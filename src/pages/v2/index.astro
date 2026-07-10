@@ -1,0 +1,480 @@
+---
+import type { ImageMetadata } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../../data/site';
+import { produtos } from '../../data/produtos';
+import { etapasComodato } from '../../data/comodato';
+import { faq } from '../../data/faq';
+import { provaSocial } from '../../data/provaSocial';
+import { sustentabilidade } from '../../data/sustentabilidade';
+import * as img from '../../data/imagens';
+import { simular, reais, PREMISSAS } from '../../scripts/simulador-core.js';
+import '../../styles/v2.css';
+
+const base = import.meta.env.BASE_URL;
+const hubUrl = base.endsWith('/') ? base : `${base}/`;
+const ano = new Date().getFullYear();
+
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+
+// Faixa de números-gigantes — valores vindos de src/data/site.ts
+const grandesNumeros = [
+  { valor: numeros.escolas, rotulo: 'escolas atendidas no Brasil' },
+  { valor: `${numeros.recargaSegundos}s`, rotulo: 'por recarga automática' },
+  { valor: `${numeros.escritaKm} km`, rotulo: 'de escrita por recarga' },
+  { valor: String(numeros.entregaDiasUteis), rotulo: 'dias úteis até a entrega' },
+];
+
+// Fotos das linhas-artigo — página clara: todas as fotos são seguras aqui
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrioTampas,
+    alt: 'Pincéis FILL Eco Marker preto, vermelho e azul destampados, com as tampas suspensas acima das pontas',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterCleanAberto,
+    alt: 'Estojo azul FILL Master Clean 3P aberto, guardando pincéis e um refil translúcido',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+// FAQ em duas colunas de revista — todas as 10 perguntas
+const metadeFaq = Math.ceil(faq.length / 2);
+const faqColunas = [faq.slice(0, metadeFaq), faq.slice(metadeFaq)];
+
+const linksMenu = [
+  { href: '#produtos', rotulo: 'Produtos' },
+  { href: '#como-funciona', rotulo: 'Como funciona' },
+  { href: '#simulador', rotulo: 'Simulador' },
+  { href: '#sustentabilidade', rotulo: 'Sustentabilidade' },
+  { href: '#faq', rotulo: 'FAQ' },
+  { href: '#contato', rotulo: 'Contato' },
+];
+
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+---
+
+<Layout
+  title="Allcanci Tecnologia — O fim do pincel descartável"
+  description={empresa.descricao}
+  bodyClass="v2"
+>
+  <a class="v2-skip" href="#hero">Pular para o conteúdo</a>
+
+  <header class="v2-topo">
+    <div class="v2-caixa v2-topo-linha">
+      <a class="v2-marca" href="#hero">allcanci<span> tecnologia</span></a>
+      <nav class="v2-nav" aria-label="Seções da página">
+        <ul class="v2-menu" role="list">
+          {linksMenu.map((item) => (
+            <li><a href={item.href}>{item.rotulo}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <a class="v2-topo-whats" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+        WhatsApp<span aria-hidden="true"> ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section id="hero" class="v2-hero" aria-labelledby="titulo-hero">
+      <div class="v2-caixa">
+        <div class="v2-hero-topo">
+          <p class="v2-kicker">01 — Manifesto</p>
+          <p class="v2-hero-edicao v2-versalete">{empresa.cidade} · Edição única · {ano}</p>
+        </div>
+
+        <div class="v2-grade v2-hero-grade">
+          <h1 id="titulo-hero" class="v2-manchete">
+            O fim do pincel descartável<span class="v2-ponto">.</span>
+          </h1>
+
+          <hr class="v2-hero-filete" />
+
+          <div class="v2-hero-assina">
+            <p class="v2-hero-slogan v2-versalete">{empresa.slogan}</p>
+            <a
+              class="v2-link-editorial"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Falar com a Allcanci<span aria-hidden="true"> ↗</span>
+            </a>
+            <a class="v2-link-editorial v2-link-editorial--sutil" href="#simulador">
+              Ver a conta no simulador<span aria-hidden="true"> ↓</span>
+            </a>
+          </div>
+
+          <p class="v2-hero-apoio v2-hero-lide">{empresa.descricao}</p>
+
+          <figure class="v2-hero-figura v2-sangra-direita">
+            <Image
+              src={img.ecoMarkerTrio}
+              alt="Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul, dispostos em diagonal sobre fundo neutro"
+              widths={[480, 800, 1200, 1600]}
+              sizes="(min-width: 1180px) 60rem, (min-width: 900px) 72vw, 100vw"
+              loading="eager"
+            />
+            <figcaption class="v2-legenda">
+              FILL Eco Marker — recarregado em {numeros.recargaSegundos} segundos, nunca descartado
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ NÚMEROS COMO GRÁFICA ═══ -->
+    <section class="v2-numeros" aria-label="Allcanci em números">
+      <div class="v2-caixa">
+        <ul class="v2-numeros-lista" role="list">
+          {grandesNumeros.map((numero) => (
+            <li class="v2-numero">
+              <span class="v2-numero-valor">{numero.valor}</span>
+              <span class="v2-numero-rotulo v2-versalete">{numero.rotulo}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ PRODUTOS ═══ -->
+    <section
+      id="produtos"
+      class="v2-secao v2-secao--pos-numeros"
+      aria-labelledby="titulo-produtos"
+    >
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker">02 — Ecossistema</p>
+          <h2 class="v2-titulo" id="titulo-produtos">
+            Seis peças, nenhum descarte<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">
+            Da máquina de recarga ao aplicativo de gestão: o ecossistema FILL foi desenhado
+            para trabalhar em conjunto — e aposentar o descartável.
+          </p>
+        </header>
+
+        <ol class="v2-artigos" role="list">
+          {produtos.map((produto, i) => {
+            const foto = fotosProdutos[produto.id];
+            return (
+              <li class="v2-artigo v2-revela">
+                <span class="v2-artigo-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <div class="v2-artigo-texto">
+                  <h3>{produto.nome}</h3>
+                  <p class="v2-artigo-sub">{produto.subtitulo}</p>
+                  <p class="v2-artigo-desc">{produto.descricao}</p>
+                  <ul class="v2-artigo-destaques" role="list">
+                    {produto.destaques.map((destaque) => (
+                      <li>{destaque}</li>
+                    ))}
+                  </ul>
+                </div>
+                {foto && (
+                  <figure class="v2-artigo-foto">
+                    <Image
+                      src={foto.src}
+                      alt={foto.alt}
+                      widths={[200, 320, 480]}
+                      sizes="(min-width: 900px) 12.5rem, 9.5rem"
+                    />
+                  </figure>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══ COMO FUNCIONA ═══ -->
+    <section id="como-funciona" class="v2-secao" aria-labelledby="titulo-como">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker">03 — Comodato</p>
+          <h2 class="v2-titulo" id="titulo-como">
+            O comodato, em seis atos<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">
+            Sem investimento inicial em equipamento: a Allcanci instala, treina e acompanha.
+            Um sumário do contrato, do diagnóstico ao suporte contínuo.
+          </p>
+        </header>
+
+        <div class="v2-grade">
+          <ol class="v2-sumario v2-revela" role="list">
+            {etapasComodato.map((etapa, i) => (
+              <li class="v2-etapa">
+                <div class="v2-etapa-linha">
+                  <h3>{etapa.titulo}</h3>
+                  <span class="v2-etapa-pontilha" aria-hidden="true"></span>
+                  <span class="v2-etapa-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <p>{etapa.texto}</p>
+              </li>
+            ))}
+          </ol>
+
+          <figure class="v2-como-figura v2-revela">
+            <div class="v2-moldura">
+              <Image
+                src={img.comoUsar}
+                alt="Ilustração da recarga em três passos: primeiro, insira o pincel no encaixe da máquina e a tampa na trava de segurança; depois, aguarde 22 segundos para a recarga; por fim, retire o pincel e a tampa e utilize normalmente."
+                widths={[420, 640, 900]}
+                sizes="(min-width: 900px) 24rem, 88vw"
+              />
+            </div>
+            <figcaption class="v2-legenda">A recarga em três passos</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SIMULADOR ═══ -->
+    <section id="simulador" class="v2-secao" aria-labelledby="titulo-simulador">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker">04 — Simulador</p>
+          <h2 class="v2-titulo" id="titulo-simulador">
+            A economia, preto no branco<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">
+            Ajuste o número de professores e leia a projeção anual — recargas, custos e o
+            plástico que deixa de virar lixo.
+          </p>
+        </header>
+
+        <div class="v2-grade">
+          <div class="v2-sim-entrada v2-revela">
+            <label class="v2-sim-rotulo v2-versalete" for="sim-professores">
+              Professores na instituição
+            </label>
+            <div class="v2-sim-controles">
+              <input
+                type="range"
+                id="sim-professores"
+                min="1"
+                max="200"
+                step="1"
+                value={professoresIniciais}
+              />
+              <input
+                type="number"
+                id="sim-professores-num"
+                min="1"
+                max="999"
+                value={professoresIniciais}
+                aria-label="Número de professores"
+              />
+            </div>
+            <p class="v2-premissas">
+              Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
+              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
+              recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+              ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+              ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+            </p>
+          </div>
+
+          <dl class="v2-tabela v2-revela">
+            <div class="v2-tabela-linha">
+              <dt>Recargas por ano</dt>
+              <dd id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</dd>
+            </div>
+            <div class="v2-tabela-linha">
+              <dt>Investimento FILL/ano</dt>
+              <dd id="sim-custo-fill">{reais(sim0.custoFill)}</dd>
+            </div>
+            <div class="v2-tabela-linha">
+              <dt>Descartáveis evitados</dt>
+              <dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd>
+            </div>
+            <div class="v2-tabela-linha">
+              <dt>Plástico evitado</dt>
+              <dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd>
+            </div>
+            <div class="v2-tabela-linha v2-tabela-linha--soma">
+              <dt>Economia estimada/ano</dt>
+              <dd id="sim-economia">{reais(sim0.economia)}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROVA SOCIAL ═══ -->
+    <section id="prova-social" class="v2-secao" aria-labelledby="titulo-prova">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker">05 — Confiança</p>
+          <h2 class="v2-titulo" id="titulo-prova">
+            {provaSocial.titulo}<span class="v2-ponto">.</span>
+          </h2>
+        </header>
+
+        <div class="v2-grade">
+          <p class="v2-citacao v2-revela">
+            <span class="v2-aspas v2-aspas--abre" aria-hidden="true">“</span>
+            {provaSocial.texto}
+            <span class="v2-aspas v2-aspas--fecha" aria-hidden="true">”</span>
+          </p>
+        </div>
+
+        {provaSocial.depoimentos.length > 0 && (
+          <ul class="v2-depoimentos" role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li>
+                <blockquote>
+                  <p>{dep.citacao}</p>
+                  <footer>{dep.autor} — {dep.instituicao}</footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <ul class="v2-selos v2-revela" role="list" aria-label="Compromissos Allcanci">
+          {provaSocial.selos.map((selo) => (
+            <li>{selo}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ SUSTENTABILIDADE ═══ -->
+    <section id="sustentabilidade" class="v2-secao" aria-labelledby="titulo-sustentabilidade">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker v2-kicker--verde">06 — Sustentabilidade</p>
+          <h2 class="v2-titulo" id="titulo-sustentabilidade">
+            {sustentabilidade.titulo}<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">{sustentabilidade.texto}</p>
+        </header>
+
+        <ul class="v2-pontos v2-revela" role="list">
+          {sustentabilidade.pontos.map((ponto) => (
+            <li class="v2-ponto-item">
+              <h3>{ponto.titulo}</h3>
+              <p>{ponto.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="v2-secao" aria-labelledby="titulo-faq">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade v2-revela">
+          <p class="v2-kicker">07 — Perguntas</p>
+          <h2 class="v2-titulo" id="titulo-faq">
+            Perguntas frequentes<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">
+            O que escolas e instituições perguntam antes de assinar o comodato.
+          </p>
+        </header>
+
+        <div class="v2-faq-colunas v2-revela">
+          {faqColunas.map((coluna) => (
+            <div class="v2-faq-col">
+              {coluna.map((item) => (
+                <details>
+                  <summary>
+                    {item.pergunta}
+                    <span class="v2-faq-mais" aria-hidden="true">+</span>
+                  </summary>
+                  <p class="v2-faq-resposta">{item.resposta}</p>
+                </details>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTATO · COLOFÃO ═══ -->
+    <section id="contato" class="v2-colofao" aria-labelledby="titulo-contato">
+      <div class="v2-caixa">
+        <header class="v2-cabeca v2-grade">
+          <p class="v2-kicker">08 — Colofão</p>
+          <h2 class="v2-titulo" id="titulo-contato">
+            Vamos conversar<span class="v2-ponto">.</span>
+          </h2>
+          <p class="v2-lide">
+            Peça uma proposta de comodato sob medida — entrega em até
+            {' '}{numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+          </p>
+        </header>
+
+        <p class="v2-colofao-cta">
+          <a
+            class="v2-link-editorial v2-link-editorial--claro"
+            href={contatos.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Chamar no WhatsApp<span aria-hidden="true"> ↗</span>
+          </a>
+        </p>
+
+        <div class="v2-colofao-colunas">
+          <div class="v2-colofao-col">
+            <h3>Contato</h3>
+            <ul role="list">
+              <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+              <li><a href={telefoneHref}>{contatos.telefone}</a></li>
+              <li>
+                <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                  WhatsApp
+                </a>
+              </li>
+              <li><address>{contatos.endereco}</address></li>
+            </ul>
+          </div>
+          <div class="v2-colofao-col">
+            <h3>Redes</h3>
+            <ul role="list">
+              {redes.map((rede) => (
+                <li>
+                  <a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="v2-colofao-col">
+            <h3>Expediente</h3>
+            <p>{empresa.nome} — {empresa.slogan.toLowerCase()}.</p>
+            <p>© {ano} · {empresa.cidade}</p>
+            <p><a href={hubUrl}>Ver as 5 propostas de design</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../scripts/v2.js"></script>
+</Layout>
