@@ -1,0 +1,53 @@
+/* Design tokens — manual de marca Allcanci */
+:root {
+  /* Cores de trabalho */
+  --azul: #0000fe;
+  --azul-claro: #008aff;
+  --nevoa: #bbe0ef;
+  --creme: #fefff0;
+  --preto: #080808;
+  --branco: #ffffff;
+  /* Cores opostas (acentos) */
+  --verde: #00ff60;
+  --amarelo: #ffd100;
+  --vermelho: #ff0c00;
+  /* Sombras do azul */
+  --azul-700: #0000db;
+  --azul-800: #0000b3;
+  --azul-900: #00008a;
+  --azul-950: #000061;
+  /* Tipografia */
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-titulo: 'Nunito', system-ui, sans-serif;
+  --font-texto: 'Nunito Sans', system-ui, sans-serif;
+  /* Escala tipográfica fluida */
+  --texto-xs: 0.8rem;
+  --texto-sm: 0.94rem;
+  --texto-base: 1.06rem;
+  --texto-lg: clamp(1.15rem, 1rem + 0.6vw, 1.35rem);
+  --titulo-sm: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --titulo-md: clamp(2rem, 1.5rem + 2.2vw, 3.4rem);
+  --titulo-lg: clamp(2.6rem, 1.8rem + 3.6vw, 4.6rem);
+  --display-xl: clamp(3rem, 2rem + 5.5vw, 6.5rem);
+  /* Espaços e formas */
+  --espaco-secao: clamp(4rem, 3rem + 5vw, 7.5rem);
+  --raio-sm: 10px;
+  --raio-md: 22px;
+  --raio-lg: 30px;
+  --raio-pill: 999px;
+  --largura-conteudo: 1180px;
+  /* Sombras */
+  --sombra-azul: 0 20px 60px rgba(0, 0, 254, 0.16);
+  --sombra-tinta: 0 18px 40px rgba(8, 8, 8, 0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+body { margin: 0; font-family: var(--font-texto); color: var(--preto); }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--azul-claro); outline-offset: 3px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

@@ -1,0 +1,32 @@
+---
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/900.css';
+import '@fontsource/nunito/800.css';
+import '@fontsource/nunito/900.css';
+import '@fontsource/nunito-sans/400.css';
+import '@fontsource/nunito-sans/700.css';
+import '@fontsource/nunito-sans/800.css';
+import '../styles/tokens.css';
+
+interface Props { title: string; description: string; bodyClass?: string }
+const { title, description, bodyClass = '' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>
