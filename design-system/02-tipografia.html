@@ -1,0 +1,203 @@
+<!-- @dsCard group="Type" -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allcanci — Escala tipográfica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&family=Nunito:wght@800;900&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0000fe;
+    --azul-claro: #008aff;
+    --nevoa: #bbe0ef;
+    --creme: #fefff0;
+    --preto: #080808;
+    --branco: #ffffff;
+    --font-display: 'Poppins', system-ui, sans-serif;
+    --font-titulo: 'Nunito', system-ui, sans-serif;
+    --font-texto: 'Nunito Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-texto);
+    color: var(--preto);
+    background: var(--creme);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .kicker {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.8rem, 1.4rem + 2vw, 2.6rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+  .lead {
+    font-size: 1.02rem;
+    max-width: 62ch;
+    color: rgba(8, 8, 8, 0.72);
+    margin: 0 0 2.6rem;
+  }
+  .grupo-titulo {
+    font-family: var(--font-titulo);
+    font-weight: 900;
+    font-size: 1.3rem;
+    margin: 3.2rem 0 0.4rem;
+    padding-top: 1.8rem;
+    border-top: 2px solid rgba(0, 0, 254, 0.14);
+  }
+  .grupo-titulo:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .grupo-desc {
+    font-size: 0.92rem;
+    color: rgba(8, 8, 8, 0.6);
+    margin: 0 0 1.6rem;
+  }
+  .amostra {
+    background: var(--branco);
+    border: 1px solid rgba(0, 0, 254, 0.12);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 12px 34px rgba(0, 0, 254, 0.07);
+  }
+  .caption {
+    display: block;
+    font-family: var(--font-texto);
+    font-weight: 700;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 0.9rem 0 0;
+    padding-top: 0.9rem;
+    border-top: 1px dashed rgba(0, 0, 254, 0.2);
+  }
+
+  /* Display — Poppins */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 2rem + 5.5vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--preto);
+  }
+  .display-xl span { color: var(--azul); }
+  .display-sub {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0.9rem 0 0;
+    color: var(--azul);
+  }
+
+  /* Título — Nunito */
+  .titulo-lg {
+    font-family: var(--font-titulo);
+    font-weight: 900;
+    font-size: clamp(2.6rem, 1.8rem + 3.6vw, 4.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .titulo-lg .ponto { color: var(--azul); }
+  .titulo-md {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem);
+    line-height: 1.1;
+    margin: 1.4rem 0 0;
+  }
+  .titulo-sm {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+    margin: 1.4rem 0 0;
+    color: var(--azul);
+  }
+
+  /* Texto — Nunito Sans */
+  .texto-lg {
+    font-family: var(--font-texto);
+    font-weight: 400;
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.35rem);
+    line-height: 1.65;
+    max-width: 52ch;
+    margin: 0;
+  }
+  .texto-kicker {
+    font-family: var(--font-texto);
+    font-weight: 800;
+    font-size: 0.94rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 1.6rem 0 0;
+  }
+  .texto-sm {
+    font-family: var(--font-texto);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: rgba(8, 8, 8, 0.65);
+    margin: 1rem 0 0;
+  }
+  footer {
+    margin-top: 3.2rem;
+    padding-top: 1.6rem;
+    border-top: 2px solid rgba(0, 0, 254, 0.14);
+    font-size: 0.85rem;
+    color: rgba(8, 8, 8, 0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">Allcanci · Design System</p>
+    <h1>Escala tipográfica</h1>
+    <p class="lead">Três fontes, três papéis: Poppins para o gesto de marca (display), Nunito para títulos editoriais e Nunito Sans para o corpo de texto.</p>
+
+    <h2 class="grupo-titulo">Display — Poppins</h2>
+    <p class="grupo-desc">Reservada para o hero e para números-manifesto. Sempre peso 900 ou 700.</p>
+    <div class="amostra">
+      <p class="display-xl">22 <span>segundos.</span></p>
+      <p class="display-sub">Allcanci</p>
+      <span class="caption">Poppins 900 · display-xl · clamp(3rem, 2rem + 5.5vw, 6.5rem)</span>
+    </div>
+
+    <h2 class="grupo-titulo">Título — Nunito</h2>
+    <p class="grupo-desc">Manchetes de seção e assinaturas editoriais. Peso 900 para impacto, 800 para subtítulos.</p>
+    <div class="amostra">
+      <p class="titulo-lg">O fim do pincel descartável<span class="ponto">.</span></p>
+      <p class="titulo-md">Menos descarte, mais futuro</p>
+      <p class="titulo-sm">Quem usou, aprovou</p>
+      <span class="caption">Nunito 900/800 · titulo-lg / titulo-md / titulo-sm</span>
+    </div>
+
+    <h2 class="grupo-titulo">Texto — Nunito Sans</h2>
+    <p class="grupo-desc">Corpo de texto, legendas e rótulos. Peso 400 para leitura longa, 700/800 para ênfase e rótulos.</p>
+    <div class="amostra">
+      <p class="texto-lg">Tecnologia 100% nacional e patenteada que substitui pincéis descartáveis por um ecossistema de recarga automática: menos desperdício, mais controle.</p>
+      <p class="texto-kicker">Allcanci Tecnologia · Betim/MG</p>
+      <p class="texto-sm">+500 escolas atendidas em todo o Brasil</p>
+      <span class="caption">Nunito Sans 400 / 800 / 700 · texto-lg / texto-base / texto-sm</span>
+    </div>
+
+    <footer>Allcanci Tecnologia — manual de marca · design-system/02-tipografia.html</footer>
+  </div>
+</body>
+</html>

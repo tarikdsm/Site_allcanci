@@ -1,0 +1,236 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allcanci — Sistema de cores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&family=Nunito:wght@800;900&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0000fe;
+    --azul-claro: #008aff;
+    --nevoa: #bbe0ef;
+    --creme: #fefff0;
+    --preto: #080808;
+    --branco: #ffffff;
+    --verde: #00ff60;
+    --amarelo: #ffd100;
+    --vermelho: #ff0c00;
+    --azul-700: #0000db;
+    --azul-800: #0000b3;
+    --azul-900: #00008a;
+    --azul-950: #000061;
+    --font-display: 'Poppins', system-ui, sans-serif;
+    --font-titulo: 'Nunito', system-ui, sans-serif;
+    --font-texto: 'Nunito Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-texto);
+    color: var(--preto);
+    background: var(--creme);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .kicker {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.8rem, 1.4rem + 2vw, 2.6rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+  .lead {
+    font-size: 1.02rem;
+    max-width: 62ch;
+    color: rgba(8, 8, 8, 0.72);
+    margin: 0 0 2.6rem;
+  }
+  .grupo-titulo {
+    font-family: var(--font-titulo);
+    font-weight: 900;
+    font-size: 1.3rem;
+    margin: 3rem 0 0.4rem;
+    padding-top: 1.8rem;
+    border-top: 2px solid rgba(0, 0, 254, 0.14);
+  }
+  .grupo-titulo:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .grupo-desc {
+    font-size: 0.92rem;
+    color: rgba(8, 8, 8, 0.6);
+    margin: 0 0 1.4rem;
+  }
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.1rem;
+  }
+  .swatch {
+    background: var(--branco);
+    border: 1px solid rgba(0, 0, 254, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 254, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .swatch:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 254, 0.14);
+  }
+  .swatch-cor {
+    height: 96px;
+    box-shadow: inset 0 0 0 1px rgba(8, 8, 8, 0.08);
+  }
+  .swatch-info { padding: 0.8rem 1rem 1rem; }
+  .swatch-nome {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: 0.95rem;
+    margin: 0 0 0.2rem;
+  }
+  .swatch-hex {
+    font-family: var(--font-texto);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: rgba(8, 8, 8, 0.55);
+    text-transform: uppercase;
+  }
+  footer {
+    margin-top: 3.2rem;
+    padding-top: 1.6rem;
+    border-top: 2px solid rgba(0, 0, 254, 0.14);
+    font-size: 0.85rem;
+    color: rgba(8, 8, 8, 0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">Allcanci · Design System</p>
+    <h1>Sistema de cores</h1>
+    <p class="lead">As três famílias de cor do manual de marca: cores de trabalho, cores opostas (acentos) e as sombras do azul usadas em gradientes e profundidade.</p>
+
+    <h2 class="grupo-titulo">Cores de trabalho</h2>
+    <p class="grupo-desc">Base do sistema — usadas em fundo, texto e superfícies em todas as versões do site.</p>
+    <div class="grade">
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #0000fe;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul</p>
+          <p class="swatch-hex">#0000FE</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #008aff;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul-claro</p>
+          <p class="swatch-hex">#008AFF</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #bbe0ef;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Névoa</p>
+          <p class="swatch-hex">#BBE0EF</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #fefff0;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Creme</p>
+          <p class="swatch-hex">#FEFFF0</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #080808;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Preto</p>
+          <p class="swatch-hex">#080808</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #ffffff;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Branco</p>
+          <p class="swatch-hex">#FFFFFF</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="grupo-titulo">Cores opostas (acentos)</h2>
+    <p class="grupo-desc">Uso pontual — CTA do WhatsApp, destaques de sustentabilidade e alertas. Nunca como cor de fundo dominante.</p>
+    <div class="grade">
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #00ff60;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Verde</p>
+          <p class="swatch-hex">#00FF60</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #ffd100;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Amarelo</p>
+          <p class="swatch-hex">#FFD100</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #ff0c00;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Vermelho</p>
+          <p class="swatch-hex">#FF0C00</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="grupo-titulo">Sombras do azul</h2>
+    <p class="grupo-desc">Degradê de profundidade do azul — usado em gradientes, hover de botões e estados escuros.</p>
+    <div class="grade">
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #0000db;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul-700</p>
+          <p class="swatch-hex">#0000DB</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #0000b3;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul-800</p>
+          <p class="swatch-hex">#0000B3</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #00008a;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul-900</p>
+          <p class="swatch-hex">#00008A</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background: #000061;"></div>
+        <div class="swatch-info">
+          <p class="swatch-nome">Azul-950</p>
+          <p class="swatch-hex">#000061</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>Allcanci Tecnologia — manual de marca · design-system/01-cores.html</footer>
+  </div>
+</body>
+</html>

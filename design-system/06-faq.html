@@ -1,0 +1,150 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allcanci — FAQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&family=Nunito:wght@800;900&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0000fe;
+    --azul-claro: #008aff;
+    --nevoa: #bbe0ef;
+    --creme: #fefff0;
+    --preto: #080808;
+    --branco: #ffffff;
+    --font-display: 'Poppins', system-ui, sans-serif;
+    --font-titulo: 'Nunito', system-ui, sans-serif;
+    --font-texto: 'Nunito Sans', system-ui, sans-serif;
+    --raio-md: 22px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-texto);
+    color: var(--preto);
+    background: var(--creme);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .kicker {
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.8rem, 1.4rem + 2vw, 2.6rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+  .lead {
+    font-size: 1.02rem;
+    max-width: 62ch;
+    color: rgba(8, 8, 8, 0.72);
+    margin: 0 0 2rem;
+  }
+  :focus-visible { outline: 3px solid var(--azul-claro); outline-offset: 3px; }
+
+  .faq-lista {
+    background: var(--branco);
+    border: 1px solid rgba(0, 0, 254, 0.14);
+    border-radius: var(--raio-md);
+    padding: 0.4rem 1.6rem;
+    box-shadow: 0 12px 34px rgba(0, 0, 254, 0.07);
+  }
+  .faq-lista details {
+    border-bottom: 1px solid rgba(8, 8, 8, 0.12);
+  }
+  .faq-lista details:last-child { border-bottom: 0; }
+  .faq-lista summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding-block: 1.15rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: 1.02rem;
+    line-height: 1.4;
+  }
+  .faq-lista summary::-webkit-details-marker { display: none; }
+  .faq-lista summary:hover { color: var(--azul); }
+  .faq-mais {
+    flex: 0 0 auto;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 0.8;
+    color: var(--azul);
+    transition: transform 0.25s ease;
+    transform-origin: center;
+  }
+  details[open] .faq-mais { transform: rotate(45deg); }
+  .faq-resposta {
+    margin: 0;
+    padding: 0 0 1.3rem;
+    max-width: 58ch;
+    font-family: var(--font-texto);
+    font-size: 0.94rem;
+    line-height: 1.7;
+    color: rgba(8, 8, 8, 0.75);
+  }
+
+  .legenda-estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 1.4rem 0 0;
+    font-family: var(--font-texto);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: rgba(8, 8, 8, 0.5);
+  }
+
+  footer {
+    margin-top: 3.2rem;
+    padding-top: 1.6rem;
+    border-top: 2px solid rgba(0, 0, 254, 0.14);
+    font-size: 0.85rem;
+    color: rgba(8, 8, 8, 0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">Allcanci · Design System</p>
+    <h1>FAQ — item de pergunta</h1>
+    <p class="lead">O componente <code>&lt;details&gt;</code> nativo estilizado: marcador "+" que gira 45° quando aberto, borda inferior fina. Clique para abrir/fechar de verdade.</p>
+
+    <div class="faq-lista">
+      <details open>
+        <summary>O sistema Allcanci serve para qualquer quadro branco ou de vidro?<span class="faq-mais" aria-hidden="true">+</span></summary>
+        <p class="faq-resposta">Sim! Todos os produtos FILL são compatíveis com quadros brancos e de vidro.</p>
+      </details>
+      <details>
+        <summary>Quanto tempo dura uma recarga?<span class="faq-mais" aria-hidden="true">+</span></summary>
+        <p class="faq-resposta">Cada recarga tem rendimento calculado de aproximadamente 1 km de escrita, garantindo economia real e previsibilidade no consumo.</p>
+      </details>
+      <details>
+        <summary>Vocês atendem escolas públicas e municipais?<span class="faq-mais" aria-hidden="true">+</span></summary>
+        <p class="faq-resposta">Sim! Atendemos escolas públicas municipais, estaduais e federais em todo o Brasil.</p>
+      </details>
+    </div>
+    <p class="legenda-estado">Primeiro item: estado aberto (atributo <code>open</code>) · demais: estado fechado</p>
+
+    <footer>Allcanci Tecnologia — manual de marca · design-system/06-faq.html</footer>
+  </div>
+</body>
+</html>
