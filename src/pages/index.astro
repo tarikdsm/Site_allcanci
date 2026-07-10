@@ -1,9 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getImage } from 'astro:assets';
 import { empresa, contatos, redes } from '../data/site';
+import { inkInjectorAberta } from '../data/imagens';
 
 const base = import.meta.env.BASE_URL;
 const ano = new Date().getFullYear();
+
+const ogImage = await getImage({ src: inkInjectorAberta, format: 'webp', width: 1200 });
 
 const versoes = [
   {
@@ -46,7 +50,8 @@ const versoes = [
 
 <Layout
   title="Allcanci Tecnologia — Escolha o futuro do site"
-  description="Cinco propostas de design radicalmente diferentes para o novo site da Allcanci Tecnologia. Explore as versões V1 a V5 e escolha a direção."
+  description="Cinco propostas de design para o novo site da Allcanci Tecnologia, fabricante do sistema FILL de recarga de pincéis para escolas. Compare as versões V1 a V5."
+  ogImage={ogImage.src}
 >
   <div class="pagina">
     <header class="topo">

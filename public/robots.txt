@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tarikdsm.github.io/Site_allcanci/sitemap-index.xml

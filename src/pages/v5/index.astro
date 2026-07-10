@@ -1,7 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import Layout from '../../layouts/Layout.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { empresa, numeros, contatos, redes } from '../../data/site';
 import { produtos } from '../../data/produtos';
 import { etapasComodato } from '../../data/comodato';
@@ -16,6 +16,8 @@ const base = import.meta.env.BASE_URL;
 const hubUrl = base.endsWith('/') ? base : `${base}/`;
 const ano = new Date().getFullYear();
 const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+
+const ogImage = await getImage({ src: img.masterColorTrio, format: 'webp', width: 1200 });
 
 // Simulador: estado inicial renderizado no servidor (funciona sem JS)
 const professoresIniciais = 20;
@@ -104,7 +106,8 @@ const linksMenu = [
 
 <Layout
   title="Allcanci Tecnologia — Tinta viva para quadro branco"
-  description={`Tinta viva: recarga em ${numeros.recargaSegundos} segundos, ${numeros.escritaKm} km de escrita. ${empresa.descricao}`}
+  description="Menos descarte, mais tinta: o sistema FILL da Allcanci troca pincéis descartáveis por recarga inteligente, com créditos previsíveis para escolas de todo o Brasil."
+  ogImage={ogImage.src}
   bodyClass="v5"
 >
   <a class="v5-pular" href="#hero">Pular para o conteúdo</a>
