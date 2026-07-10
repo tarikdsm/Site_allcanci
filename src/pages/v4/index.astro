@@ -1,0 +1,489 @@
+---
+import type { ImageMetadata } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../../data/site';
+import { produtos } from '../../data/produtos';
+import { etapasComodato } from '../../data/comodato';
+import { faq } from '../../data/faq';
+import { provaSocial } from '../../data/provaSocial';
+import { sustentabilidade } from '../../data/sustentabilidade';
+import * as img from '../../data/imagens';
+import { simular, reais, PREMISSAS } from '../../scripts/simulador-core.js';
+import '../../styles/v4.css';
+
+const base = import.meta.env.BASE_URL;
+const hubUrl = base.endsWith('/') ? base : `${base}/`;
+const ano = new Date().getFullYear();
+
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+
+// Comodato condensado: etapas 1–2 abrem o bloco introdutório;
+// etapas 3–6 alimentam os 4 atos do scrollytelling, em ordem cronológica.
+const etapasIntro = etapasComodato.slice(0, 2);
+const etapasAtos = etapasComodato.slice(2);
+
+// Fotos dos produtos — página clara: todas as fotos são seguras aqui
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+const linksMenu = [
+  { href: '#como-funciona', rotulo: 'Como funciona' },
+  { href: '#produtos', rotulo: 'Produtos' },
+  { href: '#simulador', rotulo: 'Simulador' },
+  { href: '#faq', rotulo: 'FAQ' },
+];
+
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+---
+
+<Layout
+  title="Allcanci Tecnologia — A recarga de 22 segundos"
+  description={`22 segundos para recarregar, ${numeros.escritaKm} km para escrever. ${empresa.descricao}`}
+  bodyClass="v4"
+>
+  <a class="v4-pular" href="#hero">Pular para o conteúdo</a>
+
+  <header class="v4-topo">
+    <div class="v4-caixa v4-topo-linha">
+      <a class="v4-wordmark" href="#hero">allcanci<span>&nbsp;tecnologia</span></a>
+      <nav class="v4-nav" aria-label="Seções da página">
+        <ul class="v4-menu" role="list">
+          {linksMenu.map((item) => (
+            <li><a href={item.href}>{item.rotulo}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <a class="v4-topo-chip" href="#contato">Contato</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ HERO — uma ideia: 22 segundos ═══ -->
+    <section id="hero" class="v4-secao v4-hero" aria-labelledby="titulo-hero">
+      <div class="v4-caixa">
+        <p class="v4-kicker v4-hero-kicker">{empresa.nome} apresenta</p>
+        <h1 id="titulo-hero">{numeros.recargaSegundos} segundos.</h1>
+        <p class="v4-sub">
+          É o tempo de recarregar um pincel para escrever {numeros.escritaKm}&nbsp;km.
+        </p>
+        <p class="v4-hero-cta">
+          <a class="v4-cta-quieto" href="#como-funciona">
+            Veja a recarga acontecer <span aria-hidden="true">↓</span>
+          </a>
+        </p>
+
+        <figure class="v4-hero-figura">
+          <Image
+            src={img.ecoMarkerPreto}
+            alt="Pincel recarregável FILL Eco Marker preto, com ponta de feltro branca e base de recarga translúcida"
+            widths={[420, 640, 900]}
+            sizes="(min-width: 800px) 26rem, 70vw"
+            loading="eager"
+          />
+          <figcaption class="v4-hero-legenda">FILL Eco Marker — o pincel que não vira lixo</figcaption>
+        </figure>
+      </div>
+      <div class="v4-rolagem" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- ═══ COMO FUNCIONA — scrollytelling da recarga ═══ -->
+    <section id="como-funciona" class="v4-secao v4-como" aria-labelledby="titulo-como">
+      <div class="v4-caixa">
+        <div class="v4-como-cabeca">
+          <p class="v4-kicker">Como funciona</p>
+          <h2 class="v4-titulo" id="titulo-como">Do diagnóstico à recarga contínua.</h2>
+          <p class="v4-sub">
+            O comodato começa antes da máquina chegar — e a história da recarga
+            se conta sozinha enquanto você rola a página.
+          </p>
+        </div>
+
+        <!-- Etapas 1–2: o que acontece antes do palco -->
+        <div class="v4-sy-intro">
+          {etapasIntro.map((etapa, i) => (
+            <article class="v4-intro-item">
+              <span class="v4-num" aria-hidden="true">0{i + 1}</span>
+              <h3>{etapa.titulo}</h3>
+              <p>{etapa.texto}</p>
+            </article>
+          ))}
+        </div>
+
+        <!-- Palco sticky (cena) + passos (etapas 3–6) -->
+        <div class="v4-sy">
+          <div class="sy-palco" data-etapa="1">
+            <div class="sy-cena">
+              <figure class="sy-ato" data-ato="1">
+                <Image
+                  class="sy-foto"
+                  src={img.ecoMarkerPreto}
+                  alt="Pincel recarregável FILL Eco Marker preto novo, pronto para o primeiro uso"
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 860px) 24rem, 60vw"
+                />
+                <figcaption>FILL Eco Marker: entregue, instalado, treinado.</figcaption>
+              </figure>
+
+              <figure class="sy-ato" data-ato="2">
+                <div class="sy-maquina">
+                  <Image
+                    class="sy-maquina-foto"
+                    src={img.inkInjector}
+                    alt="Pincel Eco Marker encaixado no soquete da máquina FILL Ink Injector para a recarga automática"
+                    widths={[420, 640, 900]}
+                    sizes="(min-width: 860px) 21rem, 55vw"
+                  />
+                  <Image
+                    class="sy-maquina-pincel"
+                    src={img.ecoMarkerPreto}
+                    alt=""
+                    widths={[240, 420]}
+                    sizes="8rem"
+                  />
+                </div>
+                <svg class="sy-anel" viewBox="0 0 84 84" aria-hidden="true">
+                  <circle class="sy-anel-tras" cx="42" cy="42" r="36"></circle>
+                  <circle class="sy-anel-arco" cx="42" cy="42" r="36"></circle>
+                  <text x="42" y="48" text-anchor="middle">{numeros.recargaSegundos}s</text>
+                </svg>
+                <figcaption>Encaixou. O anel conta os {numeros.recargaSegundos} segundos.</figcaption>
+              </figure>
+
+              <figure class="sy-ato" data-ato="3">
+                <div class="sy-cena3-linha">
+                  <div class="sy-maquina">
+                    <Image
+                      class="sy-maquina-foto"
+                      src={img.inkInjector}
+                      alt="Máquina FILL Ink Injector injetando tinta no pincel encaixado"
+                      widths={[420, 640, 900]}
+                      sizes="(min-width: 860px) 19rem, 50vw"
+                    />
+                    <Image
+                      class="sy-maquina-pincel"
+                      src={img.ecoMarkerPreto}
+                      alt=""
+                      widths={[240, 420]}
+                      sizes="8rem"
+                    />
+                  </div>
+                  <div class="sy-gauge" role="img" aria-label={`Nível de tinta subindo até 100% em ${numeros.recargaSegundos} segundos`}>
+                    <span class="sy-gauge-fill"></span>
+                  </div>
+                </div>
+                <figcaption>Tinta subindo — sem contato, sem sujeira.</figcaption>
+              </figure>
+
+              <figure class="sy-ato" data-ato="4">
+                <Image
+                  class="sy-foto sy-foto--final"
+                  src={img.ecoMarkerPreto}
+                  alt="Pincel FILL Eco Marker recarregado, pronto para voltar ao quadro"
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 860px) 20rem, 50vw"
+                />
+                <p class="sy-km" aria-hidden="true">
+                  <span class="sy-km-linha"></span>
+                  {numeros.escritaKm} km
+                </p>
+                <figcaption>Pronto: {numeros.escritaKm} km de escrita pela frente.</figcaption>
+                <p class="sy-legenda-todas">
+                  A cena completa: encaixe o pincel na FILL Ink Injector, aguarde os
+                  {' '}{numeros.recargaSegundos} segundos da recarga automática — o anel se fecha,
+                  a tinta sobe — e volte ao quadro com cerca de {numeros.escritaKm} km de escrita.
+                </p>
+              </figure>
+            </div>
+          </div>
+
+          <div class="sy-passos">
+            {etapasAtos.map((etapa, i) => (
+              <article class="sy-passo" data-etapa={String(i + 1)}>
+                <span class="v4-num" aria-hidden="true">0{i + 3}</span>
+                <h3>{etapa.titulo}</h3>
+                <p>{etapa.texto}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PRODUTOS — carrossel scroll-snap ═══ -->
+    <section id="produtos" class="v4-secao v4-produtos" aria-labelledby="titulo-produtos">
+      <div class="v4-caixa v4-produtos-cabeca">
+        <div>
+          <p class="v4-kicker">Ecossistema FILL</p>
+          <h2 class="v4-titulo" id="titulo-produtos">Seis peças. Uma ideia.</h2>
+          <p class="v4-sub">
+            Da máquina ao aplicativo, tudo foi desenhado para o mesmo fim:
+            aposentar o pincel descartável.
+          </p>
+        </div>
+        <div class="v4-setas">
+          <button class="v4-seta v4-seta--prev" type="button" aria-label="Produto anterior" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m14.5 5.5-6.5 6.5 6.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button class="v4-seta v4-seta--next" type="button" aria-label="Próximo produto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m9.5 5.5 6.5 6.5-6.5 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <ul
+        class="v4-trilho"
+        role="list"
+        tabindex="0"
+        aria-label="Catálogo de produtos FILL — role horizontalmente para ver todos"
+      >
+        {produtos.map((produto) => {
+          const foto = fotosProdutos[produto.id];
+          const destaque = produto.destaques[0];
+          return (
+            <li class="v4-card">
+              {foto && (
+                <div class="v4-card-foto">
+                  <Image
+                    src={foto.src}
+                    alt={foto.alt}
+                    widths={[320, 480, 680]}
+                    sizes="(min-width: 640px) 300px, 70vw"
+                  />
+                </div>
+              )}
+              <div class="v4-card-corpo">
+                <p class="v4-card-kicker">{produto.subtitulo}</p>
+                <h3>{produto.nome}</h3>
+                <p class="v4-card-desc">{produto.descricao}</p>
+                {destaque && (
+                  <p class="v4-card-destaque">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                      <path d="m4 10.4 3.8 3.8L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    {destaque}
+                  </p>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+
+    <!-- ═══ SIMULADOR ═══ -->
+    <section id="simulador" class="v4-secao v4-simulador" aria-labelledby="titulo-simulador">
+      <div class="v4-caixa v4-central">
+        <p class="v4-kicker">Simulador de economia</p>
+        <h2 class="v4-titulo" id="titulo-simulador">Faça as contas.</h2>
+        <p class="v4-sub">
+          Arraste o controle e veja o que um ano de FILL representa para a sua instituição.
+        </p>
+
+        <div class="v4-painel">
+          <label class="v4-painel-label" for="sim-professores">Professores na instituição</label>
+          <div class="v4-controle-linha">
+            <input
+              type="range"
+              id="sim-professores"
+              min="1"
+              max="200"
+              step="1"
+              value={professoresIniciais}
+            />
+            <input
+              type="number"
+              id="sim-professores-num"
+              min="1"
+              max="999"
+              value={professoresIniciais}
+              aria-label="Número de professores"
+            />
+          </div>
+
+          <dl class="v4-herois">
+            <div class="v4-heroi v4-heroi--principal">
+              <dt>de economia estimada por ano</dt>
+              <dd id="sim-economia">{reais(sim0.economia)}</dd>
+            </div>
+            <div class="v4-heroi">
+              <dt>pincéis descartáveis evitados</dt>
+              <dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd>
+            </div>
+            <div class="v4-heroi">
+              <dt>de plástico que não vira lixo</dt>
+              <dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd>
+            </div>
+          </dl>
+
+          <p class="v4-apoio">
+            São <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong> recargas
+            por ano, com investimento de <strong id="sim-custo-fill">{reais(sim0.custoFill)}</strong> em
+            créditos FILL.
+          </p>
+
+          <p class="v4-premissas">
+            Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por professor/ano ·
+            crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1 recarga rende
+            ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+            ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+            ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROVA SOCIAL ═══ -->
+    <section id="prova-social" class="v4-secao" aria-labelledby="titulo-prova">
+      <div class="v4-caixa v4-central">
+        <p class="v4-gigante">{numeros.escolas}</p>
+        <h2 class="v4-titulo" id="titulo-prova">{provaSocial.titulo}</h2>
+        <p class="v4-sub">{provaSocial.texto}</p>
+
+        <ul class="v4-selos" role="list">
+          {provaSocial.selos.map((selo) => (
+            <li>{selo}</li>
+          ))}
+        </ul>
+
+        {provaSocial.depoimentos.length > 0 && (
+          <ul role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li>
+                <blockquote>
+                  <p>{dep.citacao}</p>
+                  <footer>{dep.autor} — {dep.instituicao}</footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+
+    <!-- ═══ SUSTENTABILIDADE — respiro verde suave ═══ -->
+    <section id="sustentabilidade" class="v4-secao v4-sustenta" aria-labelledby="titulo-sustenta">
+      <div class="v4-caixa v4-central">
+        <p class="v4-kicker v4-kicker--verde">Sustentabilidade</p>
+        <h2 class="v4-titulo" id="titulo-sustenta">{sustentabilidade.titulo}</h2>
+        <p class="v4-sub">{sustentabilidade.texto}</p>
+
+        <ul class="v4-pontos" role="list">
+          {sustentabilidade.pontos.map((ponto) => (
+            <li class="v4-ponto">
+              <h3>{ponto.titulo}</h3>
+              <p>{ponto.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ — linhas finas ═══ -->
+    <section id="faq" class="v4-secao" aria-labelledby="titulo-faq">
+      <div class="v4-caixa v4-central">
+        <p class="v4-kicker">FAQ</p>
+        <h2 class="v4-titulo" id="titulo-faq">Perguntas frequentes.</h2>
+
+        <div class="v4-faq-lista">
+          {faq.map((item) => (
+            <details>
+              <summary>
+                {item.pergunta}
+                <span class="v4-faq-icone" aria-hidden="true">+</span>
+              </summary>
+              <p class="v4-faq-resposta">{item.resposta}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTATO ═══ -->
+    <section id="contato" class="v4-secao v4-contato" aria-labelledby="titulo-contato">
+      <div class="v4-caixa v4-central">
+        <h2 id="titulo-contato">Vamos equipar sua escola?</h2>
+        <p class="v4-sub">
+          Proposta de comodato sob medida, com entrega em até {numeros.entregaDiasUteis} dias
+          úteis para todo o Brasil.
+        </p>
+
+        <div class="v4-contato-ctas">
+          <a
+            class="v4-botao v4-botao--primario"
+            href={contatos.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+            Falar no WhatsApp
+          </a>
+          <a class="v4-botao v4-botao--fantasma" href={`mailto:${contatos.email}`}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8" />
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Escrever e-mail
+          </a>
+        </div>
+
+        <ul class="v4-contato-info" role="list">
+          <li><a href={telefoneHref}>{contatos.telefone}</a></li>
+          <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+          <li>{contatos.endereco}</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v4-rodape">
+    <div class="v4-caixa v4-rodape-linha">
+      <p>
+        <a class="v4-wordmark" href="#hero">allcanci<span>&nbsp;tecnologia</span></a>
+        · {empresa.slogan}
+      </p>
+      <ul class="v4-rodape-redes" role="list">
+        {redes.map((rede) => (
+          <li>
+            <a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a>
+          </li>
+        ))}
+      </ul>
+      <p>© {ano} {empresa.nome} — {empresa.cidade} · <a href={hubUrl}>Ver as 5 propostas</a></p>
+    </div>
+  </footer>
+
+  <script src="../../scripts/v4.js"></script>
+</Layout>
