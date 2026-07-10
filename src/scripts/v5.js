@@ -1,4 +1,5 @@
 import { bindSimulador } from './simulador-bind.js';
+import { simular } from './simulador-core.js';
 
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -50,13 +51,16 @@ if (trilho && trilhoPrev && trilhoNext) {
 }
 
 // ── Simulador + tanque de tinta: #sim-tanque é o <rect> interno do SVG ─────
-// A altura do retângulo é proporcional à razão economia/custoDescartaveis.
+// A altura do retângulo é proporcional à economia do slider em relação à
+// economia no máximo do slider — cheio (ALTURA_MAX) quando o slider está no máximo.
 const tanque = document.querySelector('#sim-tanque');
 const ALTURA_MAX = 180; // altura útil do rect no viewBox da garrafa
 bindSimulador((r) => {
   if (!tanque) return;
-  const fracao = r.custoDescartaveis > 0 ? Math.max(0, r.economia / r.custoDescartaveis) : 0;
-  const h = Math.round(ALTURA_MAX * Math.min(1, fracao * 10)); // ×10 para tornar a fração visível
+  const max = Number(document.querySelector('#sim-professores')?.max || 200);
+  const economiaMax = simular(max).economia;
+  const fracao = economiaMax > 0 ? Math.max(0, r.economia) / economiaMax : 0;
+  const h = Math.round(ALTURA_MAX * Math.min(1, fracao));
   tanque.setAttribute('height', String(h));
   tanque.setAttribute('y', String(200 - h)); // fundo da garrafa em y=200 no viewBox
 });

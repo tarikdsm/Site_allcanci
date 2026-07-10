@@ -22,9 +22,12 @@ const professoresIniciais = 20;
 const sim0 = simular(professoresIniciais);
 
 // Tanque de tinta: mesma fórmula do v5.js — ALTURA_MAX 180, fundo da garrafa em y=200
+// A fração é a economia do estado inicial em relação à economia no máximo do slider.
 const ALTURA_MAX = 180;
-const fracao0 = sim0.custoDescartaveis > 0 ? Math.max(0, sim0.economia / sim0.custoDescartaveis) : 0;
-const tanqueAltura0 = Math.round(ALTURA_MAX * Math.min(1, fracao0 * 10));
+const professoresMax = 200;
+const economiaMax0 = simular(professoresMax).economia;
+const fracao0 = economiaMax0 > 0 ? Math.max(0, sim0.economia) / economiaMax0 : 0;
+const tanqueAltura0 = Math.round(ALTURA_MAX * Math.min(1, fracao0));
 const tanqueY0 = 200 - tanqueAltura0;
 
 // Marquee do hero (decorativo; versão legível fica em .visually-hidden)
@@ -323,8 +326,8 @@ const linksMenu = [
               </g>
             </svg>
             <figcaption class="v5-tanque-legenda">
-              Tanque de economia — garrafa FILL Master Color de 500 ml. A tinta sobe na
-              proporção da economia sobre o custo com descartáveis (escala ×10 para leitura).
+              Tanque de economia — garrafa FILL Master Color de 500 ml. A tinta cresce com
+              a sua escola: quanto mais professores no slider, mais cheio o tanque.
             </figcaption>
           </figure>
         </div>
