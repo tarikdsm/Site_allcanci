@@ -148,11 +148,15 @@ body.v1 {
 }
 
 @media (min-width: 960px) {
+  .v1-topo-linha {
+    flex-wrap: nowrap;
+  }
+
   .v1-nav {
     order: 0;
     flex: 0 1 auto;
     margin-left: auto;
-    overflow: visible;
+    overflow-x: auto;
   }
 
   .v1-menu {
@@ -161,6 +165,7 @@ body.v1 {
 
   .v1-topo .v1-botao {
     margin-left: 0;
+    flex: none;
   }
 }
 
