@@ -1,8 +1,428 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { empresa, contatos, redes } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
+const ano = new Date().getFullYear();
+
+const versoes = [
+  {
+    num: 'V1',
+    slug: 'v1',
+    nome: 'Laboratório',
+    descricao: 'A máquina como protagonista, no escuro do laboratório.',
+    paleta: ['#080808', '#0000fe', '#008aff'],
+  },
+  {
+    num: 'V2',
+    slug: 'v2',
+    nome: 'Editorial',
+    descricao: 'Poppins gigante, grid suíço, confiança institucional.',
+    paleta: ['#fefff0', '#080808', '#0000fe'],
+  },
+  {
+    num: 'V3',
+    slug: 'v3',
+    nome: 'Sala de Aula',
+    descricao: 'O site é um quadro branco: traços de marcador ganham vida.',
+    paleta: ['#ffffff', '#0000fe', '#ff0c00', '#ffd100'],
+  },
+  {
+    num: 'V4',
+    slug: 'v4',
+    nome: 'Produto',
+    descricao: 'Um scroll, uma história: a recarga em 22 segundos.',
+    paleta: ['#ffffff', '#bbe0ef', '#0000fe'],
+  },
+  {
+    num: 'V5',
+    slug: 'v5',
+    nome: 'Tinta Viva',
+    descricao: 'A tinta reage ao seu cursor. O mais ousado.',
+    paleta: ['#fefff0', '#0000fe', '#ff0c00', '#080808'],
+  },
+];
 ---
-<Layout title="Allcanci Tecnologia — Novo site (5 versões)" description="Cinco propostas de novo site para a Allcanci Tecnologia.">
-  <main style="min-height:100vh;display:grid;place-items:center;background:var(--azul);color:var(--branco);font-family:var(--font-display);">
-    <h1>Allcanci — 5 versões em construção</h1>
-  </main>
+
+<Layout
+  title="Allcanci Tecnologia — Escolha o futuro do site"
+  description="Cinco propostas de design radicalmente diferentes para o novo site da Allcanci Tecnologia. Explore as versões V1 a V5 e escolha a direção."
+>
+  <div class="pagina">
+    <header class="topo">
+      <p class="wordmark">allcanci<span> tecnologia</span></p>
+    </header>
+
+    <main class="conteudo">
+      <section class="hero" aria-labelledby="titulo-hub">
+        <p class="etiqueta">5 propostas · 1 decisão</p>
+        <h1 id="titulo-hub">Escolha o <span class="destaque">futuro</span> do site da Allcanci</h1>
+        <p class="sub">
+          Cinco conceitos radicalmente diferentes para o novo site da {empresa.nome} — navegue por
+          cada proposta e escolha a direção.
+        </p>
+      </section>
+
+      <ul class="grade" role="list">
+        {
+          versoes.map((v) => (
+            <li>
+              <a class="card" href={`${base}/${v.slug}/`}>
+                <span class="card-topo">
+                  <span class="num">{v.num}</span>
+                  <span class="seta" aria-hidden="true">→</span>
+                </span>
+                <span class="nome">{v.nome}</span>
+                <span class="desc">{v.descricao}</span>
+                <span class="ver">Ver proposta</span>
+                <span class="paleta" aria-hidden="true">
+                  {v.paleta.map((cor) => (
+                    <span class="cor" style={`background:${cor}`} />
+                  ))}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+
+    <footer class="rodape">
+      <div class="rodape-grade">
+        <div>
+          <p class="rodape-marca">allcanci<span> tecnologia</span></p>
+          <p class="rodape-slogan">{empresa.slogan}</p>
+        </div>
+        <div>
+          <h2>Contato</h2>
+          <ul role="list">
+            <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li>
+              <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp — {contatos.telefone}
+              </a>
+            </li>
+            <li class="endereco">{contatos.endereco}</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Redes</h2>
+          <ul role="list">
+            {
+              redes.map((rede) => (
+                <li>
+                  <a href={rede.url} target="_blank" rel="noopener noreferrer">
+                    {rede.nome}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <p class="rodape-nota">© {ano} {empresa.nome} — {empresa.cidade}</p>
+    </footer>
+  </div>
 </Layout>
+
+<style>
+  :global(body) {
+    background-color: var(--azul);
+  }
+
+  .pagina {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--azul);
+    background-image:
+      radial-gradient(55rem 34rem at 50% -10rem, rgba(0, 138, 255, 0.3), transparent 70%),
+      radial-gradient(circle, rgba(254, 255, 240, 0.13) 1px, transparent 1.7px);
+    background-repeat: no-repeat, repeat;
+    background-size: auto, 28px 28px;
+    color: var(--branco);
+  }
+
+  /* ── Topo ─────────────────────────────────────────── */
+  .topo {
+    width: 100%;
+    max-width: var(--largura-conteudo);
+    margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 4vw, 2.5rem) 0;
+  }
+
+  .wordmark,
+  .rodape-marca {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    color: var(--branco);
+  }
+
+  .wordmark span,
+  .rodape-marca span {
+    font-weight: 500;
+    color: var(--nevoa);
+  }
+
+  /* ── Hero ─────────────────────────────────────────── */
+  .conteudo {
+    width: 100%;
+    max-width: var(--largura-conteudo);
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 2.5rem) var(--espaco-secao);
+    flex: 1;
+  }
+
+  .hero {
+    text-align: center;
+    padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .etiqueta {
+    display: inline-block;
+    margin: 0 0 1.75rem;
+    padding: 0.45rem 1.1rem;
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: var(--texto-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--creme);
+    border: 1px solid rgba(254, 255, 240, 0.35);
+    border-radius: var(--raio-pill);
+  }
+
+  .hero h1 {
+    margin: 0 auto;
+    max-width: 18ch;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: var(--display-xl);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    color: var(--branco);
+  }
+
+  .destaque {
+    color: var(--amarelo);
+  }
+
+  .sub {
+    max-width: 46rem;
+    margin: 1.75rem auto 0;
+    font-size: var(--texto-lg);
+    line-height: 1.6;
+    color: var(--nevoa);
+  }
+
+  /* ── Grade de cards ───────────────────────────────── */
+  .grade {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .grade {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grade > li:nth-child(5) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grade {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .grade > li {
+      grid-column: span 2;
+    }
+    .grade > li:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+    .grade > li:nth-child(5) {
+      grid-column: span 2;
+    }
+  }
+
+  .grade > li {
+    display: grid;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    height: 100%;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(180deg, var(--azul-800), var(--azul-950));
+    border: 1px solid rgba(254, 255, 240, 0.18);
+    border-radius: var(--raio-md);
+    color: var(--branco);
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 60, 0.35);
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--azul-claro);
+    box-shadow:
+      0 26px 60px rgba(0, 0, 40, 0.5),
+      0 0 0 1px var(--azul-claro);
+  }
+
+  .card:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 4px;
+  }
+
+  .card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .num {
+    padding: 0.3rem 0.85rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--texto-sm);
+    letter-spacing: 0.12em;
+    color: var(--creme);
+    border: 1px solid rgba(254, 255, 240, 0.3);
+    border-radius: var(--raio-pill);
+  }
+
+  .seta {
+    font-size: 1.35rem;
+    color: var(--nevoa);
+    transition: transform 0.25s ease;
+  }
+
+  .card:hover .seta {
+    transform: translateX(6px);
+    color: var(--branco);
+  }
+
+  .nome {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--titulo-sm);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .desc {
+    font-size: var(--texto-base);
+    line-height: 1.55;
+    color: var(--nevoa);
+  }
+
+  .ver {
+    margin-top: auto;
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: var(--texto-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--creme);
+  }
+
+  .paleta {
+    display: flex;
+    gap: 6px;
+  }
+
+  .cor {
+    height: 10px;
+    flex: 1;
+    border-radius: var(--raio-pill);
+    box-shadow: inset 0 0 0 1px rgba(254, 255, 240, 0.28);
+  }
+
+  /* ── Rodapé ───────────────────────────────────────── */
+  .rodape {
+    border-top: 1px solid rgba(254, 255, 240, 0.2);
+    background: rgba(0, 0, 97, 0.35);
+  }
+
+  .rodape-grade {
+    width: 100%;
+    max-width: var(--largura-conteudo);
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 4vw, 2.5rem) 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  @media (min-width: 720px) {
+    .rodape-grade {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+
+  .rodape-slogan {
+    margin: 0.5rem 0 0;
+    max-width: 26rem;
+    font-size: var(--texto-sm);
+    line-height: 1.55;
+    color: var(--nevoa);
+  }
+
+  .rodape h2 {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-titulo);
+    font-weight: 900;
+    font-size: var(--texto-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--creme);
+  }
+
+  .rodape ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+    font-size: var(--texto-sm);
+  }
+
+  .rodape a {
+    color: var(--branco);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.45);
+  }
+
+  .rodape a:hover {
+    color: var(--amarelo);
+    text-decoration-color: currentColor;
+  }
+
+  .endereco {
+    color: var(--nevoa);
+    line-height: 1.5;
+  }
+
+  .rodape-nota {
+    margin: 0;
+    padding: 0 clamp(1.25rem, 4vw, 2.5rem) 2rem;
+    text-align: center;
+    font-size: var(--texto-xs);
+    color: var(--nevoa);
+  }
+</style>
