@@ -176,6 +176,7 @@ body.v4 {
 .v4-hero-cta { margin-top: 2.2rem; }
 .v4-hero-figura {
   position: relative;
+  width: fit-content;
   margin: clamp(2rem, 5vh, 3.5rem) auto 0;
   z-index: 0;
 }
@@ -194,7 +195,8 @@ body.v4 {
   mix-blend-mode: multiply; /* funde o fundo branco da foto ao gradiente de névoa */
 }
 .v4-hero-legenda {
-  margin-top: 1.1rem;
+  max-width: 16rem;
+  margin: 1.1rem auto 0;
   font-size: var(--texto-sm);
   color: var(--v4-suave);
 }
@@ -213,6 +215,8 @@ body.v4 {
 @media (max-width: 480px) {
   /* telas estreitas: a foto (quadrada) passa a ser limitada pela largura */
   .v4-hero-figura img { height: auto; width: min(72vw, 300px); }
+  /* o halo precisa de um respiro bem menor aqui, senão vaza para fora da viewport */
+  .v4-hero-figura::before { inset: -6% -8%; }
 }
 
 .v4-rolagem span {
