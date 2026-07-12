@@ -1,0 +1,236 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { produtos } from '../data/produtos';
+import { etapasComodato } from '../data/comodato';
+import { faq } from '../data/faq';
+import { provaSocial } from '../data/provaSocial';
+import { sustentabilidade } from '../data/sustentabilidade';
+import { empresa, numeros, contatos, redes } from '../data/site';
+import * as img from '../data/imagens';
+import { simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+
+interface Copy {
+  produtosKicker: string;
+  produtosTitulo: string;
+  produtosTexto: string;
+  processoKicker: string;
+  processoTitulo: string;
+  processoTexto: string;
+  simuladorKicker: string;
+  simuladorTitulo: string;
+  simuladorTexto: string;
+  provaKicker: string;
+  sustentabilidadeKicker: string;
+  faqTexto: string;
+  contatoTitulo: string;
+  contatoTexto: string;
+}
+
+interface Props {
+  prefix: 'v11' | 'v12' | 'v13' | 'v14' | 'v15';
+  copy: Copy;
+  showChecklist?: boolean;
+}
+
+const { prefix, copy, showChecklist = false } = Astro.props;
+const c = (name: string) => `${prefix}-${name}`;
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+const base = import.meta.env.BASE_URL;
+const ano = new Date().getFullYear();
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+
+const fotos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P azul com feltro apagador na base',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+---
+
+<section id="produtos" class={c('section')} aria-labelledby={`${prefix}-produtos-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>{copy.produtosKicker}</p>
+    <h2 class={c('title')} id={`${prefix}-produtos-title`}>{copy.produtosTitulo}</h2>
+    <p class={c('lead')}>{copy.produtosTexto}</p>
+    <ul class={c('products')} role="list">
+      {produtos.map((produto, index) => {
+        const foto = fotos[produto.id];
+        return (
+          <li class={c('product')} data-product={produto.id}>
+            <span class={c('index')} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            {foto && (
+              <div class={c('product-photo')}>
+                <Image
+                  src={foto.src}
+                  alt={foto.alt}
+                  widths={[280, 440, 640]}
+                  sizes="(min-width: 1000px) 30vw, (min-width: 640px) 44vw, 88vw"
+                />
+              </div>
+            )}
+            <p class={c('tag')}>{produto.subtitulo}</p>
+            <h3>{produto.nome}</h3>
+            <p>{produto.descricao}</p>
+            <ul class={c('features')} role="list">
+              {produto.destaques.map((destaque) => <li>{destaque}</li>)}
+            </ul>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<section id="como-funciona" class={c('section')} aria-labelledby={`${prefix}-processo-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>{copy.processoKicker}</p>
+    <h2 class={c('title')} id={`${prefix}-processo-title`}>{copy.processoTitulo}</h2>
+    <p class={c('lead')}>{copy.processoTexto}</p>
+    <div class={c('process-layout')}>
+      <ol class={c('process')} role="list">
+        {etapasComodato.map((etapa, index) => (
+          <li class={c('step')}>
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div><h3>{etapa.titulo}</h3><p>{etapa.texto}</p></div>
+          </li>
+        ))}
+      </ol>
+      <div class={c('process-photo')}>
+        <Image
+          src={img.comoUsar}
+          alt="Ilustração da recarga: inserir o pincel, aguardar 22 segundos e retirar para usar"
+          widths={[420, 640, 900]}
+          sizes="(min-width: 900px) 34vw, 88vw"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="simulador" class={c('section')} aria-labelledby={`${prefix}-sim-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>{copy.simuladorKicker}</p>
+    <h2 class={c('title')} id={`${prefix}-sim-title`}>{copy.simuladorTitulo}</h2>
+    <p class={c('lead')}>{copy.simuladorTexto}</p>
+    <div class={c('simulator')}>
+      <div class={c('sim-input')}>
+        <label for="sim-professores">Professores na instituição</label>
+        <div class={c('sim-controls')}>
+          <input type="range" id="sim-professores" min="1" max="200" step="1" value={professoresIniciais} />
+          <input type="number" id="sim-professores-num" min="1" max="999" value={professoresIniciais} aria-label="Número de professores" />
+        </div>
+        <p class={c('premises')}>
+          Premissas: {PREMISSAS.recargasPorProfessorAno} recargas/professor/ano · crédito a {reais(PREMISSAS.precoCreditoReais)} ·
+          recarga de ~{PREMISSAS.kmPorRecarga} km · descartável de ~{PREMISSAS.metrosPorDescartavel} m a {reais(PREMISSAS.precoDescartavelReais)} ·
+          ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+        </p>
+      </div>
+      <dl class={c('results')}>
+        <div class={c('result')} data-impact-result="recargas"><dt>Recargas por ano</dt><dd id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</dd></div>
+        <div class={c('result')} data-impact-result="fill"><dt>Investimento FILL/ano</dt><dd id="sim-custo-fill">{reais(sim0.custoFill)}</dd></div>
+        <div class={c('result')} data-impact-result="descartaveis"><dt>Descartáveis evitados</dt><dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd></div>
+        <div class={c('result')} data-impact-result="plastico"><dt>Plástico evitado</dt><dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd></div>
+        <div class={`${c('result')} ${c('result-accent')}`} data-impact-result="economia"><dt>Economia estimada/ano</dt><dd id="sim-economia">{reais(sim0.economia)}</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="prova-social" class={c('section')} aria-labelledby={`${prefix}-proof-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>{copy.provaKicker}</p>
+    <h2 class={c('title')} id={`${prefix}-proof-title`}>{provaSocial.titulo}</h2>
+    <p class={c('lead')}>{provaSocial.texto}</p>
+    <p class={c('proof-number')}>{numeros.escolas}</p>
+    <ul class={c('badges')} role="list">
+      {provaSocial.selos.map((selo) => <li class={c('badge')}>{selo}</li>)}
+    </ul>
+    {provaSocial.depoimentos.length > 0 && (
+      <ul class={c('testimonials')} role="list">
+        {provaSocial.depoimentos.map((dep) => <li><blockquote><p>{dep.citacao}</p><footer>{dep.autor} — {dep.instituicao}</footer></blockquote></li>)}
+      </ul>
+    )}
+  </div>
+</section>
+
+<section id="sustentabilidade" class={c('section')} aria-labelledby={`${prefix}-sustainability-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>{copy.sustentabilidadeKicker}</p>
+    <h2 class={c('title')} id={`${prefix}-sustainability-title`}>{sustentabilidade.titulo}</h2>
+    <p class={c('lead')}>{sustentabilidade.texto}</p>
+    <ul class={c('eco-grid')} role="list">
+      {sustentabilidade.pontos.map((ponto, index) => (
+        <li class={c('eco-card')}>
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <h3>{ponto.titulo}</h3><p>{ponto.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section id="faq" class={c('section')} aria-labelledby={`${prefix}-faq-title`} data-experience-section>
+  <div class={c('shell')}>
+    <p class={c('eyebrow')}>Objeções respondidas</p>
+    <h2 class={c('title')} id={`${prefix}-faq-title`}>Perguntas frequentes</h2>
+    <p class={c('lead')}>{copy.faqTexto}</p>
+    <div class={c('faq')}>
+      {faq.map((item, index) => (
+        <details>
+          <summary><span>{String(index + 1).padStart(2, '0')}</span>{item.pergunta}<b aria-hidden="true">+</b></summary>
+          <p>{item.resposta}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id="contato" class={c('section')} aria-labelledby={`${prefix}-contact-title`} data-experience-section>
+  <div class={c('shell')}>
+    <div class={c('contact-card')}>
+      <p class={c('eyebrow')}>Próximo passo</p>
+      <h2 id={`${prefix}-contact-title`}>{copy.contatoTitulo}</h2>
+      <p>{copy.contatoTexto}</p>
+      <a class={`${c('button')} ${c('button-primary')}`} href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Falar com a Allcanci <span aria-hidden="true">↗</span></a>
+      <ul class={c('contact-links')} role="list">
+        <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+        <li><a href={telefoneHref}>{contatos.telefone}</a></li>
+        <li>{contatos.endereco}</li>
+      </ul>
+      <ul class={c('social')} role="list">
+        {redes.map((rede) => <li><a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a></li>)}
+      </ul>
+      {showChecklist && <p class={c('contact-note')}>Checklist de leitura completo ou não: nossa equipe ajuda no próximo passo.</p>}
+    </div>
+  </div>
+</section>
+
+<footer class={c('footer')}>
+  <div class={c('shell')}>
+    <p><strong>allcanci</strong> tecnologia · {empresa.slogan}</p>
+    <p>© {ano} {empresa.nome} · {empresa.cidade}</p>
+    <a href={`${base}/`}>Ver as 15 propostas de design</a>
+  </div>
+</footer>

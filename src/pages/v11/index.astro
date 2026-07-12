@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import '../../styles/v11.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.ecoMarkerTrioTampas, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Um ecossistema, não seis descartáveis',
+  produtosTitulo: 'Cada peça mantém o ciclo em movimento',
+  produtosTexto: 'Máquina, pincel, tinta, apagador, refil e aplicativo trabalham como um sistema único, desenhado para continuar.',
+  processoKicker: 'O circuito da adoção',
+  processoTitulo: 'Da primeira conversa ao uso contínuo',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha. Sua escola entra no ciclo com suporte em cada volta.',
+  simuladorKicker: 'Quantifique o ciclo',
+  simuladorTitulo: 'Quantas voltas sua escola deixa de jogar fora?',
+  simuladorTexto: 'Ajuste o número de professores e veja a projeção anual com as premissas abertas.',
+  provaKicker: 'Um movimento que já começou',
+  sustentabilidadeKicker: 'Circular por projeto',
+  faqTexto: 'Tudo o que sua instituição precisa saber para trocar descarte por continuidade.',
+  contatoTitulo: 'Coloque sua escola no ciclo FILL',
+  contatoTexto: `Converse com a ${empresa.nome} e receba uma proposta dimensionada para sua instituição.`,
+};
+---
+
+<Layout
+  title="Allcanci Ciclo Infinito — O fim do fim do pincel"
+  description="Conheça o ecossistema FILL como um ciclo de uso, recarga e reuso para escolas: menos descarte, mais controle."
+  ogImage={ogImage.src}
+  bodyClass="v11"
+>
+  <a class="v11-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v11-topbar">
+    <a class="v11-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">allcanci<span>tecnologia</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#produtos">Ecossistema</a><a href="#simulador">Impacto</a><a href="#contato">Contato</a>
+    </nav>
+    <a class="v11-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Conversar ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v11-hero" aria-labelledby="v11-hero-title" data-experience-section>
+      <div class="v11-shell v11-hero-grid">
+        <div class="v11-hero-copy">
+          <p class="v11-eyebrow">Economia circular para o quadro branco</p>
+          <h1 id="v11-hero-title">O fim do <em>fim</em> do pincel.</h1>
+          <p class="v11-lead">Usar. Recarregar. Continuar. O sistema FILL transforma a ferramenta mais presente na sala de aula em um ciclo inteligente.</p>
+          <div class="v11-actions">
+            <a class="v11-button v11-button-primary" href="#como-funciona">Percorrer o ciclo <span aria-hidden="true">↓</span></a>
+            <a class="v11-button" href="#simulador">Simular impacto</a>
+          </div>
+          <ul class="v11-hero-stats" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>por recarga</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas atendidas</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita</span></li>
+          </ul>
+        </div>
+
+        <div class="v11-orbit" style="--cycle-progress: 0%" data-cycle>
+          <svg class="v11-orbit-svg" viewBox="0 0 620 620" role="img" aria-label="Ciclo usar, recarregar e continuar">
+            <circle cx="310" cy="310" r="242" class="v11-track" />
+            <path d="M310 68 A242 242 0 1 1 309.9 68" class="v11-progress" pathLength="100" />
+            <path d="M310 68 A242 242 0 1 1 309.9 68" class="v11-motion-path" id="v11-motion-path" />
+          </svg>
+          <div class="v11-orbit-image">
+            <Image src={img.inkInjectorAberta} alt="Máquina FILL Ink Injector aberta, pronta para recarregar um pincel" widths={[420, 640, 900]} sizes="(min-width: 900px) 38vw, 82vw" loading="eager" />
+          </div>
+          <span class="v11-marker" data-cycle-marker aria-hidden="true"></span>
+          <button class="v11-node v11-node-use" type="button" data-cycle-step="use" aria-pressed="true"><b>01</b> Usar</button>
+          <button class="v11-node v11-node-refill" type="button" data-cycle-step="refill" aria-pressed="false"><b>02</b> Recarregar</button>
+          <button class="v11-node v11-node-continue" type="button" data-cycle-step="continue" aria-pressed="false"><b>03</b> Continuar</button>
+        </div>
+      </div>
+      <div class="v11-ticker" aria-hidden="true"><span>USAR → RECARREGAR → CONTINUAR → USAR → RECARREGAR → CONTINUAR →</span></div>
+    </section>
+
+    <ExperienceBody prefix="v11" copy={copy} />
+  </main>
+  <script src="../../scripts/v11.js"></script>
+</Layout>
