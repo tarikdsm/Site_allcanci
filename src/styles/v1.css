@@ -498,27 +498,37 @@ body.v1 {
   box-shadow: 0 0 0 1px rgba(0, 138, 255, 0.65), 0 26px 60px rgba(0, 0, 254, 0.32);
 }
 
-/* estágio claro interno — fotos com xadrez gravado ficam seguras aqui */
+/* estágio claro interno — fotos com xadrez gravado ficam seguras aqui.
+   Altura controlada por min-height + max-height (padrão de v3/v4/v5): a foto
+   nunca fica gigante no celular e o container tem uma altura previsível.
+   Não usar aspect-ratio + height:100% aqui — dispara o crescimento infinito
+   no iOS Safari. */
 .v1-produto-foto {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  min-height: 9.5rem;
   margin: -0.35rem -0.6rem 0.9rem;
-  padding: 1.25rem;
+  padding: 1rem 1.1rem;
   background: linear-gradient(168deg, var(--branco) 10%, var(--creme) 55%, var(--nevoa) 100%);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: calc(var(--raio-md) - 8px);
 }
 
 .v1-produto-foto img {
-  /* max-* + auto (nunca height:100%) — height percentual dentro de um container
-     flex com aspect-ratio dispara o bug de crescimento infinito no iOS Safari. */
-  max-width: 100%;
-  max-height: 100%;
   width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 9rem;
   object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .v1-produto-foto {
+    min-height: 11rem;
+  }
+  .v1-produto-foto img {
+    max-height: 10.5rem;
+  }
 }
 
 .v1-produto-tag {
