@@ -1,0 +1,627 @@
+---
+import type { ImageMetadata } from 'astro';
+import '@fontsource-variable/fraunces/index.css';
+import '@fontsource-variable/fraunces/wght-italic.css';
+import '@fontsource-variable/inter/index.css';
+import Layout from '../../layouts/Layout.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../../data/site';
+import { produtos } from '../../data/produtos';
+import { etapasComodato } from '../../data/comodato';
+import { faq } from '../../data/faq';
+import { provaSocial } from '../../data/provaSocial';
+import { sustentabilidade } from '../../data/sustentabilidade';
+import * as img from '../../data/imagens';
+import { simular, reais, PREMISSAS } from '../../scripts/simulador-core.js';
+import render3d from '../../assets/3d/maquina-fill-render.png';
+import renderTopo from '../../assets/3d/maquina-fill-topo.png';
+import renderPerfil from '../../assets/3d/maquina-fill-perfil.png';
+import '../../styles/v6.css';
+
+const base = import.meta.env.BASE_URL;
+const ano = new Date().getFullYear();
+
+// Modelo 3D servido como asset estático + poster imediato (nunca é o LCP)
+const glbUrl = `${import.meta.env.BASE_URL}/models/maquina_fill_web.glb`;
+const poster = await getImage({ src: render3d, format: 'webp', width: 1100 });
+
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+
+// Legenda de exposição — os quatro números da peça (src/data/site.ts)
+const legenda = [
+  { valor: numeros.escolas, rotulo: 'escolas já atendidas' },
+  { valor: `${numeros.recargaSegundos}s`, rotulo: 'por recarga automática' },
+  { valor: `${numeros.escritaKm} km`, rotulo: 'de escrita por recarga' },
+  { valor: String(numeros.entregaDiasUteis), rotulo: 'dias úteis até a entrega' },
+];
+
+// Hotspots do model-viewer — posições provisórias; o v6.js recalcula no load
+// a partir de getDimensions()/getBoundingBoxCenter()
+const hotspots = [
+  {
+    slot: 'hotspot-encaixes',
+    ficha: 'v6-ficha-encaixes',
+    posicao: '-0.034 0.26 0',
+    normal: '0 1 0',
+    rotulo: 'Abrir ficha técnica: encaixes de recarga',
+  },
+  {
+    slot: 'hotspot-tela',
+    ficha: 'v6-ficha-tela',
+    posicao: '0.106 0.184 0',
+    normal: '1 0 0',
+    rotulo: 'Abrir ficha técnica: visor de operação',
+  },
+  {
+    slot: 'hotspot-placa',
+    ficha: 'v6-ficha-placa',
+    posicao: '0.106 0.123 0',
+    normal: '1 0 0',
+    rotulo: 'Abrir ficha técnica: placa FILL Ink Injector',
+  },
+];
+
+const fichas = [
+  {
+    id: 'v6-ficha-encaixes',
+    titulo: 'Encaixes do topo',
+    texto: '7 encaixes · azul, preto e vermelho — recarga sem contato com a tinta.',
+    cores: true,
+  },
+  {
+    id: 'v6-ficha-tela',
+    titulo: 'Visor de operação',
+    texto: 'Recarga automática em ~22s.',
+    cores: false,
+  },
+  {
+    id: 'v6-ficha-placa',
+    titulo: 'FILL Ink Injector',
+    texto: 'Patente nacional, única no mundo.',
+    cores: false,
+  },
+];
+
+// Numerais romanos do percurso (6 atos do comodato)
+const romanos = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+
+// Fotos dos produtos — todas sobre palco marfim (xadrez gravado seguro em claro).
+// Alts copiados da V1 (mesmas fotos).
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+const totalPecas = String(produtos.length).padStart(2, '0');
+
+const linksMenu = [
+  { href: '#produtos', rotulo: 'Coleção' },
+  { href: '#como-funciona', rotulo: 'Percurso' },
+  { href: '#simulador', rotulo: 'Avaliação' },
+  { href: '#sustentabilidade', rotulo: 'Legado' },
+  { href: '#faq', rotulo: 'FAQ' },
+  { href: '#contato', rotulo: 'Contato' },
+];
+
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+---
+
+<Layout
+  title="Allcanci Tecnologia — FILL Ink Injector, a peça que aposenta o pincel descartável"
+  description="Vitrine do sistema FILL da Allcanci Tecnologia: gire a máquina Ink Injector em 3D, conheça a coleção de seis peças e simule a economia da recarga automática em 22s."
+  ogImage={poster.src}
+  bodyClass="v6"
+>
+  <a class="v6-skip" href="#hero">Pular para o conteúdo</a>
+
+  <header class="v6-topo">
+    <div class="v6-caixa v6-topo-linha">
+      <a class="v6-wordmark" href="#hero">
+        <span class="v6-losango" aria-hidden="true"></span>
+        allcanci<span>&nbsp;tecnologia</span>
+      </a>
+      <nav class="v6-nav" aria-label="Seções da página">
+        <ul class="v6-menu" role="list">
+          {linksMenu.map((item) => (
+            <li><a href={item.href}>{item.rotulo}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <a
+        class="v6-botao v6-botao--ouro v6-botao--mini"
+        href={contatos.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ HERO · A VITRINE ═══ -->
+    <section id="hero" class="v6-hero" aria-labelledby="titulo-hero">
+      <div class="v6-caixa v6-hero-conteudo">
+        <p class="v6-hero-etiqueta">
+          <span class="v6-hero-peca">Peça 01/06</span>
+          <span class="v6-hero-sep" aria-hidden="true">—</span>
+          FILL Ink Injector · Betim, Brasil
+        </p>
+
+        <h1 id="titulo-hero" class="v6-hero-titulo">
+          A máquina que <em class="v6-italico">aposenta</em> o pincel descartável
+        </h1>
+        <p class="v6-sub v6-hero-sub">{empresa.descricao}</p>
+
+        <div class="v6-hero-ctas">
+          <a
+            class="v6-botao v6-botao--ouro"
+            href={contatos.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+            Falar no WhatsApp
+          </a>
+          <a class="v6-botao v6-botao--contorno" href="#simulador">Avaliar a economia</a>
+        </div>
+
+        <div class="v6-palco">
+          <span class="v6-canto v6-canto--no" aria-hidden="true"></span>
+          <span class="v6-canto v6-canto--ne" aria-hidden="true"></span>
+          <span class="v6-canto v6-canto--so" aria-hidden="true"></span>
+          <span class="v6-canto v6-canto--se" aria-hidden="true"></span>
+
+          <model-viewer
+            class="v6-visor"
+            src={glbUrl}
+            poster={poster.src}
+            alt="Modelo 3D interativo da máquina FILL Ink Injector: corpo preto fosco, encaixes de recarga azuis, pretos e vermelhos no topo, visor azul aceso e placa frontal com logotipo dourado"
+            loading="lazy"
+            camera-orbit="100deg 78deg auto"
+            camera-controls
+            disable-zoom
+            touch-action="pan-y"
+            auto-rotate
+            rotation-per-second="8deg"
+            auto-rotate-delay="4000"
+            interaction-prompt="none"
+            shadow-intensity="1"
+            exposure="1.1"
+          >
+            {hotspots.map((h) => (
+              <button
+                type="button"
+                class="v6-hotspot"
+                slot={h.slot}
+                data-position={h.posicao}
+                data-normal={h.normal}
+                aria-expanded="false"
+                aria-controls={h.ficha}
+              >
+                <span class="v6-hotspot-ponto" aria-hidden="true"></span>
+                <span class="visually-hidden">{h.rotulo}</span>
+              </button>
+            ))}
+          </model-viewer>
+
+          {fichas.map((ficha) => (
+            <div
+              class="v6-ficha"
+              id={ficha.id}
+              tabindex="-1"
+              role="group"
+              aria-label={`Ficha técnica — ${ficha.titulo}`}
+              hidden
+            >
+              <button class="v6-ficha-fechar" type="button" aria-label="Fechar ficha técnica">
+                <span aria-hidden="true">×</span>
+              </button>
+              <p class="v6-ficha-kicker">Ficha técnica</p>
+              <p class="v6-ficha-titulo">{ficha.titulo}</p>
+              <p class="v6-ficha-texto">{ficha.texto}</p>
+              {ficha.cores && (
+                <span class="v6-ficha-cores" aria-hidden="true">
+                  <i class="v6-cor v6-cor--azul"></i>
+                  <i class="v6-cor v6-cor--preto"></i>
+                  <i class="v6-cor v6-cor--vermelho"></i>
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <p class="v6-palco-dica">
+          Arraste para girar a peça — os pontos dourados abrem a ficha técnica
+        </p>
+
+        <ul class="v6-legenda" role="list">
+          {legenda.map((item) => (
+            <li class="v6-legenda-item">
+              <span class="v6-legenda-num">{item.valor}</span>
+              <span class="v6-legenda-rotulo">{item.rotulo}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ PRODUTOS · A COLEÇÃO ═══ -->
+    <section id="produtos" class="v6-secao" aria-labelledby="titulo-produtos">
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>Sala 01 · Ecossistema FILL</p>
+        <h2 class="v6-titulo" id="titulo-produtos" data-v6-revela>
+          Uma coleção de <em class="v6-italico">seis</em> peças
+        </h2>
+        <p class="v6-sub" data-v6-revela>
+          Da máquina de recarga ao aplicativo de gestão: cada peça foi projetada para funcionar
+          em conjunto — e aposentar o pincel descartável.
+        </p>
+
+        <ul class="v6-galeria" role="list">
+          {produtos.map((produto, i) => {
+            const foto = fotosProdutos[produto.id];
+            const numero = String(i + 1).padStart(2, '0');
+            return (
+              <li class="v6-obra" data-v6-revela>
+                <p class="v6-obra-plaqueta">
+                  <span class="v6-obra-num" aria-hidden="true">{numero}</span>
+                  <span class="v6-obra-serie">Peça {numero} / {totalPecas}</span>
+                </p>
+                {foto && (
+                  <div class="v6-obra-foto">
+                    <Image
+                      src={foto.src}
+                      alt={foto.alt}
+                      widths={[320, 480, 680]}
+                      sizes="(min-width: 1024px) 340px, (min-width: 640px) 46vw, 88vw"
+                    />
+                  </div>
+                )}
+                <span class="v6-obra-tag">{produto.subtitulo}</span>
+                <h3>{produto.nome}</h3>
+                <p class="v6-obra-desc">{produto.descricao}</p>
+                <ul class="v6-obra-destaques" role="list">
+                  {produto.destaques.map((destaque) => (
+                    <li>{destaque}</li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ COMO FUNCIONA · O PERCURSO ═══ -->
+    <section id="como-funciona" class="v6-secao v6-secao--carvao" aria-labelledby="titulo-como">
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>O percurso · comodato em seis atos</p>
+        <h2 class="v6-titulo" id="titulo-como" data-v6-revela>
+          Do diagnóstico à recarga <em class="v6-italico">contínua</em>
+        </h2>
+        <p class="v6-sub" data-v6-revela>
+          Sem investimento inicial em equipamento: a Allcanci instala, treina e acompanha —
+          sua equipe só usa.
+        </p>
+
+        <div class="v6-percurso-grade">
+          <ol class="v6-atos" role="list">
+            {etapasComodato.map((etapa, i) => (
+              <li class="v6-ato" data-v6-revela>
+                <span class="v6-ato-num" aria-hidden="true">{romanos[i]}</span>
+                <div class="v6-ato-corpo">
+                  <h3>{etapa.titulo}</h3>
+                  <p>{etapa.texto}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <aside class="v6-percurso-aside" aria-label="Vista superior da máquina">
+            <figure class="v6-vitrine" data-v6-revela>
+              <Image
+                src={renderTopo}
+                alt="Vista superior da máquina FILL Ink Injector, com os sete encaixes de recarga nas cores azul, preto e vermelho"
+                widths={[420, 640, 900]}
+                sizes="(min-width: 1024px) 26rem, 80vw"
+              />
+              <figcaption class="v6-vitrine-legenda">
+                Vista superior — os 7 encaixes de recarga da Peça 01
+              </figcaption>
+            </figure>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SIMULADOR · AVALIAÇÃO DA PEÇA ═══ -->
+    <section id="simulador" class="v6-secao" aria-labelledby="titulo-simulador">
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>Avaliação da peça</p>
+        <h2 class="v6-titulo" id="titulo-simulador" data-v6-revela>
+          Quanto a peça <em class="v6-italico">rende</em> à sua instituição?
+        </h2>
+        <p class="v6-sub" data-v6-revela>
+          Ajuste o número de professores e acompanhe a avaliação anual em tempo real — recargas,
+          custos e plástico que deixa de virar lixo.
+        </p>
+
+        <div class="v6-console" data-v6-revela>
+          <div class="v6-console-topo">
+            <span class="v6-console-marca" aria-hidden="true"></span>
+            <p class="v6-console-titulo">Avaliação · economia anual</p>
+            <span class="v6-console-marca" aria-hidden="true"></span>
+          </div>
+          <div class="v6-console-corpo">
+            <div>
+              <label class="v6-console-label" for="sim-professores">
+                Professores na instituição
+              </label>
+              <div class="v6-console-controle">
+                <input
+                  type="range"
+                  id="sim-professores"
+                  min="1"
+                  max="200"
+                  step="1"
+                  value={professoresIniciais}
+                />
+                <input
+                  type="number"
+                  id="sim-professores-num"
+                  min="1"
+                  max="999"
+                  value={professoresIniciais}
+                  aria-label="Número de professores"
+                />
+              </div>
+              <p class="v6-premissas">
+                Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
+                professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
+                recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+                ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+                ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+              </p>
+            </div>
+
+            <dl class="v6-leituras">
+              <div class="v6-leitura">
+                <dt>Recargas por ano</dt>
+                <dd id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v6-leitura">
+                <dt>Investimento FILL/ano</dt>
+                <dd id="sim-custo-fill">{reais(sim0.custoFill)}</dd>
+              </div>
+              <div class="v6-leitura">
+                <dt>Descartáveis evitados</dt>
+                <dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v6-leitura">
+                <dt>Plástico evitado</dt>
+                <dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd>
+              </div>
+              <div class="v6-leitura v6-leitura--destaque">
+                <dt>Economia estimada/ano</dt>
+                <dd id="sim-economia">{reais(sim0.economia)}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROVA SOCIAL · ACERVO DE CONFIANÇA ═══ -->
+    <section id="prova-social" class="v6-secao v6-secao--carvao" aria-labelledby="titulo-prova">
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>Acervo de confiança</p>
+        <h2 class="v6-titulo" id="titulo-prova" data-v6-revela>{provaSocial.titulo}</h2>
+        <p class="v6-sub" data-v6-revela>{provaSocial.texto}</p>
+
+        <ul class="v6-medalhas" role="list">
+          {provaSocial.selos.map((selo) => (
+            <li class="v6-medalha" data-v6-revela>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10.4" stroke="currentColor" stroke-width="1" />
+                <circle cx="12" cy="12" r="7.7" stroke="currentColor" stroke-width="1.4" />
+                <path d="m8.6 12.2 2.3 2.3 4.6-4.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {selo}
+            </li>
+          ))}
+        </ul>
+
+        {provaSocial.depoimentos.length > 0 && (
+          <ul class="v6-depoimentos" role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li>
+                <blockquote>
+                  <p>{dep.citacao}</p>
+                  <footer>
+                    {dep.autor} — {dep.instituicao}
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+
+    <!-- ═══ SUSTENTABILIDADE · O LEGADO ═══ -->
+    <section
+      id="sustentabilidade"
+      class="v6-secao v6-secao--verde"
+      aria-labelledby="titulo-sustentabilidade"
+    >
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>O legado</p>
+        <h2 class="v6-titulo" id="titulo-sustentabilidade" data-v6-revela>
+          {sustentabilidade.titulo}
+        </h2>
+        <p class="v6-sub" data-v6-revela>{sustentabilidade.texto}</p>
+
+        <ul class="v6-verde-grade" role="list">
+          {sustentabilidade.pontos.map((ponto) => (
+            <li class="v6-verde-card" data-v6-revela>
+              <h3>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 19C5 10 10 5 19 5c0 9-5 14-14 14Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+                  <path d="M5 19c3-5.5 6.5-9 10-10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                </svg>
+                {ponto.titulo}
+              </h3>
+              <p>{ponto.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ · GUIA DO VISITANTE ═══ -->
+    <section id="faq" class="v6-secao" aria-labelledby="titulo-faq">
+      <div class="v6-caixa">
+        <p class="v6-etiqueta" data-v6-revela>Guia do visitante</p>
+        <h2 class="v6-titulo" id="titulo-faq" data-v6-revela>Perguntas frequentes</h2>
+        <p class="v6-sub" data-v6-revela>
+          O que escolas e instituições mais perguntam antes de adotar o ecossistema FILL.
+        </p>
+
+        <div class="v6-faq-lista" data-v6-revela>
+          {faq.map((item) => (
+            <details>
+              <summary>
+                {item.pergunta}
+                <span class="v6-faq-mais" aria-hidden="true">+</span>
+              </summary>
+              <p class="v6-faq-resposta">{item.resposta}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTATO · O CONVITE ═══ -->
+    <section id="contato" class="v6-secao" aria-labelledby="titulo-contato">
+      <div class="v6-caixa">
+        <div class="v6-convite" data-v6-revela>
+          <div class="v6-convite-arte" aria-hidden="true">
+            <Image src={renderPerfil} alt="" widths={[280, 420]} sizes="17rem" />
+          </div>
+          <p class="v6-etiqueta v6-etiqueta--centro">O convite</p>
+          <h2 id="titulo-contato">
+            Leve a <em class="v6-italico">Peça 01</em> para a sua instituição
+          </h2>
+          <p class="v6-convite-texto">
+            Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
+            entrega em até {numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+          </p>
+
+          <div class="v6-convite-cta">
+            <a
+              class="v6-botao v6-botao--ouro v6-botao--largo"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              </svg>
+              Chamar no WhatsApp
+            </a>
+          </div>
+
+          <ul class="v6-convite-lista" role="list">
+            <li>
+              <a class="v6-chip" href={`mailto:${contatos.email}`}>{contatos.email}</a>
+            </li>
+            <li>
+              <a class="v6-chip" href={telefoneHref}>{contatos.telefone}</a>
+            </li>
+          </ul>
+
+          <address>{contatos.endereco}</address>
+
+          <ul class="v6-convite-redes" role="list">
+            {redes.map((rede) => (
+              <li>
+                <a class="v6-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
+                  {rede.nome}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v6-rodape">
+    <div class="v6-caixa">
+      <div class="v6-rodape-grade">
+        <div>
+          <p class="v6-rodape-marca">allcanci<span>&nbsp;tecnologia</span></p>
+          <p class="v6-rodape-slogan">{empresa.slogan}. {empresa.descricao}</p>
+        </div>
+        <div>
+          <h2>Contato</h2>
+          <ul role="list">
+            <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li>
+              <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp — {contatos.telefone}
+              </a>
+            </li>
+            <li>{contatos.endereco}</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Redes</h2>
+          <ul role="list">
+            {redes.map((rede) => (
+              <li>
+                <a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="v6-rodape-nota">
+        <p>© {ano} {empresa.nome} — {empresa.cidade}</p>
+        <p><a href={`${base}/`}>Ver as 10 propostas de design</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../scripts/v6.js"></script>
+</Layout>

@@ -13,7 +13,7 @@ if (page) {
     if (!html.includes(`id="${id}"`)) problemas.push(`seção #${id} ausente`);
   }
 } else {
-  for (const v of ['v1', 'v2', 'v3', 'v4', 'v5']) {
+  for (const v of ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']) {
     if (!html.includes(`/Site_allcanci/${v}/`)) problemas.push(`link para /${v}/ ausente`);
   }
 }

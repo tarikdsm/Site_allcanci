@@ -1,0 +1,621 @@
+---
+import type { ImageMetadata } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../../data/site';
+import { produtos } from '../../data/produtos';
+import { etapasComodato } from '../../data/comodato';
+import { faq } from '../../data/faq';
+import { provaSocial } from '../../data/provaSocial';
+import { sustentabilidade } from '../../data/sustentabilidade';
+import * as img from '../../data/imagens';
+import { simular, reais, PREMISSAS } from '../../scripts/simulador-core.js';
+import render3d from '../../assets/3d/maquina-fill-render.png';
+import render3dTqEsq from '../../assets/3d/maquina-fill-tq-esq.png';
+import render3dTopo from '../../assets/3d/maquina-fill-topo.png';
+import '@fontsource-variable/archivo/index.css';
+import '@fontsource/archivo-black/index.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '../../styles/v7.css';
+
+const base = import.meta.env.BASE_URL;
+const ano = new Date().getFullYear();
+const dataDesenho = new Date().toLocaleDateString('pt-BR');
+
+// URL do modelo 3D (asset estático em public/) — lida pelo v7.js via data-glb
+const glbUrl = `${base}/models/maquina_fill_web.glb`;
+
+// Render frontal: OG + camada de carregamento (poster) do palco 3D
+const ogImage = await getImage({ src: render3d, format: 'webp', width: 1200 });
+const poster = await getImage({ src: render3d, format: 'webp', width: 900 });
+
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+
+// Dados de placa do hero — valores vindos de src/data/site.ts
+const placa = [
+  { rotulo: 'Escolas atendidas', valor: numeros.escolas },
+  { rotulo: 'Tempo por recarga', valor: `${numeros.recargaSegundos} s` },
+  { rotulo: 'Escrita por recarga', valor: `${numeros.escritaKm} km` },
+  { rotulo: 'Entrega em até', valor: `${numeros.entregaDiasUteis} dias úteis` },
+];
+
+// Fotos dos produtos — todas sobre palco claro (xadrez gravado seguro no papel)
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+// Cotas decorativas (medidas mono) por produto
+const cotasProdutos: Record<string, string> = {
+  'ink-injector': '≈ 22 s / recarga',
+  'eco-marker': '≈ 1 km / recarga',
+  'master-color': '500 ml',
+  'master-clean': '3 pincéis',
+  refil: 'troca em segundos',
+  app: 'tempo real',
+};
+
+const linksMenu = [
+  { num: '02', href: '#produtos', rotulo: 'Produtos' },
+  { num: '03', href: '#como-funciona', rotulo: 'Processo' },
+  { num: '04', href: '#simulador', rotulo: 'Simulador' },
+  { num: '06', href: '#sustentabilidade', rotulo: 'Sustentabilidade' },
+  { num: '07', href: '#faq', rotulo: 'FAQ' },
+  { num: '08', href: '#contato', rotulo: 'Contato' },
+];
+
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+---
+
+<Layout
+  title="Allcanci Tecnologia — Linha de produção FILL para quadro branco"
+  description="A prancheta de engenharia da Allcanci Tecnologia: a máquina FILL Ink Injector recarrega pincéis de quadro branco em 22s. Mais de 500 escolas já trocaram o descarte pelo comodato."
+  ogImage={ogImage.src}
+  bodyClass="v7"
+>
+  <a class="v7-skip" href="#hero">Pular para o conteúdo</a>
+
+  <!-- ═══ TOPO · legenda de prancheta técnica ═══ -->
+  <header class="v7-topo">
+    <div class="v7-caixa v7-topo-grade">
+      <a class="v7-marca" href="#hero">
+        <span class="v7-marca-cruz" aria-hidden="true"></span>
+        allcanci<span>&nbsp;tecnologia</span>
+      </a>
+
+      <dl class="v7-topo-meta">
+        <div><dt>Proj.</dt><dd>Sistema FILL</dd></div>
+        <div><dt>Rev.</dt><dd>07</dd></div>
+        <div><dt>Data</dt><dd>{dataDesenho}</dd></div>
+        <div><dt>Esc.</dt><dd>1:1</dd></div>
+      </dl>
+
+      <nav class="v7-nav" aria-label="Seções da página">
+        <ul class="v7-menu" role="list">
+          {linksMenu.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span class="v7-menu-num" aria-hidden="true">{item.num}</span>
+                {item.rotulo}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <a
+        class="v7-botao v7-botao--primario v7-botao--mini"
+        href={contatos.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ EST. 01 · HERO ═══ -->
+    <section id="hero" class="v7-estacao v7-hero" aria-labelledby="titulo-hero">
+      <span class="v7-fantasma v7-fantasma--dir" aria-hidden="true">01</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--hero">
+          <span class="v7-carimbo v7-carimbo--hero" aria-hidden="true">Patenteado</span>
+          <p class="v7-est-rotulo">Est. 01 — Recepção · {empresa.nome} · {empresa.cidade}</p>
+          <h1 class="v7-titulo v7-titulo--hero" id="titulo-hero">
+            O fim do pincel descartável <em class="v7-grifo">saiu da prancheta</em>
+          </h1>
+          <p class="v7-sub">{empresa.descricao}</p>
+
+          <div class="v7-ctas">
+            <a
+              class="v7-botao v7-botao--primario"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              </svg>
+              Falar no WhatsApp
+            </a>
+            <a class="v7-botao v7-botao--fantasma" href="#simulador">Abrir ordem de serviço</a>
+          </div>
+        </div>
+
+        <!-- Bancada de inspeção 3D: canvas fixo atrás do conteúdo (palco do hero no mobile) -->
+        <div class="v7-palco3d" aria-hidden="true">
+          <canvas class="v7-canvas" data-glb={glbUrl}></canvas>
+          <img
+            class="v7-poster"
+            src={poster.src}
+            width={poster.attributes.width}
+            height={poster.attributes.height}
+            alt=""
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+        <p class="v7-hud" aria-hidden="true">AZ 000.0° · EL 08.0° · ZOOM 1.00×</p>
+
+        <!-- Fallback estático (prefers-reduced-motion / sem WebGL) -->
+        <figure class="v7-fallback3d">
+          <Image
+            src={render3dTqEsq}
+            alt="Máquina FILL Ink Injector em vista de três quartos: gabinete preto fosco, visor digital azul e placa frontal com o logotipo dourado FILL Ink Injector"
+            widths={[420, 640, 900, 1200]}
+            sizes="(min-width: 800px) 34rem, 88vw"
+          />
+          <figcaption class="v7-figura-legenda">FIG. 01 — FILL Ink Injector · vista de três quartos</figcaption>
+        </figure>
+
+        <dl class="v7-placa">
+          {placa.map((item) => (
+            <div class="v7-placa-celula">
+              <dt>{item.rotulo}</dt>
+              <dd>{item.valor}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <p class="v7-anotacao" aria-hidden="true">
+        <span class="v7-anotacao-fio"></span>
+        FILL Ink Injector · esc. 1:1
+      </p>
+    </section>
+
+    <!-- ═══ EST. 02 · PRODUTOS ═══ -->
+    <section id="produtos" class="v7-estacao" aria-labelledby="titulo-produtos">
+      <span class="v7-fantasma v7-fantasma--esq" aria-hidden="true">02</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--dir v7-prancheta--larga">
+          <header class="v7-est-cab">
+            <p class="v7-est-rotulo">Est. 02 — Componentes</p>
+            <h2 class="v7-titulo" id="titulo-produtos">Seis peças saem desta linha</h2>
+            <p class="v7-sub">
+              Da máquina de recarga ao aplicativo de gestão: cada componente foi projetado
+              para trabalhar em série — e aposentar o pincel descartável.
+            </p>
+          </header>
+
+          <ul class="v7-produtos" role="list">
+            {produtos.map((produto, i) => {
+              const foto = fotosProdutos[produto.id];
+              const cota = cotasProdutos[produto.id];
+              return (
+                <li class="v7-produto">
+                  <p class="v7-produto-indice">Peça {String(i + 1).padStart(2, '0')}/06</p>
+                  {foto && (
+                    <div class="v7-produto-foto">
+                      <Image
+                        src={foto.src}
+                        alt={foto.alt}
+                        widths={[320, 480, 680]}
+                        sizes="(min-width: 640px) 20rem, 84vw"
+                      />
+                    </div>
+                  )}
+                  {cota && (
+                    <span class="v7-cota" aria-hidden="true">
+                      <span class="v7-cota-linha"></span>
+                      <span class="v7-cota-txt">{cota}</span>
+                      <span class="v7-cota-linha"></span>
+                    </span>
+                  )}
+                  <span class="v7-produto-tag">{produto.subtitulo}</span>
+                  <h3>{produto.nome}</h3>
+                  <p class="v7-produto-desc">{produto.descricao}</p>
+                  <ul class="v7-destaques" role="list">
+                    {produto.destaques.map((destaque) => (
+                      <li>{destaque}</li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+
+          <!-- FIG. 02-A — vista superior com os 7 encaixes -->
+          <figure class="v7-figura-topo">
+            <div class="v7-figura-topo-palco">
+              <Image
+                src={render3dTopo}
+                alt="Vista superior da máquina FILL Ink Injector, com os sete encaixes de recarga coloridos alinhados no topo do gabinete preto"
+                widths={[420, 640, 900]}
+                sizes="(min-width: 900px) 36rem, 84vw"
+              />
+              <ul class="v7-callouts" role="list">
+                <li class="v7-callout v7-callout--1">
+                  <span class="v7-callout-fio" aria-hidden="true"></span>
+                  7 encaixes de recarga no topo
+                </li>
+                <li class="v7-callout v7-callout--2">
+                  <span class="v7-callout-fio" aria-hidden="true"></span>
+                  Cores: azul, preto e vermelho
+                </li>
+                <li class="v7-callout v7-callout--3">
+                  <span class="v7-callout-fio" aria-hidden="true"></span>
+                  Recarga automática em ≈ 22 s
+                </li>
+                <li class="v7-callout v7-callout--4">
+                  <span class="v7-callout-fio" aria-hidden="true"></span>
+                  Sem contato com a tinta, sem sujeira
+                </li>
+              </ul>
+            </div>
+            <figcaption class="v7-figura-legenda">
+              FIG. 02-A — vista superior · encaixes de recarga da Ink Injector
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 03 · COMO FUNCIONA ═══ -->
+    <section id="como-funciona" class="v7-estacao" aria-labelledby="titulo-como">
+      <span class="v7-fantasma v7-fantasma--dir" aria-hidden="true">03</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--esq v7-prancheta--larga">
+          <header class="v7-est-cab">
+            <p class="v7-est-rotulo">Est. 03 — Processo · comodato em 6 operações</p>
+            <h2 class="v7-titulo" id="titulo-como">Do diagnóstico à recarga contínua</h2>
+            <p class="v7-sub">
+              Sem investimento inicial em equipamento: a Allcanci instala, treina e acompanha —
+              sua equipe só usa.
+            </p>
+          </header>
+
+          <ol class="v7-etapas" role="list">
+            {etapasComodato.map((etapa, i) => (
+              <li class="v7-etapa">
+                <span class="v7-etapa-num" aria-hidden="true">OP.{(i + 1) * 10}</span>
+                <h3>{etapa.titulo}</h3>
+                <p>{etapa.texto}</p>
+              </li>
+            ))}
+          </ol>
+
+          <figure class="v7-figura">
+            <div class="v7-figura-palco">
+              <Image
+                src={img.comoUsar}
+                alt="Ilustração da recarga em três passos: primeiro, insira o pincel no encaixe da máquina e a tampa na trava de segurança; depois, aguarde 22 segundos para a recarga; por fim, retire o pincel e a tampa e utilize normalmente."
+                widths={[420, 640, 900]}
+                sizes="(min-width: 900px) 38rem, 84vw"
+              />
+            </div>
+            <span class="v7-cota" aria-hidden="true">
+              <span class="v7-cota-linha"></span>
+              <span class="v7-cota-txt">3 passos · ≈ 22 s</span>
+              <span class="v7-cota-linha"></span>
+            </span>
+            <figcaption class="v7-figura-legenda">FIG. 03-A — procedimento de recarga</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 04 · SIMULADOR (ordem de serviço) ═══ -->
+    <section id="simulador" class="v7-estacao" aria-labelledby="titulo-simulador">
+      <span class="v7-fantasma v7-fantasma--esq" aria-hidden="true">04</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--dir v7-prancheta--larga v7-os">
+          <div class="v7-os-cab">
+            <p>Ordem de serviço · SIM-{String(ano).slice(2)}</p>
+            <p>Emissão {dataDesenho}</p>
+          </div>
+
+          <div class="v7-os-corpo">
+            <header class="v7-est-cab v7-os-cab-secao">
+              <p class="v7-est-rotulo">Est. 04 — Cálculo de economia anual</p>
+              <h2 class="v7-titulo" id="titulo-simulador">Quanto a sua instituição economiza?</h2>
+              <p class="v7-sub">
+                Preencha o campo da ordem de serviço e acompanhe a projeção anual em tempo
+                real — recargas, custos e plástico que deixa de virar lixo.
+              </p>
+            </header>
+
+            <div class="v7-os-controle">
+              <label class="v7-os-label" for="sim-professores">
+                Campo 01 — Professores na instituição
+              </label>
+              <div class="v7-os-linha">
+                <input
+                  type="range"
+                  id="sim-professores"
+                  min="1"
+                  max="200"
+                  step="1"
+                  value={professoresIniciais}
+                />
+                <input
+                  type="number"
+                  id="sim-professores-num"
+                  min="1"
+                  max="999"
+                  value={professoresIniciais}
+                  aria-label="Número de professores"
+                />
+              </div>
+              <p class="v7-premissas">
+                Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
+                professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
+                recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+                ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+                ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+              </p>
+            </div>
+
+            <dl class="v7-leituras">
+              <div class="v7-leitura">
+                <dt>Recargas por ano</dt>
+                <dd id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v7-leitura">
+                <dt>Investimento FILL/ano</dt>
+                <dd id="sim-custo-fill">{reais(sim0.custoFill)}</dd>
+              </div>
+              <div class="v7-leitura">
+                <dt>Descartáveis evitados</dt>
+                <dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v7-leitura">
+                <dt>Plástico evitado</dt>
+                <dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd>
+              </div>
+              <div class="v7-leitura v7-leitura--total">
+                <dt>Economia estimada/ano</dt>
+                <dd id="sim-economia">{reais(sim0.economia)}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 05 · PROVA SOCIAL ═══ -->
+    <section id="prova-social" class="v7-estacao" aria-labelledby="titulo-prova">
+      <span class="v7-fantasma v7-fantasma--dir" aria-hidden="true">05</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--esq v7-prancheta--larga v7-prancheta--prova">
+          <span class="v7-carimbo v7-carimbo--prova" aria-hidden="true">Aprovado p/ licitação</span>
+
+          <header class="v7-est-cab">
+            <p class="v7-est-rotulo">Est. 05 — Controle de qualidade</p>
+            <h2 class="v7-titulo" id="titulo-prova">{provaSocial.titulo}</h2>
+            <p class="v7-sub">{provaSocial.texto}</p>
+          </header>
+
+          <ul class="v7-checklist" role="list">
+            {provaSocial.selos.map((selo, i) => (
+              <li class="v7-check">
+                <span class="v7-check-caixa" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                    <path d="m4 10.5 4 4 8-9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <span class="v7-check-ref" aria-hidden="true">CQ-{String(i + 1).padStart(2, '0')}</span>
+                {selo}
+              </li>
+            ))}
+          </ul>
+
+          {provaSocial.depoimentos.length > 0 && (
+            <ul class="v7-depoimentos" role="list">
+              {provaSocial.depoimentos.map((dep) => (
+                <li>
+                  <blockquote>
+                    <p>{dep.citacao}</p>
+                    <footer>
+                      {dep.autor} — {dep.instituicao}
+                    </footer>
+                  </blockquote>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 06 · SUSTENTABILIDADE ═══ -->
+    <section id="sustentabilidade" class="v7-estacao" aria-labelledby="titulo-sustentabilidade">
+      <span class="v7-fantasma v7-fantasma--esq" aria-hidden="true">06</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--dir v7-prancheta--larga">
+          <header class="v7-est-cab">
+            <p class="v7-est-rotulo v7-est-rotulo--verde">Est. 06 — Gestão de resíduos</p>
+            <h2 class="v7-titulo" id="titulo-sustentabilidade">{sustentabilidade.titulo}</h2>
+            <p class="v7-sub">{sustentabilidade.texto}</p>
+          </header>
+
+          <ul class="v7-residuos" role="list">
+            {sustentabilidade.pontos.map((ponto, i) => (
+              <li class="v7-residuo">
+                <p class="v7-residuo-ref" aria-hidden="true">REG. RES-{String(i + 1).padStart(2, '0')}</p>
+                <h3>{ponto.titulo}</h3>
+                <p>{ponto.texto}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 07 · FAQ (notas de margem) ═══ -->
+    <section id="faq" class="v7-estacao" aria-labelledby="titulo-faq">
+      <span class="v7-fantasma v7-fantasma--dir" aria-hidden="true">07</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-prancheta--esq v7-prancheta--larga">
+          <header class="v7-est-cab">
+            <p class="v7-est-rotulo">Est. 07 — Notas de margem</p>
+            <h2 class="v7-titulo" id="titulo-faq">Perguntas frequentes</h2>
+            <p class="v7-sub">
+              O que escolas e instituições mais anotam na margem antes de adotar o
+              ecossistema FILL.
+            </p>
+          </header>
+
+          <div class="v7-notas">
+            {faq.map((item, i) => (
+              <details class="v7-nota">
+                <summary>
+                  <span class="v7-nota-num" aria-hidden="true">NOTA {String(i + 1).padStart(2, '0')}</span>
+                  <span class="v7-nota-pergunta">{item.pergunta}</span>
+                  <span class="v7-nota-mais" aria-hidden="true">+</span>
+                </summary>
+                <p class="v7-nota-resposta">{item.resposta}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EST. 08 · CONTATO (etiqueta de expedição) ═══ -->
+    <section id="contato" class="v7-estacao v7-estacao--contato" aria-labelledby="titulo-contato">
+      <span class="v7-fantasma v7-fantasma--esq" aria-hidden="true">08</span>
+
+      <div class="v7-caixa">
+        <div class="v7-prancheta v7-etiqueta">
+          <p class="v7-est-rotulo">Est. 08 — Expedição</p>
+          <h2 class="v7-titulo" id="titulo-contato">Leve a linha FILL para a sua instituição</h2>
+          <p class="v7-etiqueta-texto">
+            Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
+            entrega em até {numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+          </p>
+
+          <div class="v7-etiqueta-cta">
+            <a
+              class="v7-botao v7-botao--primario v7-botao--grande"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              </svg>
+              Chamar no WhatsApp
+            </a>
+          </div>
+
+          <ul class="v7-etiqueta-lista" role="list">
+            <li><a class="v7-chip" href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li><a class="v7-chip" href={telefoneHref}>{contatos.telefone}</a></li>
+          </ul>
+
+          <address>{contatos.endereco}</address>
+
+          <ul class="v7-etiqueta-redes" role="list">
+            {redes.map((rede) => (
+              <li>
+                <a class="v7-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
+                  {rede.nome}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div class="v7-codigo-barras" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v7-rodape">
+    <div class="v7-caixa">
+      <div class="v7-rodape-grade">
+        <div>
+          <p class="v7-rodape-marca">allcanci<span>&nbsp;tecnologia</span></p>
+          <p class="v7-rodape-slogan">{empresa.slogan}. {empresa.descricao}</p>
+        </div>
+        <div>
+          <h2>Contato</h2>
+          <ul role="list">
+            <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li>
+              <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp — {contatos.telefone}
+              </a>
+            </li>
+            <li>{contatos.endereco}</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Redes</h2>
+          <ul role="list">
+            {redes.map((rede) => (
+              <li>
+                <a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="v7-rodape-nota">
+        <p>© {ano} {empresa.nome} — {empresa.cidade}</p>
+        <p><a href={`${base}/`}>Ver as 10 propostas de design</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../scripts/v7.js"></script>
+</Layout>

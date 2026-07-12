@@ -9,7 +9,7 @@ const ano = new Date().getFullYear();
 
 const ogImage = await getImage({ src: inkInjectorAberta, format: 'webp', width: 1200 });
 
-const versoes = [
+const serie1 = [
   {
     num: 'V1',
     slug: 'v1',
@@ -46,11 +46,49 @@ const versoes = [
     paleta: ['#fefff0', '#0000fe', '#ff0c00', '#080808'],
   },
 ];
+
+const serie3d = [
+  {
+    num: 'V6',
+    slug: 'v6',
+    nome: 'Vitrine',
+    descricao: 'A máquina como peça de museu: gire a obra e toque nos detalhes.',
+    paleta: ['#0b0b0f', '#e6c87c', '#f6f1e4'],
+  },
+  {
+    num: 'V7',
+    slug: 'v7',
+    nome: 'Linha de Produção',
+    descricao: 'Prancheta de engenharia viva: a máquina gira conforme o scroll.',
+    paleta: ['#f3efe4', '#1d3fbf', '#ff5a1f'],
+  },
+  {
+    num: 'V8',
+    slug: 'v8',
+    nome: 'Quiosque Pop',
+    descricao: 'Neo-brutalismo pop: a máquina é o brinquedo da feira.',
+    paleta: ['#6c4df6', '#d9ff3f', '#ff7ac3', '#131313'],
+  },
+  {
+    num: 'V9',
+    slug: 'v9',
+    nome: 'Levitação',
+    descricao: 'Vidro, auroras e AR: veja a máquina em tamanho real na sua mesa.',
+    paleta: ['#fafbff', '#19c3b1', '#7b8cff', '#ffb2c7'],
+  },
+  {
+    num: 'V10',
+    slug: 'v10',
+    nome: 'FILL OS',
+    descricao: 'O site é o firmware da máquina: boot, terminal e visor com raio-X.',
+    paleta: ['#060b1c', '#43e8ff', '#ffc14d'],
+  },
+];
 ---
 
 <Layout
   title="Allcanci Tecnologia — Escolha o futuro do site"
-  description="Cinco propostas de design para o novo site da Allcanci Tecnologia, fabricante do sistema FILL de recarga de pincéis para escolas. Compare as versões V1 a V5."
+  description="Dez propostas de design para o novo site da Allcanci Tecnologia, fabricante do sistema FILL de recarga de pincéis para escolas. Compare as versões V1 a V10 — cinco delas com a máquina em 3D interativo."
   ogImage={ogImage.src}
 >
   <div class="pagina">
@@ -60,36 +98,68 @@ const versoes = [
 
     <main class="conteudo">
       <section class="hero" aria-labelledby="titulo-hub">
-        <p class="etiqueta">5 propostas · 1 decisão</p>
+        <p class="etiqueta">10 propostas · 1 decisão</p>
         <h1 id="titulo-hub">Escolha o <span class="destaque">futuro</span> do site da Allcanci</h1>
         <p class="sub">
-          Cinco conceitos radicalmente diferentes para o novo site da {empresa.nome} — navegue por
-          cada proposta e escolha a direção.
+          Dez conceitos radicalmente diferentes para o novo site da {empresa.nome} — cinco deles
+          com a máquina FILL em 3D interativo. Navegue por cada proposta e escolha a direção.
         </p>
       </section>
 
-      <ul class="grade" role="list">
-        {
-          versoes.map((v) => (
-            <li>
-              <a class="card" href={`${base}/${v.slug}/`}>
-                <span class="card-topo">
-                  <span class="num">{v.num}</span>
-                  <span class="seta" aria-hidden="true">→</span>
-                </span>
-                <span class="nome">{v.nome}</span>
-                <span class="desc">{v.descricao}</span>
-                <span class="ver">Ver proposta</span>
-                <span class="paleta" aria-hidden="true">
-                  {v.paleta.map((cor) => (
-                    <span class="cor" style={`background:${cor}`} />
-                  ))}
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <section class="serie" aria-labelledby="titulo-serie3d">
+        <h2 class="serie-titulo" id="titulo-serie3d">
+          Série 3D <span class="serie-badge">novas · máquina em 3D interativo</span>
+        </h2>
+        <ul class="grade" role="list">
+          {
+            serie3d.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    <span class="tag3d">3D</span>
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Ver proposta</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => (
+                      <span class="cor" style={`background:${cor}`} />
+                    ))}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="serie" aria-labelledby="titulo-serie1">
+        <h2 class="serie-titulo" id="titulo-serie1">Série original</h2>
+        <ul class="grade" role="list">
+          {
+            serie1.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Ver proposta</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => (
+                      <span class="cor" style={`background:${cor}`} />
+                    ))}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
     </main>
 
     <footer class="rodape">
@@ -224,6 +294,40 @@ const versoes = [
     color: var(--nevoa);
   }
 
+  /* ── Séries ───────────────────────────────────────── */
+  .serie {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .serie:first-of-type {
+    margin-top: 0;
+  }
+
+  .serie-titulo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 1.25rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: var(--titulo-sm);
+    letter-spacing: -0.01em;
+    color: var(--branco);
+  }
+
+  .serie-badge {
+    padding: 0.3rem 0.9rem;
+    font-family: var(--font-titulo);
+    font-weight: 800;
+    font-size: var(--texto-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--preto);
+    background: var(--amarelo);
+    border-radius: var(--raio-pill);
+  }
+
   /* ── Grade de cards ───────────────────────────────── */
   .grade {
     list-style: none;
@@ -295,8 +399,23 @@ const versoes = [
 
   .card-topo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.6rem;
+  }
+
+  .card-topo .seta {
+    margin-left: auto;
+  }
+
+  .tag3d {
+    padding: 0.3rem 0.7rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: var(--texto-xs);
+    letter-spacing: 0.1em;
+    color: var(--preto);
+    background: var(--amarelo);
+    border-radius: var(--raio-pill);
   }
 
   .num {

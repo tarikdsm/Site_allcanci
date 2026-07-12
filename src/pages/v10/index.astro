@@ -1,0 +1,645 @@
+---
+import type { ImageMetadata } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../../data/site';
+import { produtos } from '../../data/produtos';
+import { etapasComodato } from '../../data/comodato';
+import { faq } from '../../data/faq';
+import { provaSocial } from '../../data/provaSocial';
+import { sustentabilidade } from '../../data/sustentabilidade';
+import * as img from '../../data/imagens';
+import { simular, reais, PREMISSAS } from '../../scripts/simulador-core.js';
+import renderFrontal from '../../assets/3d/maquina-fill-render.png';
+import renderPerfil from '../../assets/3d/maquina-fill-perfil.png';
+import renderCostas from '../../assets/3d/maquina-fill-costas.png';
+import '@fontsource/chakra-petch/600.css';
+import '@fontsource/chakra-petch/700.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '../../styles/v10.css';
+
+const base = import.meta.env.BASE_URL;
+const ano = new Date().getFullYear();
+const glbUrl = `${import.meta.env.BASE_URL}/models/maquina_fill_web.glb`;
+
+const ogImage = await getImage({ src: renderFrontal, format: 'webp', width: 1200 });
+
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+const pct0 = ((professoresIniciais - 1) / 199) * 100;
+
+// Checksum decorativo (FNV-1a) para os registros de auditoria da prova social
+const checksum = (s: string) => {
+  let h = 0x811c9dc5;
+  for (const ch of s) {
+    h ^= ch.codePointAt(0)!;
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, '0');
+};
+
+// Fotos dos produtos — todas exibidas em "janelas de scanner" claras
+// (imagens com xadrez gravado só funcionam sobre fundo claro)
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
+  },
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+  },
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
+  },
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
+  },
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+  },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+const totalProdutos = String(produtos.length).padStart(2, '0');
+const totalEtapas = String(etapasComodato.length).padStart(2, '0');
+const escolasBoot = `${numeros.escolas.replace(/\D/g, '')}+`;
+
+const linksMenu = [
+  { href: '#produtos', num: '01', rotulo: 'Produtos' },
+  { href: '#como-funciona', num: '02', rotulo: 'Processo' },
+  { href: '#simulador', num: '03', rotulo: 'Simulador' },
+  { href: '#prova-social', num: '04', rotulo: 'Registros' },
+  { href: '#sustentabilidade', num: '05', rotulo: 'Eco' },
+  { href: '#faq', num: '06', rotulo: 'Manual' },
+  { href: '#contato', num: '07', rotulo: 'Contato' },
+];
+
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
+---
+
+<Layout
+  title="Allcanci Tecnologia — FILL OS · O sistema operacional da recarga"
+  description="FILL OS: a interface da máquina FILL Ink Injector em forma de site. Explore o modelo 3D, simule a economia anual e conheça o ecossistema de recarga da Allcanci Tecnologia — recarga em 22s, mais de 500 escolas."
+  ogImage={ogImage.src}
+  bodyClass="v10"
+>
+  <a class="v10-skip" href="#hero">Pular para o conteúdo</a>
+
+  <!-- Overlay CRT: scanlines + vinheta (puramente decorativo) -->
+  <div class="v10-crt" aria-hidden="true"></div>
+
+  <header class="v10-chrome">
+    <div class="v10-caixa v10-status">
+      <a class="v10-marca" href="#hero">
+        <span class="v10-led" aria-hidden="true"></span>
+        FILL OS v2.6
+        <span class="v10-marca-sep" aria-hidden="true">·</span>
+        <span class="v10-marca-emp">ALLCANCI TECNOLOGIA</span>
+      </a>
+      <p class="v10-status-dir" aria-hidden="true">
+        <span class="v10-status-item">tty:web</span>
+        <time class="v10-relogio" id="v10-relogio">--:--:--</time>
+      </p>
+    </div>
+    <nav class="v10-nav" aria-label="Seções da página">
+      <div class="v10-caixa">
+        <ul class="v10-menu" role="list">
+          {linksMenu.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span class="v10-menu-num" aria-hidden="true">[{item.num}]</span>
+                {item.rotulo}
+              </a>
+            </li>
+          ))}
+          <li class="v10-menu-cta">
+            <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <span class="v10-menu-num" aria-hidden="true">[▶]</span>
+              WhatsApp
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ═══ HERO · BOOT + VISOR.3D ═══ -->
+    <section id="hero" class="v10-hero" aria-labelledby="titulo-hero">
+      <div class="v10-caixa v10-hero-grade">
+        <div class="v10-hero-texto">
+          <p class="v10-kicker">
+            <span aria-hidden="true">&gt;_</span>
+            sessão iniciada · {empresa.nome} · {empresa.cidade}
+          </p>
+          <h1 id="titulo-hero">O sistema operacional da <span class="v10-grifo">recarga</span>.</h1>
+          <p class="v10-sub">{empresa.descricao}</p>
+
+          <div class="v10-boot v10-painel" id="v10-boot" aria-label="Registro de inicialização do sistema FILL">
+            <div class="v10-painel-cab">
+              <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <p class="v10-painel-titulo">boot.log</p>
+              <span class="v10-painel-etq" aria-hidden="true">stdout</span>
+            </div>
+            <ol class="v10-boot-log" role="list">
+              <li class="v10-boot-linha">
+                montando reservatorios
+                <span class="v10-tag v10-tag--azul">[AZUL]</span>
+                <span class="v10-tag v10-tag--preto">[PRETO]</span>
+                <span class="v10-tag v10-tag--vermelho">[VERMELHO]</span>
+                <span class="v10-pontos" aria-hidden="true">...</span>
+                <span class="v10-ok">OK</span>
+              </li>
+              <li class="v10-boot-linha">
+                bomba de tinta
+                <span class="v10-pontos" aria-hidden="true">.........</span>
+                <span class="v10-ok">OK</span>
+              </li>
+              <li class="v10-boot-linha">
+                calibrando injetor
+                <span class="v10-pontos" aria-hidden="true">......</span>
+                <span class="v10-ok">OK</span>
+              </li>
+              <li class="v10-boot-linha">
+                rendimento por recarga
+                <span class="v10-pontos" aria-hidden="true">...</span>
+                <span class="v10-val">{numeros.escritaKm} km</span>
+              </li>
+              <li class="v10-boot-linha">
+                tempo de ciclo
+                <span class="v10-pontos" aria-hidden="true">........</span>
+                <span class="v10-val">{numeros.recargaSegundos}s</span>
+              </li>
+              <li class="v10-boot-linha">
+                creditos
+                <span class="v10-pontos" aria-hidden="true">.............</span>
+                <span class="v10-val">{numeros.recargasPorProfessorAno}/professor·ano</span>
+              </li>
+              <li class="v10-boot-linha">
+                escolas conectadas
+                <span class="v10-pontos" aria-hidden="true">....</span>
+                <span class="v10-val">{escolasBoot}</span>
+              </li>
+              <li class="v10-boot-linha v10-boot-linha--fim">sistema pronto.</li>
+            </ol>
+          </div>
+
+          <div class="v10-hero-ctas">
+            <a
+              class="v10-botao v10-botao--ambar"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              </svg>
+              Falar no WhatsApp
+            </a>
+            <a class="v10-botao v10-botao--fantasma" href="#simulador">Executar simulador</a>
+          </div>
+        </div>
+
+        <div class="v10-visor v10-painel">
+          <div class="v10-painel-cab v10-visor-cab">
+            <p class="v10-painel-titulo">VISOR.3D <span aria-hidden="true">· maquina_fill_web.glb</span></p>
+            <div class="v10-modos" role="group" aria-label="Modo de renderização do modelo 3D">
+              <button type="button" class="v10-modo" data-modo="solido" data-rotulo="SOLIDO" aria-pressed="true">Sólido</button>
+              <button type="button" class="v10-modo" data-modo="arame" data-rotulo="ARAME" aria-pressed="false">Arame</button>
+              <button type="button" class="v10-modo" data-modo="raiox" data-rotulo="RAIO-X" aria-pressed="false">Raio-X</button>
+            </div>
+          </div>
+          <div class="v10-visor-palco">
+            <canvas
+              class="v10-visor-canvas"
+              data-glb={glbUrl}
+              role="img"
+              aria-label="Modelo 3D interativo da máquina FILL Ink Injector — arraste para girar, use a rolagem para aproximar"
+            ></canvas>
+            <Image
+              class="v10-visor-poster"
+              src={renderFrontal}
+              alt=""
+              aria-hidden="true"
+              widths={[420, 640, 960]}
+              sizes="(min-width: 1024px) 32rem, 88vw"
+              loading="eager"
+            />
+          </div>
+          <p class="v10-visor-leitura" aria-hidden="true">
+            modo: <span id="v10-visor-modo">SOLIDO</span> · arraste para girar · zoom: scroll
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 02 · PRODUTOS ═══ -->
+    <section id="produtos" class="v10-secao" aria-labelledby="titulo-produtos">
+      <div class="v10-caixa">
+        <header class="v10-mod">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.02 / INVENTÁRIO</p>
+          <h2 class="v10-mod-titulo" id="titulo-produtos">Inventário do ecossistema FILL</h2>
+          <p class="v10-mod-sub">
+            Da máquina de recarga ao aplicativo de gestão: {produtos.length} componentes
+            projetados para funcionar em conjunto — e aposentar o pincel descartável.
+          </p>
+        </header>
+
+        <ul class="v10-inventario" role="list">
+          {produtos.map((produto, i) => {
+            const foto = fotosProdutos[produto.id];
+            return (
+              <li class="v10-item">
+                <div class="v10-item-cab" aria-hidden="true">
+                  <span>ITEM {String(i + 1).padStart(2, '0')}/{totalProdutos}</span>
+                  <span>id: {produto.id}</span>
+                </div>
+                {foto && (
+                  <div class="v10-scanner">
+                    <Image
+                      src={foto.src}
+                      alt={foto.alt}
+                      widths={[320, 480, 680]}
+                      sizes="(min-width: 1024px) 340px, (min-width: 640px) 46vw, 88vw"
+                    />
+                  </div>
+                )}
+                <p class="v10-item-tag">{produto.subtitulo}</p>
+                <h3>{produto.nome}</h3>
+                <p class="v10-item-desc">{produto.descricao}</p>
+                <ul class="v10-specs" role="list">
+                  {produto.destaques.map((destaque) => (
+                    <li>{destaque}</li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 03 · PROCESSO ═══ -->
+    <section id="como-funciona" class="v10-secao" aria-labelledby="titulo-como">
+      <div class="v10-caixa">
+        <header class="v10-mod">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.03 / PIPELINE</p>
+          <h2 class="v10-mod-titulo" id="titulo-como">Processo de comodato em {etapasComodato.length} etapas</h2>
+          <p class="v10-mod-sub">
+            Sem investimento inicial em equipamento: a Allcanci instala, treina e acompanha —
+            sua equipe só usa.
+          </p>
+        </header>
+
+        <ol class="v10-fluxo" role="list">
+          {etapasComodato.map((etapa, i) => (
+            <li class="v10-etapa">
+              <div class="v10-etapa-cab" aria-hidden="true">
+                <span class="v10-etapa-num">ETAPA {String(i + 1).padStart(2, '0')}/{totalEtapas}</span>
+                <span class="v10-etapa-seta">{i < etapasComodato.length - 1 ? '▸▸' : '■'}</span>
+              </div>
+              <h3>{etapa.titulo}</h3>
+              <p>{etapa.texto}</p>
+              <p class="v10-etapa-status" aria-hidden="true">status: <span>[ OK ]</span></p>
+            </li>
+          ))}
+        </ol>
+
+        <div class="v10-como-diag">
+          <figure class="v10-diag-manual v10-painel">
+            <div class="v10-painel-cab">
+              <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <p class="v10-painel-titulo" aria-hidden="true">$ fill manual --recarga</p>
+            </div>
+            <div class="v10-scanner v10-scanner--largo">
+              <Image
+                src={img.comoUsar}
+                alt="Ilustração da recarga em três passos: primeiro, insira o pincel no encaixe da máquina e a tampa na trava de segurança; depois, aguarde 22 segundos para a recarga; por fim, retire o pincel e a tampa e utilize normalmente."
+                widths={[420, 640, 900]}
+                sizes="(min-width: 1024px) 34rem, 88vw"
+              />
+            </div>
+            <figcaption class="v10-diag-legenda">a recarga em 3 passos · ciclo de {numeros.recargaSegundos}s</figcaption>
+          </figure>
+
+          <div class="v10-diag-vistas">
+            <figure class="v10-diag-fig v10-painel">
+              <Image
+                src={renderPerfil}
+                alt="Render 3D da máquina FILL Ink Injector vista de perfil"
+                widths={[280, 420, 560]}
+                sizes="(min-width: 1024px) 16rem, 44vw"
+              />
+              <figcaption class="v10-diag-legenda">fig. A — vista: perfil</figcaption>
+            </figure>
+            <figure class="v10-diag-fig v10-painel">
+              <Image
+                src={renderCostas}
+                alt="Render 3D da máquina FILL Ink Injector vista de trás"
+                widths={[280, 420, 560]}
+                sizes="(min-width: 1024px) 16rem, 44vw"
+              />
+              <figcaption class="v10-diag-legenda">fig. B — vista: traseira</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 04 · SIMULADOR ═══ -->
+    <section id="simulador" class="v10-secao" aria-labelledby="titulo-simulador">
+      <div class="v10-caixa">
+        <header class="v10-mod">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.04 / SIMULAÇÃO</p>
+          <h2 class="v10-mod-titulo" id="titulo-simulador">Quanto a sua instituição economiza?</h2>
+          <p class="v10-mod-sub">
+            Ajuste o número de professores e leia a projeção anual na saída do terminal —
+            recargas, custos e plástico que deixa de virar lixo.
+          </p>
+        </header>
+
+        <div class="v10-term v10-painel">
+          <div class="v10-painel-cab">
+            <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="v10-painel-titulo">tty/fill — simulação de economia anual</p>
+            <span class="v10-painel-etq" aria-hidden="true">bash</span>
+          </div>
+
+          <div class="v10-term-corpo">
+            <div class="v10-term-entrada">
+              <p class="v10-term-cmd" aria-hidden="true">
+                <span class="v10-cmd-dolar">$</span> fill sim --professores <span class="v10-cmd-arg" id="v10-sim-arg">{professoresIniciais}</span>
+              </p>
+
+              <label class="v10-term-label" for="sim-professores">Professores na instituição</label>
+              <div class="v10-term-controles">
+                <input
+                  type="range"
+                  id="sim-professores"
+                  min="1"
+                  max="200"
+                  step="1"
+                  value={professoresIniciais}
+                  style={`--pct: ${pct0.toFixed(2)}%`}
+                />
+                <input
+                  type="number"
+                  id="sim-professores-num"
+                  min="1"
+                  max="999"
+                  value={professoresIniciais}
+                  aria-label="Número de professores"
+                />
+              </div>
+
+              <p class="v10-premissas">
+                Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
+                professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
+                recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+                ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+                ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+              </p>
+            </div>
+
+            <dl class="v10-term-saida">
+              <div class="v10-log-linha">
+                <dt>recargas/ano</dt>
+                <dd id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v10-log-linha">
+                <dt>investimento FILL/ano</dt>
+                <dd id="sim-custo-fill">{reais(sim0.custoFill)}</dd>
+              </div>
+              <div class="v10-log-linha">
+                <dt>descartáveis evitados</dt>
+                <dd id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</dd>
+              </div>
+              <div class="v10-log-linha">
+                <dt>plástico evitado</dt>
+                <dd id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</dd>
+              </div>
+              <div class="v10-log-linha v10-log-linha--eco">
+                <dt>economia estimada/ano</dt>
+                <dd id="sim-economia">{reais(sim0.economia)}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 05 · REGISTROS (PROVA SOCIAL) ═══ -->
+    <section id="prova-social" class="v10-secao" aria-labelledby="titulo-prova">
+      <div class="v10-caixa">
+        <header class="v10-mod">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.05 / AUDITORIA</p>
+          <h2 class="v10-mod-titulo" id="titulo-prova">{provaSocial.titulo}</h2>
+          <p class="v10-mod-sub">{provaSocial.texto}</p>
+        </header>
+
+        <div class="v10-audit-painel v10-painel">
+          <div class="v10-painel-cab">
+            <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="v10-painel-titulo" aria-hidden="true">$ fill audit --selos</p>
+            <span class="v10-painel-etq v10-painel-etq--verde" aria-hidden="true">{provaSocial.selos.length}/{provaSocial.selos.length} OK</span>
+          </div>
+          <ul class="v10-audit-log" role="list">
+            {provaSocial.selos.map((selo, i) => (
+              <li class="v10-audit">
+                <span class="v10-audit-ok" aria-hidden="true">[ OK ]</span>
+                <span class="v10-audit-texto">{selo}</span>
+                <code class="v10-audit-sum" aria-hidden="true">#{String(i + 1).padStart(2, '0')} crc:{checksum(selo)}</code>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {provaSocial.depoimentos.length > 0 && (
+          <ul class="v10-depoimentos" role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li class="v10-depoimento v10-painel">
+                <blockquote>
+                  <p>{dep.citacao}</p>
+                  <footer>
+                    {dep.autor} — {dep.instituicao}
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 06 · ECO (SUSTENTABILIDADE) ═══ -->
+    <section id="sustentabilidade" class="v10-secao" aria-labelledby="titulo-sustentabilidade">
+      <div class="v10-caixa">
+        <header class="v10-mod v10-mod--verde">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.06 / ECO</p>
+          <h2 class="v10-mod-titulo" id="titulo-sustentabilidade">{sustentabilidade.titulo}</h2>
+          <p class="v10-mod-sub">{sustentabilidade.texto}</p>
+        </header>
+
+        <div class="v10-eco-painel v10-painel">
+          <div class="v10-painel-cab v10-painel-cab--verde">
+            <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="v10-painel-titulo" aria-hidden="true">$ fill eco --relatorio</p>
+            <span class="v10-painel-etq v10-painel-etq--verde" aria-hidden="true">modo: regeneração</span>
+          </div>
+          <ul class="v10-eco-grade" role="list">
+            {sustentabilidade.pontos.map((ponto) => (
+              <li class="v10-eco-card">
+                <h3>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 19C5 10 10 5 19 5c0 9-5 14-14 14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+                    <path d="M5 19c3-5.5 6.5-9 10-10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                  </svg>
+                  {ponto.titulo}
+                </h3>
+                <p>{ponto.texto}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 07 · MANUAL (FAQ) ═══ -->
+    <section id="faq" class="v10-secao" aria-labelledby="titulo-faq">
+      <div class="v10-caixa">
+        <header class="v10-mod">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.07 / MANUAL</p>
+          <h2 class="v10-mod-titulo" id="titulo-faq">Perguntas frequentes</h2>
+          <p class="v10-mod-sub">
+            O que escolas e instituições mais perguntam antes de adotar o ecossistema FILL.
+          </p>
+        </header>
+
+        <div class="v10-man">
+          <p class="v10-man-cmd" aria-hidden="true"><span class="v10-cmd-dolar">$</span> man fill</p>
+          <div class="v10-man-lista">
+            {faq.map((item, i) => (
+              <details class="v10-man-item">
+                <summary>
+                  <span class="v10-man-ind" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  {item.pergunta}
+                  <span class="v10-man-mais" aria-hidden="true">+</span>
+                </summary>
+                <p class="v10-man-resposta">{item.resposta}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MÓDULO 08 · CONTATO ═══ -->
+    <section id="contato" class="v10-secao" aria-labelledby="titulo-contato">
+      <div class="v10-caixa">
+        <header class="v10-mod v10-mod--ambar">
+          <p class="v10-mod-tag" aria-hidden="true">MÓD.08 / CONTATO</p>
+          <h2 class="v10-mod-titulo" id="titulo-contato">Leve o FILL OS para a sua instituição</h2>
+          <p class="v10-mod-sub">
+            Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
+            entrega em até {numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+          </p>
+        </header>
+
+        <div class="v10-contato v10-painel">
+          <div class="v10-painel-cab">
+            <span class="v10-painel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <p class="v10-painel-titulo" aria-hidden="true">$ fill contato --whatsapp</p>
+            <span class="v10-painel-etq v10-painel-etq--verde" aria-hidden="true">canal aberto</span>
+          </div>
+
+          <div class="v10-contato-corpo">
+            <p class="v10-contato-eco" aria-hidden="true">
+              <span aria-hidden="true">&gt;</span> abrindo canal comercial
+              <span class="v10-pontos">...</span>
+              <span class="v10-ok">OK</span>
+            </p>
+
+            <div class="v10-contato-cta">
+              <a
+                class="v10-botao v10-botao--ambar v10-botao--grande"
+                href={contatos.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                </svg>
+                Chamar no WhatsApp
+              </a>
+            </div>
+
+            <ul class="v10-contato-canais" role="list">
+              <li><a class="v10-chip" href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+              <li><a class="v10-chip" href={telefoneHref}>{contatos.telefone}</a></li>
+            </ul>
+
+            <address class="v10-contato-endereco">{contatos.endereco}</address>
+
+            <ul class="v10-contato-redes" role="list">
+              {redes.map((rede) => (
+                <li>
+                  <a class="v10-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
+                    {rede.nome}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="v10-rodape">
+    <div class="v10-caixa">
+      <div class="v10-rodape-grade">
+        <div>
+          <p class="v10-rodape-marca">FILL OS <span>· allcanci tecnologia</span></p>
+          <p class="v10-rodape-slogan">{empresa.slogan}. {empresa.descricao}</p>
+        </div>
+        <div>
+          <h2>Contato</h2>
+          <ul role="list">
+            <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li>
+              <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp — {contatos.telefone}
+              </a>
+            </li>
+            <li>{contatos.endereco}</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Redes</h2>
+          <ul role="list">
+            {redes.map((rede) => (
+              <li>
+                <a href={rede.url} target="_blank" rel="noopener noreferrer">{rede.nome}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="v10-rodape-nota">
+        <p>© {ano} {empresa.nome} — {empresa.cidade}</p>
+        <p><a href={`${base}/`}>Ver as 10 propostas de design</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../scripts/v10.js"></script>
+</Layout>
