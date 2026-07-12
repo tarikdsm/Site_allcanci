@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos, diferenciais } from '../../data/site';
+import * as img from '../../data/imagens';
+import '@fontsource-variable/fraunces/index.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/700.css';
+import '../../styles/v15.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const sections = [
+  ['hero', 'Resumo'], ['produtos', 'Solução'], ['como-funciona', 'Implantação'], ['simulador', 'Simulação'],
+  ['prova-social', 'Evidências'], ['sustentabilidade', 'Impacto'], ['faq', 'Dúvidas'], ['contato', 'Encaminhamento'],
+];
+const copy = {
+  produtosKicker: 'Documento 02 · Catálogo da solução',
+  produtosTitulo: 'Ecossistema FILL · fichas técnicas',
+  produtosTexto: 'Seis componentes com funções claras, organizados para uma decisão institucional completa.',
+  processoKicker: 'Documento 03 · Plano de implantação',
+  processoTitulo: 'Da análise à operação assistida',
+  processoTexto: 'Etapas documentadas com instalação, treinamento, gestão e suporte, sem criar prazos além dos dados oficiais.',
+  simuladorKicker: 'Documento 04 · Memória de cálculo',
+  simuladorTitulo: 'Simulação com premissas abertas',
+  simuladorTexto: 'Ajuste a quantidade de professores e consulte a projeção anual.',
+  provaKicker: 'Documento 05 · Evidências institucionais',
+  sustentabilidadeKicker: 'Anexo A · Impacto e circularidade',
+  faqTexto: 'Um índice objetivo para as perguntas que entram no processo de decisão.',
+  contatoTitulo: 'Encaminhamento recomendado: falar com a Allcanci',
+  contatoTexto: `Solicite uma proposta sob medida da ${empresa.nome}, com atendimento para todo o Brasil.`,
+};
+---
+
+<Layout title="Allcanci Dossiê FILL — Decisão institucional" description="Um dossiê interativo com produtos, implantação, simulação, evidências e contato do ecossistema FILL." ogImage={ogImage.src} bodyClass="v15">
+  <a class="v15-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v15-topbar">
+    <a class="v15-brand" href={`${base}/`}>ALLCANCI / ARQUIVO</a>
+    <p>DOSSIÊ Nº 15-FILL-{new Date().getFullYear()}</p>
+    <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">SOLICITAR PROPOSTA ↗</a>
+  </header>
+  <nav class="v15-tabs" aria-label="Abas do dossiê">
+    {sections.map(([id, label], index) => <a href={`#${id}`} data-dossier-tab={id}><span>{String(index + 1).padStart(2, '0')}</span>{label}</a>)}
+  </nav>
+  <aside class="v15-checklist" aria-labelledby="v15-check-title">
+    <p id="v15-check-title">CHECKLIST DE LEITURA</p>
+    <progress value="0" max="8" data-check-progress>0 de 8</progress>
+    <ul role="list">
+      {sections.map(([id, label]) => <li><label><input type="checkbox" data-check-section={id} /> <span>{label}</span></label></li>)}
+    </ul>
+  </aside>
+  <main>
+    <section id="hero" class="v15-hero" aria-labelledby="v15-hero-title" data-experience-section>
+      <div class="v15-shell">
+        <article class="v15-cover">
+          <div class="v15-cover-head"><span>CONFIDENCIALIDADE: INSTITUCIONAL</span><span>REV. 01</span></div>
+          <div class="v15-cover-grid">
+            <div>
+              <p class="v15-eyebrow">Resumo executivo · Allcanci Tecnologia</p>
+              <h1 id="v15-hero-title">Dossiê FILL</h1>
+              <p class="v15-subtitle">Recarga inteligente para quadro branco</p>
+              <p class="v15-lead">Tecnologia 100% nacional e patenteada para transformar pincéis descartáveis em um ecossistema de recarga, controle e suporte.</p>
+              <dl class="v15-meta">
+                <div><dt>Origem</dt><dd>{empresa.cidade}</dd></div><div><dt>Abrangência</dt><dd>Todo o Brasil</dd></div>
+                <div><dt>Base instalada</dt><dd>{numeros.escolas} escolas</dd></div><div><dt>Recarga</dt><dd>~{numeros.recargaSegundos} segundos</dd></div>
+              </dl>
+            </div>
+            <div class="v15-cover-image">
+              <Image src={img.kitCompleto} alt="Kit completo do ecossistema FILL com máquina, pincéis, tintas e acessórios" widths={[440, 720, 1000]} sizes="(min-width: 900px) 38vw, 86vw" loading="eager" />
+              <span class="v15-stamp" aria-hidden="true">PATENTEADO<br/>APTO PARA ANÁLISE</span>
+            </div>
+          </div>
+          <div class="v15-cover-foot"><span>Preparado para decisores institucionais</span><a href="#produtos">ABRIR DOSSIÊ ↓</a></div>
+        </article>
+        <ul class="v15-exec-list" role="list">
+          {diferenciais.slice(0, 4).map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.titulo}</strong><p>{item.texto}</p></div></li>)}
+        </ul>
+      </div>
+    </section>
+    <ExperienceBody prefix="v15" copy={copy} showChecklist={true} />
+  </main>
+  <script src="../../scripts/v15.js"></script>
+</Layout>
