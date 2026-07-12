@@ -84,11 +84,39 @@ const serie3d = [
     paleta: ['#060b1c', '#43e8ff', '#ffc14d'],
   },
 ];
+
+const serieExperiencias = [
+  {
+    num: 'V11', slug: 'v11', nome: 'Ciclo Infinito',
+    descricao: 'Usar, recarregar e continuar em um circuito visual vivo.',
+    paleta: ['#f1efe7', '#0000fe', '#008f4c', '#d7ff54'],
+  },
+  {
+    num: 'V12', slug: 'v12', nome: 'Pitch 90s',
+    descricao: 'Uma apresentação imersiva que fala com cada decisor.',
+    paleta: ['#0d1026', '#4b5cff', '#ffd100', '#57e5ff'],
+  },
+  {
+    num: 'V13', slug: 'v13', nome: 'Corte o Desperdício',
+    descricao: 'Arraste a escola para o lado inteligente da comparação.',
+    paleta: ['#dedbd2', '#ff6a3d', '#fefff0', '#0000fe'],
+  },
+  {
+    num: 'V14', slug: 'v14', nome: 'Campus Vivo',
+    descricao: 'Explore o ecossistema FILL dentro de uma escola isométrica.',
+    paleta: ['#ccecff', '#dfffbd', '#0000fe', '#ffd100'],
+  },
+  {
+    num: 'V15', slug: 'v15', nome: 'Dossiê FILL',
+    descricao: 'A decisão institucional organizada em uma pasta viva.',
+    paleta: ['#10192f', '#f3ead8', '#1746d1', '#c93832'],
+  },
+];
 ---
 
 <Layout
-  title="Allcanci Tecnologia — Escolha o futuro do site"
-  description="Dez propostas de design para o novo site da Allcanci Tecnologia, fabricante do sistema FILL de recarga de pincéis para escolas. Compare as versões V1 a V10 — cinco delas com a máquina em 3D interativo."
+  title="Allcanci Tecnologia — 15 propostas para o futuro do site"
+  description="Quinze propostas de design para o novo site da Allcanci Tecnologia. Compare V1 a V15: série original, 3D interativo e cinco novas experiências digitais."
   ogImage={ogImage.src}
 >
   <div class="pagina">
@@ -98,12 +126,39 @@ const serie3d = [
 
     <main class="conteudo">
       <section class="hero" aria-labelledby="titulo-hub">
-        <p class="etiqueta">10 propostas · 1 decisão</p>
+        <p class="etiqueta">15 propostas · 1 decisão</p>
         <h1 id="titulo-hub">Escolha o <span class="destaque">futuro</span> do site da Allcanci</h1>
         <p class="sub">
-          Dez conceitos radicalmente diferentes para o novo site da {empresa.nome} — cinco deles
-          com a máquina FILL em 3D interativo. Navegue por cada proposta e escolha a direção.
+          Quinze conceitos radicalmente diferentes para o novo site da {empresa.nome}: cinco
+          originais, cinco com 3D e cinco experiências interativas. Navegue e escolha a direção.
         </p>
+      </section>
+
+      <section class="serie" aria-labelledby="titulo-experiencias">
+        <h2 class="serie-titulo" id="titulo-experiencias">
+          Experiências <span class="serie-badge serie-badge--experiencia">novas · cinco interações autorais</span>
+        </h2>
+        <ul class="grade" role="list">
+          {
+            serieExperiencias.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    <span class="tag-interativa">Interativa</span>
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Explorar experiência</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </section>
 
       <section class="serie" aria-labelledby="titulo-serie3d">
@@ -328,6 +383,11 @@ const serie3d = [
     border-radius: var(--raio-pill);
   }
 
+  .serie-badge--experiencia {
+    color: var(--azul-950);
+    background: var(--verde);
+  }
+
   /* ── Grade de cards ───────────────────────────────── */
   .grade {
     list-style: none;
@@ -407,7 +467,8 @@ const serie3d = [
     margin-left: auto;
   }
 
-  .tag3d {
+  .tag3d,
+  .tag-interativa {
     padding: 0.3rem 0.7rem;
     font-family: var(--font-display);
     font-weight: 900;
@@ -416,6 +477,10 @@ const serie3d = [
     color: var(--preto);
     background: var(--amarelo);
     border-radius: var(--raio-pill);
+  }
+
+  .tag-interativa {
+    background: var(--verde);
   }
 
   .num {
