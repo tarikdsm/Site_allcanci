@@ -5,6 +5,7 @@ import { Image, getImage } from 'astro:assets';
 import { empresa, numeros, contatos } from '../../data/site';
 import { simular } from '../../scripts/simulador-core.js';
 import * as img from '../../data/imagens';
+import maquinaFillRender from '../../assets/3d/maquina-fill-render.png';
 import '@fontsource-variable/inter/index.css';
 import '@fontsource/archivo-black/index.css';
 import '../../styles/v13.css';
@@ -56,7 +57,7 @@ const copy = {
         <div class="v13-after">
           <div class="v13-after-stage">
             <p class="v13-eyebrow">DEPOIS · ECOSSISTEMA FILL</p>
-            <Image src={img.inkInjector} alt="Máquina FILL Ink Injector vista de frente" widths={[440, 720, 1000]} sizes="(min-width: 800px) 46vw, 86vw" loading="eager" />
+            <Image src={maquinaFillRender} alt="Máquina FILL Ink Injector vista de frente" widths={[440, 720, 1000]} sizes="(min-width: 800px) 46vw, 86vw" loading="eager" />
             <div class="v13-after-stats"><span><b>{numeros.recargaSegundos}s</b> por recarga</span><span><b>{numeros.escritaKm} km</b> de escrita</span><span><b>{numeros.escolas}</b> escolas</span></div>
           </div>
         </div>

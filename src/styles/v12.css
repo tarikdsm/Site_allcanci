@@ -16,7 +16,7 @@ body.v12 { --bg:#0d1026; --panel:#171b3f; --blue:#4b5cff; --cream:#fff9e8; --yel
 .v12-hero-layout { display:grid; gap:2.5rem; align-items:center; }
 .v12-eyebrow { margin:0 0 1rem; color:var(--cyan); font:800 .72rem 'Archivo',sans-serif; letter-spacing:.16em; text-transform:uppercase; }
 .v12-hero h1,.v12-title { margin:0; font-family:'Archivo',sans-serif; font-weight:850; letter-spacing:-.06em; line-height:.88; text-transform:uppercase; }
-.v12-hero h1 { max-width:9ch; font-size:clamp(3.8rem,9vw,8.8rem); }
+.v12-hero h1 { max-width:10ch; font-size:clamp(3.2rem,6.4vw,6.4rem); }
 .v12-title { max-width:16ch; font-size:clamp(3rem,7vw,6.8rem); }
 .v12-lead { max-width:60ch; margin:1.4rem 0 0; color:rgba(255,255,255,.73); font-size:clamp(1rem,2vw,1.3rem); line-height:1.55; }
 .v12-button { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:.7rem; margin-top:2rem; padding:.85rem 1.2rem; border:1px solid var(--cream); color:var(--cream); font-weight:800; text-decoration:none; text-transform:uppercase; }

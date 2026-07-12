@@ -66,5 +66,11 @@ const copy = {
     </section>
     <ExperienceBody prefix="v14" copy={copy} />
   </main>
+  <style is:global>
+    html:has(body.v14) { overflow-x: hidden; }
+    @media (max-width: 719px) {
+      .v14-hero, .v14-campus-wrap { overflow: hidden; }
+    }
+  </style>
   <script src="../../scripts/v14.js"></script>
 </Layout>
