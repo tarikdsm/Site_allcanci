@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import { simular } from '../../scripts/simulador-core.js';
+import * as img from '../../data/imagens';
+import '@fontsource-variable/inter/index.css';
+import '@fontsource/archivo-black/index.css';
+import '../../styles/v13.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.inkInjector, format: 'webp', width: 1200 });
+const exemplo = simular(20);
+const copy = {
+  produtosKicker: 'O sistema do outro lado',
+  produtosTitulo: 'Não é um produto. É a troca do sistema inteiro.',
+  produtosTexto: 'Cada componente FILL elimina uma fricção da rotina: recarga, organização, reposição e controle.',
+  processoKicker: 'A linha de implantação',
+  processoTitulo: 'Corte a complexidade em seis etapas claras',
+  processoTexto: 'Diagnóstico, proposta, instalação, uso, recarga e gestão com suporte Allcanci.',
+  simuladorKicker: 'Compare com sua realidade',
+  simuladorTitulo: 'O divisor agora é o número de professores',
+  simuladorTexto: 'A projeção usa premissas abertas para mostrar custo, descartáveis e plástico evitado.',
+  provaKicker: 'Do lado de quem já mudou',
+  sustentabilidadeKicker: 'O que deixa de cruzar a linha do lixo',
+  faqTexto: 'Objeção de um lado. Resposta factual do outro.',
+  contatoTitulo: 'Leve a linha até 100% FILL',
+  contatoTexto: `A ${empresa.nome} dimensiona a mudança para a sua instituição e acompanha todo o processo.`,
+};
+---
+
+<Layout title="Allcanci — Corte o Desperdício" description="Compare o consumo tradicional com o ecossistema FILL e simule o impacto anual da recarga inteligente." ogImage={ogImage.src} bodyClass="v13">
+  <a class="v13-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v13-topbar">
+    <a class="v13-brand" href={`${base}/`}>allcanci<span>/ corte o desperdício</span></a>
+    <nav aria-label="Navegação principal"><a href="#produtos">Solução</a><a href="#simulador">Comparar</a><a href="#contato">Contato</a></nav>
+    <a class="v13-top-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Mudar de lado ↗</a>
+  </header>
+  <main>
+    <section id="hero" class="v13-hero" aria-labelledby="v13-hero-title" data-experience-section>
+      <div class="v13-compare" data-compare style="--split: 50%">
+        <div class="v13-before">
+          <div class="v13-hero-content">
+            <p class="v13-eyebrow">ANTES · CONSUMO FRAGMENTADO</p>
+            <h1 id="v13-hero-title">Arraste a escola para o lado inteligente.</h1>
+            <p class="v13-lead">De um lado, reposição constante. Do outro, um ecossistema feito para recarregar e continuar.</p>
+            <dl class="v13-before-metrics">
+              <div><dt>Exemplo com 20 professores</dt><dd>{exemplo.descartaveis.toLocaleString('pt-BR')} descartáveis/ano*</dd></div>
+              <div><dt>Plástico associado</dt><dd>{exemplo.plasticoEvitadoKg.toLocaleString('pt-BR')} kg/ano*</dd></div>
+            </dl>
+            <p class="v13-footnote">*Projeção pelas premissas abertas no simulador.</p>
+          </div>
+          <div class="v13-waste-shapes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="v13-after">
+          <div class="v13-after-stage">
+            <p class="v13-eyebrow">DEPOIS · ECOSSISTEMA FILL</p>
+            <Image src={img.inkInjector} alt="Máquina FILL Ink Injector vista de frente" widths={[440, 720, 1000]} sizes="(min-width: 800px) 46vw, 86vw" loading="eager" />
+            <div class="v13-after-stats"><span><b>{numeros.recargaSegundos}s</b> por recarga</span><span><b>{numeros.escritaKm} km</b> de escrita</span><span><b>{numeros.escolas}</b> escolas</span></div>
+          </div>
+        </div>
+        <div class="v13-divider" aria-hidden="true"><span>↔</span></div>
+        <label class="v13-range-label" for="v13-divisor">Quanto da solução FILL mostrar</label>
+        <input class="v13-range" id="v13-divisor" type="range" min="10" max="90" value="50" aria-valuetext="50% solução FILL visível" />
+      </div>
+      <a class="v13-scroll" href="#produtos">VER A MUDANÇA COMPLETA ↓</a>
+    </section>
+    <ExperienceBody prefix="v13" copy={copy} />
+  </main>
+  <script src="../../scripts/v13.js"></script>
+</Layout>
