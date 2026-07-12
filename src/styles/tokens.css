@@ -48,6 +48,12 @@ html { scroll-behavior: smooth; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 body { margin: 0; font-family: var(--font-texto); color: var(--preto); }
-img { display: block; max-width: 100%; height: auto; }
+/* Base segura para TODAS as versões (inclusive futuras).
+   max-height é a rede de segurança mobile: nenhuma imagem pode "explodir" em
+   altura — neutraliza o bug do iOS Safari em que uma imagem cresce infinitamente
+   dentro de um container flex/grid com aspect-ratio.
+   Convenção para "palcos" de foto (.vN-produto-foto, .vN-card-foto, etc.):
+   use max-width/max-height + width/height:auto — NUNCA height:100%. */
+img { display: block; max-width: 100%; height: auto; max-height: 100svh; }
 :focus-visible { outline: 3px solid var(--azul-claro); outline-offset: 3px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
