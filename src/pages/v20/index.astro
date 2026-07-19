@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import maquinaRender from '../../assets/3d/maquina-fill-render.png';
+import '@fontsource/archivo-black/400.css';
+import '@fontsource-variable/fraunces/standard-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '../../styles/v20.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Capítulo II · Os suspeitos',
+  produtosTitulo: 'Seis peças com álibi perfeito',
+  produtosTexto: 'Máquina, pincel, tinta, apagador, refil e aplicativo foram fichados um a um. Todos trabalham para o mesmo ecossistema — e nenhum deles vai parar no lixo.',
+  processoKicker: 'Capítulo III · O modus operandi',
+  processoTitulo: 'Como o esquema funciona',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha. A escola entra no comodato sem comprar a máquina — e o ciclo nunca para de girar.',
+  simuladorKicker: 'Capítulo IV · As provas',
+  simuladorTitulo: 'Os números não mentem',
+  simuladorTexto: 'Arraste a contagem de professores e refaça a matemática do caso: quanto sua escola economiza e quanto plástico deixa de desaparecer no lixo.',
+  provaKicker: 'Capítulo V · As testemunhas',
+  sustentabilidadeKicker: 'O motivo',
+  faqTexto: 'Tudo o que o interrogatório revelou — as respostas que sua instituição precisa antes de assinar o depoimento.',
+  contatoTitulo: 'Epílogo: caso encerrado',
+  contatoTexto: `Resta uma última pergunta: sua escola vai continuar desaparecendo com pincéis? Converse com a ${empresa.nome} e receba uma proposta sob medida.`,
+};
+---
+
+<Layout
+  title="Noir: O Caso do Pincel Desaparecido — Allcanci"
+  description="Um filme noir em preto e branco sobre o sumiço dos pincéis descartáveis — e a gota de tinta azul que entrega o culpado: o ecossistema FILL da Allcanci."
+  ogImage={ogImage.src}
+  bodyClass="v20"
+>
+  <a class="v20-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v20-topbar">
+    <a class="v20-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">allcanci<span>estúdios</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#capitulo-um">O caso</a><a href="#produtos">Suspeitos</a><a href="#simulador">Provas</a><a href="#contato">Epílogo</a>
+    </nav>
+    <a class="v20-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Depor ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v20-hero" aria-labelledby="v20-hero-title" data-experience-section>
+      <canvas class="v20-rain" data-rain aria-hidden="true"></canvas>
+      <div class="v20-venetian" aria-hidden="true"></div>
+      <div class="v20-smoke" aria-hidden="true"><span></span><span></span></div>
+
+      <div class="v20-shell v20-hero-grid">
+        <div class="v20-hero-copy">
+          <p class="v20-marquee"><span class="v20-marquee-lights" aria-hidden="true"></span>Allcanci Tecnologia apresenta</p>
+          <h1 id="v20-hero-title">O caso do <span>pincel</span> desaparecido</h1>
+          <p class="v20-narration">— Toda noite, milhares de pincéis de quadro branco somem das salas de aula do país. Nenhum alarme. Nenhuma testemunha. Sobrou uma única pista: uma gota de tinta azul.</p>
+          <div class="v20-actions">
+            <a class="v20-button v20-button-primary" href="#capitulo-um">Investigar o caso <span aria-hidden="true">↓</span></a>
+            <a class="v20-button" href="#simulador">Ir às provas</a>
+          </div>
+          <ul class="v20-hero-stats" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>para a recarga</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas no esquema</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita por carga</span></li>
+          </ul>
+        </div>
+
+        <figure class="v20-evidence">
+          <Image src={maquinaRender} alt="Máquina FILL Ink Injector em preto e branco, fotografada como peça de evidência" widths={[360, 560, 760]} sizes="(min-width: 900px) 36vw, 80vw" loading="eager" />
+          <svg class="v20-drop" viewBox="0 0 24 32" role="img" aria-label="Gota de tinta azul: a única pista em cor">
+            <path d="M12 1C12 1 1 15 1 21.5 1 27.6 5.9 31 12 31s11-3.4 11-9.5C23 15 12 1 12 1z" />
+          </svg>
+          <figcaption>Prova nº 1 — a máquina que ninguém viu trabalhar. Recarrega em {numeros.recargaSegundos} segundos, sem deixar rastros de descarte.</figcaption>
+        </figure>
+      </div>
+
+      <div class="v20-ticker" aria-hidden="true"><span>O caso do pincel desaparecido · um filme em preto, branco e uma gota de azul · sessão contínua · O caso do pincel desaparecido · um filme em preto, branco e uma gota de azul · sessão contínua · </span></div>
+    </section>
+
+    <section id="capitulo-um" class="v20-case" aria-labelledby="v20-case-title" data-experience-section>
+      <div class="v20-shell v20-case-grid">
+        <div class="v20-case-copy">
+          <p class="v20-stamp">Caso nº 22 · Confidencial</p>
+          <h2 id="v20-case-title">Capítulo I — <span>O desaparecimento</span></h2>
+          <p class="v20-narration">Era uma terça-feira comum quando a diretora abriu o armário e encontrou o vazio. Os pincéis descartáveis — centenas por semestre, milhares por ano — tinham sumido. O quadro branco estava limpo. Limpo demais.</p>
+          <p class="v20-quote">«Sempre suspeitei que eles não duravam nada. Só não sabia que custavam tão caro — para a escola e para o planeta.»</p>
+          <p class="v20-case-note">O relatório apontava um padrão: cada pincel descartável escreve pouco mais de cem metros antes de virar lixo. O rastro de plástico levava sempre ao mesmo lugar — o lixo comum. Até que uma máquina de recarga mudou o rumo da investigação.</p>
+        </div>
+        <figure class="v20-case-photo">
+          <Image src={img.kitCompleto} alt="Kit completo do ecossistema FILL fotografado em preto e branco como evidência do caso" widths={[360, 560, 760]} sizes="(min-width: 900px) 34vw, 84vw" loading="lazy" />
+          <figcaption>Foto da cena — o ecossistema completo, apreendido como evidência.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v20" copy={copy} />
+  </main>
+  <script src="../../scripts/v20.js"></script>
+</Layout>

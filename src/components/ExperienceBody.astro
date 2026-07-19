@@ -28,7 +28,7 @@ interface Copy {
 }
 
 interface Props {
-  prefix: 'v11' | 'v12' | 'v13' | 'v14' | 'v15';
+  prefix: string;
   copy: Copy;
   showChecklist?: boolean;
 }
@@ -231,6 +231,6 @@ const fotos: Record<string, { src: ImageMetadata; alt: string }> = {
   <div class={c('shell')}>
     <p><strong>allcanci</strong> tecnologia · {empresa.slogan}</p>
     <p>© {ano} {empresa.nome} · {empresa.cidade}</p>
-    <a href={`${base}/`}>Ver as 15 propostas de design</a>
+    <a href={`${base}/`}>Ver as 30 propostas de design</a>
   </div>
 </footer>

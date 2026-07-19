@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import maquinaRender from '../../assets/3d/maquina-fill-render.png';
+import '@fontsource/chakra-petch/400.css';
+import '@fontsource/chakra-petch/600.css';
+import '@fontsource/chakra-petch/700.css';
+import '../../styles/v18.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Fase 01 — Seu arsenal',
+  produtosTitulo: 'Seis itens, um inventário completo',
+  produtosTexto: 'Máquina, pincel, tinta, apagador, refil e moedas de crédito: o kit que zera o descarte de pincéis na sua escola.',
+  processoKicker: 'Fase 02 — Como jogar',
+  processoTitulo: 'Do primeiro contato ao modo contínuo',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha. Sua escola só precisa apertar start.',
+  simuladorKicker: 'Fase 03 — Placar',
+  simuladorTitulo: 'Quantos pontos sua escola economiza?',
+  simuladorTexto: 'Mova o controle de professores e veja o placar anual subir, com as premissas abertas na tela.',
+  provaKicker: 'Fase 04 — Recordistas',
+  sustentabilidadeKicker: 'Fase 05 — Conquistas',
+  faqTexto: 'Chefões de dúvida derrotados: tudo o que sua instituição precisa saber sobre o comodato FILL.',
+  contatoTitulo: 'Insert coin para continuar',
+  contatoTexto: `Aperte start com a ${empresa.nome} e receba uma proposta dimensionada para a sua instituição.`,
+};
+---
+
+<Layout
+  title="Allcanci Recarga Quest — Aperte start contra o descarte"
+  description="Versão arcade 8-bit do ecossistema FILL: a máquina Ink Injector recarrega pincéis de quadro branco em 22 segundos e zera o descarte na sua escola."
+  ogImage={ogImage.src}
+  bodyClass="v18"
+>
+  <a class="v18-skip" href="#hero">Pular para o conteúdo</a>
+
+  <header class="v18-hud">
+    <a class="v18-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">ALLCANCI<b>QUEST</b></a>
+    <div class="v18-hud-stats">
+      <span class="v18-hud-item">SCORE&nbsp;<b data-v18-score>000000</b></span>
+      <span class="v18-hud-item v18-hud-coins" aria-label="Fichas coletadas"><i class="v18-coin" aria-hidden="true">F</i>×<b data-v18-coins>00</b></span>
+      <span class="v18-hud-item v18-lives" role="img" aria-label="3 vidas">
+        <svg viewBox="0 0 7 6" aria-hidden="true"><path d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1V0z"/></svg>
+        <svg viewBox="0 0 7 6" aria-hidden="true"><path d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1V0z"/></svg>
+        <svg viewBox="0 0 7 6" aria-hidden="true"><path d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1V0z"/></svg>
+      </span>
+    </div>
+    <a class="v18-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">INSERT COIN</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v18-hero" aria-labelledby="v18-hero-title" data-experience-section>
+      <div class="v18-shell v18-hero-grid">
+        <div class="v18-hero-copy">
+          <p class="v18-eyebrow">Ficha de jogo · Ecossistema FILL</p>
+          <h1 id="v18-hero-title"><span>RECARGA</span> <em>QUEST</em></h1>
+          <p class="v18-lead">Aperte start: a máquina FILL Ink Injector recarrega pincéis de quadro branco em {numeros.recargaSegundos} segundos e aposenta os descartáveis da sua escola.</p>
+          <div class="v18-actions">
+            <button class="v18-button v18-button-primary v18-blink-soft" type="button" data-v18-start>PRESS START ▶</button>
+            <a class="v18-button" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">INSERT COIN ↗</a>
+          </div>
+          <ul class="v18-hero-stats" role="list">
+            <li><span>Recarga</span><strong>{numeros.recargaSegundos}s</strong></li>
+            <li><span>Escolas</span><strong>{numeros.escolas}</strong></li>
+            <li><span>Escrita</span><strong>{numeros.escritaKm} km</strong></li>
+          </ul>
+          <p class="v18-hint" aria-hidden="true">↑ ↑ ↓ ↓ ← → ← → B A · quem sabe, sabe</p>
+        </div>
+
+        <div class="v18-stage">
+          <div class="v18-screen">
+            <Image
+              src={maquinaRender}
+              alt="Sprite pixelado da máquina FILL Ink Injector"
+              widths={[144]}
+              sizes="144px"
+              loading="eager"
+              class="v18-machine"
+            />
+            <span class="v18-float-coin v18-fc1" aria-hidden="true"></span>
+            <span class="v18-float-coin v18-fc2" aria-hidden="true"></span>
+            <span class="v18-float-coin v18-fc3" aria-hidden="true"></span>
+            <p class="v18-screen-tag v18-blink" data-v18-screen-tag>INSERT COIN</p>
+          </div>
+          <div class="v18-load" data-v18-load>
+            <div class="v18-load-label">
+              <span data-v18-load-text>AGUARDANDO FICHA…</span>
+              <span data-v18-load-pct>0%</span>
+            </div>
+            <div class="v18-load-track" role="progressbar" aria-label="Progresso da recarga de 22 segundos" aria-valuemin="0" aria-valuemax="22" aria-valuenow="0" data-v18-loadbar>
+              <div class="v18-load-fill" data-v18-load-fill></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v18" copy={copy} />
+  </main>
+
+  <div class="v18-scanlines" aria-hidden="true"></div>
+  <p class="v18-toast" role="status" data-v18-toast></p>
+
+  <script src="../../scripts/v18.js"></script>
+</Layout>

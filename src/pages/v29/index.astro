@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import maquinaRender from '../../assets/3d/maquina-fill-render.png';
+import '@fontsource/archivo-black/index.css';
+import '../../styles/v29.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Enquanto isso, no laboratório…',
+  produtosTitulo: 'O elenco desta história',
+  produtosTexto: 'Seis personagens, um só enredo: máquina, pincel, tinta, apagador, refil e aplicativo na saga contra o pincel descartável.',
+  processoKicker: 'Capítulo um: a aliança',
+  processoTitulo: 'Da primeira página ao uso diário',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha. Sua escola entra na história com o roteiro completo.',
+  simuladorKicker: 'Painel de números',
+  simuladorTitulo: 'Quantos vilões descartáveis sua escola derrota por ano?',
+  simuladorTexto: 'Arraste o número de professores e veja o plástico evaporar dos quadros.',
+  provaKicker: 'A plateia aplaude',
+  sustentabilidadeKicker: 'O final feliz do planeta',
+  faqTexto: 'As dúvidas que pairam sobre a sala dos professores, respondidas balão a balão.',
+  contatoTitulo: 'Continua… na sua escola',
+  contatoTexto: `Chame a ${empresa.nome} no WhatsApp e receba o próximo capítulo: uma proposta de comodato desenhada para a sua instituição.`,
+};
+---
+
+<Layout
+  title="FILL: A Graphic Novel — Allcanci Tecnologia"
+  description="O ecossistema FILL contado como um gibi: painéis, onomatopeias e a saga da recarga de pincéis de quadro branco em 22 segundos."
+  ogImage={ogImage.src}
+  bodyClass="v29"
+>
+  <a class="v29-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v29-topbar">
+    <a class="v29-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">allcanci<span>edição nº 29</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#produtos">Elenco</a><a href="#como-funciona">Capítulos</a><a href="#simulador">Números</a><a href="#faq">Balões</a>
+    </nav>
+    <a class="v29-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Chamar a Allcanci ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v29-hero" aria-labelledby="v29-hero-title" data-experience-section>
+      <div class="v29-shell">
+        <div class="v29-cover">
+          <p class="v29-issue"><span>Edição nº 29 · Anual</span><span>Betim/MG — Brasil</span><span>Aprovado por +500 escolas</span></p>
+          <div class="v29-cover-grid">
+            <div class="v29-cover-copy">
+              <p class="v29-eyebrow">Allcanci Tecnologia apresenta</p>
+              <h1 id="v29-hero-title">
+                <span class="v29-fill-word">FILL</span>
+                <span class="v29-cover-sub">A graphic novel do fim do descartável</span>
+              </h1>
+              <p class="v29-narrator">No quadro branco de uma escola perto de você… um pincel seca no meio da aula. Mas desta vez a história é diferente.</p>
+              <p class="v29-lead">O ecossistema FILL recarrega pincéis de quadro branco em 22 segundos — e transforma o fim do pincel no começo de tudo.</p>
+              <div class="v29-actions">
+                <a class="v29-button v29-button-primary" href="#produtos">Virar a página <span aria-hidden="true">↓</span></a>
+                <a class="v29-button" href="#simulador">Ler os números</a>
+              </div>
+            </div>
+            <div class="v29-cover-art">
+              <Image src={maquinaRender} alt="Máquina FILL Ink Injector, a heroína desta história" widths={[360, 560, 760]} sizes="(min-width: 1000px) 38vw, 86vw" loading="eager" />
+              <span class="v29-ono v29-ono-glop" aria-hidden="true">GLOP!</span>
+              <span class="v29-ono v29-ono-click" aria-hidden="true">CLICK!</span>
+            </div>
+          </div>
+          <ul class="v29-hero-stats" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>por recarga</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas na história</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita por carga</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="v29-ticker" aria-hidden="true"><span>CLICK! ✷ GLOP! ✷ RECARREGADO! ✷ 22 SEGUNDOS! ✷ 1 KM DE ESCRITA! ✷ CLICK! ✷ GLOP! ✷ RECARREGADO! ✷ 22 SEGUNDOS! ✷ 1 KM DE ESCRITA! ✷ </span></div>
+    </section>
+
+    <section class="v29-strip" aria-labelledby="v29-strip-title" data-experience-section>
+      <div class="v29-shell">
+        <h2 class="v29-narrator v29-narrator-strip" id="v29-strip-title">Enquanto isso, na sala dos professores…</h2>
+        <ol class="v29-panels" role="list">
+          <li class="v29-panel">
+            <figure>
+              <div class="v29-panel-art">
+                <Image src={img.ecoMarkerTrioTampas} alt="Três pincéis FILL Eco Marker com tampas coloridas" widths={[280, 440, 640]} sizes="(min-width: 1000px) 30vw, 86vw" loading="lazy" />
+              </div>
+              <figcaption class="v29-panel-cap"><b>Quadro 1</b> — O pincel seca no meio da explicação.</figcaption>
+            </figure>
+            <span class="v29-ono v29-panel-ono" aria-hidden="true">FLOP!</span>
+          </li>
+          <li class="v29-panel">
+            <figure>
+              <div class="v29-panel-art">
+                <Image src={img.inkInjectorAberta} alt="Máquina FILL Ink Injector aberta, pronta para receber o pincel" widths={[280, 440, 640]} sizes="(min-width: 1000px) 30vw, 86vw" loading="lazy" />
+              </div>
+              <figcaption class="v29-panel-cap"><b>Quadro 2</b> — O Eco Marker encaixa na Ink Injector.</figcaption>
+            </figure>
+            <span class="v29-ono v29-panel-ono" aria-hidden="true">CLICK!</span>
+          </li>
+          <li class="v29-panel">
+            <figure>
+              <div class="v29-panel-art">
+                <Image src={img.ecoMarkerPreto} alt="Pincel FILL Eco Marker preto recarregado e pronto para uso" widths={[280, 440, 640]} sizes="(min-width: 1000px) 30vw, 86vw" loading="lazy" />
+              </div>
+              <figcaption class="v29-panel-cap"><b>Quadro 3</b> — 22 segundos e 1 km de escrita depois…</figcaption>
+            </figure>
+            <span class="v29-ono v29-panel-ono v29-panel-ono-wide" aria-hidden="true">RECARREGADO!</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v29" copy={copy} />
+  </main>
+  <script src="../../scripts/v29.js"></script>
+</Layout>

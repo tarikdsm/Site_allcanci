@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import maquinaRender from '../../assets/3d/maquina-fill-render.png';
+import '@fontsource-variable/archivo/index.css';
+import '@fontsource/archivo-black/index.css';
+import '../../styles/v22.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Peças primárias',
+  produtosTitulo: 'Seis elementos, uma composição',
+  produtosTexto: 'Círculo, barra e plano de cor: cada peça do ecossistema FILL tem função exata. Nada é ornamento — tudo trabalha.',
+  processoKicker: 'A montagem',
+  processoTitulo: 'Da conversa ao quadro em rotina',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha. Sua escola entra na composição com suporte em cada etapa.',
+  simuladorKicker: 'A medida exata',
+  simuladorTitulo: 'A geometria da economia',
+  simuladorTexto: 'Mova o cursor e veja o contrapeso: de um lado, menos descarte; do outro, mais orçamento para o que importa.',
+  provaKicker: 'Obra em escala',
+  sustentabilidadeKicker: 'Material honesto',
+  faqTexto: 'Respostas diretas, sem ornamento — como manda a escola.',
+  contatoTitulo: 'Entre para a composição',
+  contatoTexto: `Converse com a ${empresa.nome} e receba uma proposta dimensionada para a sua instituição.`,
+};
+---
+
+<Layout
+  title="Allcanci Bauhaus Viva — A forma do reuso"
+  description="O ecossistema FILL em cartaz construtivo: formas primárias, cores puras e a máquina que recarrega pincéis de quadro branco em 22 segundos."
+  ogImage={ogImage.src}
+  bodyClass="v22"
+>
+  <a class="v22-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v22-topbar">
+    <a class="v22-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">
+      <span class="v22-mark" aria-hidden="true"><i class="v22-m1"></i><i class="v22-m2"></i><i class="v22-m3"></i></span>
+      <span class="v22-brand-word">allcanci<small>tecnologia</small></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#produtos">Peças</a><a href="#simulador">Medida</a><a href="#contato">Contato</a>
+    </nav>
+    <a class="v22-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Conversar ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v22-hero" aria-labelledby="v22-hero-title">
+      <div class="v22-shell v22-hero-grid">
+        <div class="v22-hero-copy">
+          <p class="v22-eyebrow">Oficina de formas primárias — Betim/MG</p>
+          <h1 id="v22-hero-title">
+            <span class="v22-line">A <span class="v22-w-blue">FORMA</span></span>
+            <span class="v22-line">DO <span class="v22-w-red">REUSO</span><span class="v22-w-dot">.</span></span>
+          </h1>
+          <p class="v22-lead">O pincel de quadro branco deixou de ser descartável. A máquina FILL recarrega, o pincel continua: arte concreta aplicada à sala de aula.</p>
+          <div class="v22-actions">
+            <a class="v22-button v22-button-primary" href="#produtos">Ver as peças <span aria-hidden="true">↓</span></a>
+            <a class="v22-button" href="#simulador">Simular economia</a>
+          </div>
+          <ul class="v22-hero-stats" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>por recarga</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas atendidas</span></li>
+          </ul>
+        </div>
+
+        <div class="v22-comp">
+          <div class="v22-comp-shapes" aria-hidden="true">
+            <span class="v22-shape v22-circle v22-c-blue v22-sh-circle" data-compose style="--dx:-70px; --dy:52px; --rot:-32deg; --cd:.05s"></span>
+            <span class="v22-shape v22-semi v22-c-red v22-sh-semi" data-compose style="--dx:64px; --dy:-40px; --rot:44deg; --cd:.18s"></span>
+            <span class="v22-shape v22-tri v22-c-yellow v22-sh-tri" data-compose style="--dx:-36px; --dy:-64px; --rot:96deg; --cd:.3s"></span>
+            <span class="v22-shape v22-bar v22-c-ink v22-sh-bar" data-compose style="--dx:-90px; --dy:22px; --rot:-14deg; --cd:.12s"></span>
+            <span class="v22-shape v22-ring v22-sh-ring" data-compose style="--dx:48px; --dy:58px; --rot:-60deg; --cd:.24s"></span>
+            <span class="v22-shape v22-sq v22-c-yellow v22-sh-sq" data-compose style="--dx:30px; --dy:70px; --rot:70deg; --cd:.36s"></span>
+          </div>
+          <figure class="v22-comp-photo">
+            <Image src={maquinaRender} alt="Render 3D da máquina FILL Ink Injector em vista três quartos, flutuando sobre um círculo azul" widths={[400, 640, 880]} sizes="(min-width: 900px) 38vw, 82vw" loading="eager" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="v22-band-wrap" aria-hidden="true">
+        <div class="v22-band">
+          <div class="v22-band-inner">
+            {[0, 1].map(() => (
+              <span>RECARREGAR <i>●</i> 22 SEGUNDOS <i>●</i> 1 KM DE ESCRITA <i>●</i> +500 ESCOLAS <i>●</i> ZERO DESCARTE <i>●</i> RECARREGAR <i>●</i> 22 SEGUNDOS <i>●</i> 1 KM DE ESCRITA <i>●</i> +500 ESCOLAS <i>●</i> ZERO DESCARTE <i>●</i>&nbsp;</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="manifesto" class="v22-manifesto" aria-labelledby="v22-manifesto-title">
+      <div class="v22-shell">
+        <p class="v22-eyebrow">Manifesto construtivo</p>
+        <h2 id="v22-manifesto-title" class="v22-manifesto-title">A forma segue a <span class="v22-hl">RECARGA</span>.</h2>
+        <p class="v22-lead">Weimar ensinou: quando a função é exata, a forma aparece. A FILL desenhou o fim do descartável com a mesma régua — círculo, triângulo e quadrado em plena produção.</p>
+        <ul class="v22-estudos" role="list">
+          <li>
+            <div class="v22-estudo-stage" aria-hidden="true">
+              <span class="v22-shape v22-circle v22-c-blue v22-e1-a" data-compose style="--dx:-52px; --dy:44px; --rot:-26deg; --cd:.06s"></span>
+              <span class="v22-shape v22-ring v22-e1-b" data-compose style="--dx:44px; --dy:-38px; --rot:36deg; --cd:.2s"></span>
+            </div>
+            <p class="v22-estudo-num"><strong>22</strong><span>segundos por recarga</span></p>
+            <p class="v22-estudo-cap"><b>Estudo nº 1 — O tempo.</b> Recarga completa enquanto a turma troca de aula.</p>
+          </li>
+          <li>
+            <div class="v22-estudo-stage" aria-hidden="true">
+              <span class="v22-shape v22-tri v22-c-yellow v22-e2-a" data-compose style="--dx:58px; --dy:36px; --rot:120deg; --cd:.1s"></span>
+              <span class="v22-shape v22-bar v22-c-ink v22-e2-b" data-compose style="--dx:-64px; --dy:-28px; --rot:-20deg; --cd:.24s"></span>
+            </div>
+            <p class="v22-estudo-num"><strong>1 km</strong><span>de escrita por recarga</span></p>
+            <p class="v22-estudo-cap"><b>Estudo nº 2 — A distância.</b> Um quilômetro de traço antes da próxima parada.</p>
+          </li>
+          <li>
+            <div class="v22-estudo-stage" aria-hidden="true">
+              <span class="v22-shape v22-semi v22-c-red v22-e3-a" data-compose style="--dx:-48px; --dy:-54px; --rot:-40deg; --cd:.14s"></span>
+              <span class="v22-shape v22-sq v22-c-blue v22-e3-b" data-compose style="--dx:52px; --dy:46px; --rot:64deg; --cd:.28s"></span>
+            </div>
+            <p class="v22-estudo-num"><strong>+500</strong><span>escolas atendidas</span></p>
+            <p class="v22-estudo-cap"><b>Estudo nº 3 — A escala.</b> Centenas de escolas já compõem com a FILL.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="v22-band-wrap" aria-hidden="true">
+        <div class="v22-band v22-band-red">
+          <div class="v22-band-inner v22-band-reverse">
+            {[0, 1].map(() => (
+              <span>FORMA <i>●</i> FUNÇÃO <i>●</i> COR <i>●</i> RITMO <i>●</i> CONTRASTE <i>●</i> RECARGA <i>●</i> FORMA <i>●</i> FUNÇÃO <i>●</i> COR <i>●</i> RITMO <i>●</i> CONTRASTE <i>●</i> RECARGA <i>●</i>&nbsp;</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v22" copy={copy} />
+  </main>
+  <script src="../../scripts/v22.js"></script>
+</Layout>

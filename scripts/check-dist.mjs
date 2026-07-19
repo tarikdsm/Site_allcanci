@@ -13,7 +13,7 @@ if (page) {
     if (!html.includes(`id="${id}"`)) problemas.push(`seção #${id} ausente`);
   }
 } else {
-  const versoes = Array.from({ length: 15 }, (_, i) => `v${i + 1}`);
+  const versoes = Array.from({ length: 30 }, (_, i) => `v${i + 1}`);
   for (const v of versoes) {
     if (!html.includes(`/Site_allcanci/${v}/`)) problemas.push(`link para /${v}/ ausente`);
   }

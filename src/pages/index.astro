@@ -112,11 +112,95 @@ const serieExperiencias = [
     paleta: ['#10192f', '#f3ead8', '#1746d1', '#c93832'],
   },
 ];
+
+const serieDistopia = [
+  {
+    num: 'V16', slug: 'v16', nome: 'Distopia 2049',
+    descricao: 'Cyberpunk distópico: a resistência recarrega em 22 segundos.',
+    paleta: ['#05060a', '#00ff60', '#43e8ff', '#ff0c00'],
+  },
+  {
+    num: 'V20', slug: 'v20', nome: 'Noir: Pincel Desaparecido',
+    descricao: 'Cinema noir em P&B: a gota azul é a única pista.',
+    paleta: ['#0a0a0a', '#f3f3f3', '#0000fe'],
+  },
+  {
+    num: 'V21', slug: 'v21', nome: 'Órbita FILL',
+    descricao: 'O sistema FILL como sistema solar: descida do espaço à sala.',
+    paleta: ['#030014', '#7b8cff', '#43e8ff', '#fefff0'],
+  },
+  {
+    num: 'V25', slug: 'v25', nome: 'Gazeta de 2050',
+    descricao: 'Jornal de 2050: o fim histórico do pincel descartável.',
+    paleta: ['#f3efe4', '#080808', '#0000fe', '#ff0c00'],
+  },
+  {
+    num: 'V30', slug: 'v30', nome: 'Universo FILL', tag3d: true,
+    descricao: 'O grand finale: a FILL no centro de um universo 3D de tinta.',
+    paleta: ['#05060f', '#0000fe', '#43e8ff', '#ffd100'],
+  },
+];
+
+const serieArte = [
+  {
+    num: 'V17', slug: 'v17', nome: 'Galeria Tinta Viva',
+    descricao: 'Um museu onde a tinta nunca vira lixo.',
+    paleta: ['#f6f1e4', '#080808', '#0000fe', '#ff0c00'],
+  },
+  {
+    num: 'V19', slug: 'v19', nome: 'Zine Punk Xerox',
+    descricao: 'Colagem xerox punk: papel kraft, carimbos e anti-design.',
+    paleta: ['#f3ead8', '#080808', '#ff0c00', '#0000fe'],
+  },
+  {
+    num: 'V22', slug: 'v22', nome: 'Bauhaus Viva',
+    descricao: 'Cartaz construtivo: formas primárias que montam o reuso.',
+    paleta: ['#f3efe4', '#0000fe', '#ff0c00', '#ffd100'],
+  },
+  {
+    num: 'V26', slug: 'v26', nome: 'Tipografia Cinética',
+    descricao: 'A interface são as palavras: tipografia gigante coreografada.',
+    paleta: ['#0000fe', '#fefff0', '#ffd100'],
+  },
+  {
+    num: 'V29', slug: 'v29', nome: 'FILL: A Graphic Novel',
+    descricao: 'O fim do descartável contado em quadrinhos, quadro a quadro.',
+    paleta: ['#fff8e7', '#080808', '#ff0c00', '#0000fe'],
+  },
+];
+
+const serieMundos = [
+  {
+    num: 'V18', slug: 'v18', nome: 'Recarga Quest',
+    descricao: 'Ficha de arcade 8-bit: aperte start e zere o descarte.',
+    paleta: ['#0d0d1f', '#ffd100', '#00ff60', '#ff7ac3'],
+  },
+  {
+    num: 'V23', slug: 'v23', nome: 'Jardim Vivo',
+    descricao: 'Recarregar é regenerar: o FILL como um jardim vivo.',
+    paleta: ['#f1efe7', '#008f4c', '#00ff60', '#0000fe'],
+  },
+  {
+    num: 'V24', slug: 'v24', nome: 'A Máquina Maravilhosa',
+    descricao: 'Steampunk 1889: a FILL como invenção de Jules Verne.',
+    paleta: ['#1a120b', '#c98a3d', '#e6c87c', '#f3ead8'],
+  },
+  {
+    num: 'V27', slug: 'v27', nome: 'Fábrica Maluca',
+    descricao: 'Máquina Rube Goldberg em SVG que desce pela página.',
+    paleta: ['#fefff0', '#0000fe', '#ff6a3d', '#ffd100'],
+  },
+  {
+    num: 'V28', slug: 'v28', nome: 'Oceano de Tinta',
+    descricao: 'Mergulhe num mar de tinta até o fim do descartável.',
+    paleta: ['#001a33', '#008aff', '#43e8ff', '#bbe0ef'],
+  },
+];
 ---
 
 <Layout
-  title="Allcanci Tecnologia — 15 propostas para o futuro do site"
-  description="Quinze propostas de design para o novo site da Allcanci Tecnologia. Compare V1 a V15: série original, 3D interativo e cinco novas experiências digitais."
+  title="Allcanci Tecnologia — 30 propostas para o futuro do site"
+  description="Trinta propostas de design para o novo site da Allcanci Tecnologia. Compare V1 a V30: série original, 3D interativo, experiências digitais e as novas séries Distópica, Artística e de Mundos."
   ogImage={ogImage.src}
 >
   <div class="pagina">
@@ -126,12 +210,92 @@ const serieExperiencias = [
 
     <main class="conteudo">
       <section class="hero" aria-labelledby="titulo-hub">
-        <p class="etiqueta">15 propostas · 1 decisão</p>
+        <p class="etiqueta">30 propostas · 1 decisão</p>
         <h1 id="titulo-hub">Escolha o <span class="destaque">futuro</span> do site da Allcanci</h1>
         <p class="sub">
-          Quinze conceitos radicalmente diferentes para o novo site da {empresa.nome}: cinco
-          originais, cinco com 3D e cinco experiências interativas. Navegue e escolha a direção.
+          Trinta conceitos radicalmente diferentes para o novo site da {empresa.nome}: cinco
+          originais, cinco com 3D, cinco experiências interativas e quinze novas fronteiras —
+          distópicas, artísticas e lúdicas. Navegue e escolha a direção.
         </p>
+      </section>
+
+      <section class="serie" aria-labelledby="titulo-distopia">
+        <h2 class="serie-titulo" id="titulo-distopia">
+          Série Distópica <span class="serie-badge serie-badge--distopia">novas · futuros possíveis</span>
+        </h2>
+        <ul class="grade" role="list">
+          {
+            serieDistopia.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    {v.tag3d && <span class="tag3d">3D</span>}
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Explorar experiência</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="serie" aria-labelledby="titulo-arte">
+        <h2 class="serie-titulo" id="titulo-arte">
+          Série Artística <span class="serie-badge serie-badge--arte">novas · arte aplicada</span>
+        </h2>
+        <ul class="grade" role="list">
+          {
+            serieArte.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Explorar experiência</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="serie" aria-labelledby="titulo-mundos">
+        <h2 class="serie-titulo" id="titulo-mundos">
+          Série de Mundos <span class="serie-badge serie-badge--mundos">novas · universos imersivos</span>
+        </h2>
+        <ul class="grade" role="list">
+          {
+            serieMundos.map((v) => (
+              <li>
+                <a class="card" href={`${base}/${v.slug}/`}>
+                  <span class="card-topo">
+                    <span class="num">{v.num}</span>
+                    <span class="seta" aria-hidden="true">→</span>
+                  </span>
+                  <span class="nome">{v.nome}</span>
+                  <span class="desc">{v.descricao}</span>
+                  <span class="ver">Explorar experiência</span>
+                  <span class="paleta" aria-hidden="true">
+                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </section>
 
       <section class="serie" aria-labelledby="titulo-experiencias">
@@ -386,6 +550,21 @@ const serieExperiencias = [
   .serie-badge--experiencia {
     color: var(--azul-950);
     background: var(--verde);
+  }
+
+  .serie-badge--distopia {
+    color: var(--branco);
+    background: var(--vermelho);
+  }
+
+  .serie-badge--arte {
+    color: var(--azul-950);
+    background: #43e8ff;
+  }
+
+  .serie-badge--mundos {
+    color: var(--preto);
+    background: #ff7ac3;
   }
 
   /* ── Grade de cards ───────────────────────────────── */

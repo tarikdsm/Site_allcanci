@@ -1,0 +1,229 @@
+/* v20 — «Noir: O Caso do Pincel Desaparecido»
+   Cinema noir anos 40 em P&B total. A única cor do site é a gota de tinta
+   azul #0000fe, usada como pista/prova (hero, economia do simulador, carimbo final). */
+body.v20 {
+  --v20-noir: #0a0a0a;
+  --v20-noir-2: #111111;
+  --v20-papel: #f3f3f3;
+  --v20-azul: #0000fe;
+  --v20-cinza: #9a9a9a;
+  --v20-linha: rgba(243, 243, 243, .16);
+  --v20-font-letreiro: 'Archivo Black', system-ui, sans-serif;
+  --v20-font-fala: 'Fraunces Variable', Georgia, serif;
+  --v20-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--v20-papel);
+  background: var(--v20-noir);
+  font-family: var(--v20-font-mono);
+}
+
+/* Grão de filme sobre a página inteira */
+body.v20::after {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  content: '';
+  opacity: .05;
+  pointer-events: none;
+}
+
+/* TODA fotografia vive em preto e branco — a única cor permitida é a gota azul */
+.v20 img { filter: grayscale(1) contrast(1.06); }
+
+.v20-skip { position: fixed; z-index: 100; top: .75rem; left: .75rem; transform: translateY(-160%); padding: .8rem 1rem; color: var(--v20-noir); background: var(--v20-papel); font-family: var(--v20-font-mono); }
+.v20-skip:focus { transform: none; }
+.v20-shell { width: min(1180px, calc(100% - 2.5rem)); margin-inline: auto; }
+
+/* ---------- Topbar ---------- */
+.v20-topbar { position: relative; z-index: 30; display: flex; align-items: center; gap: 1.5rem; width: min(1240px, calc(100% - 2.5rem)); margin: 0 auto; padding: 1rem .25rem; border-bottom: 1px solid var(--v20-linha); }
+.v20-brand { display: flex; align-items: baseline; gap: .45rem; color: inherit; font-family: var(--v20-font-letreiro); font-size: 1.05rem; letter-spacing: .02em; text-decoration: none; text-transform: uppercase; }
+.v20-brand span { color: var(--v20-cinza); font-family: var(--v20-font-mono); font-size: .62rem; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.v20-topbar nav { display: flex; gap: 1.6rem; margin-left: auto; }
+.v20-topbar nav a, .v20-mini-cta { color: inherit; font-family: var(--v20-font-mono); font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-decoration: none; text-transform: uppercase; }
+.v20-topbar nav a:hover { text-decoration: underline; text-underline-offset: .35em; }
+.v20-mini-cta { padding: .65rem 1.1rem; border: 1px solid var(--v20-papel); }
+.v20-mini-cta:hover { color: var(--v20-noir); background: var(--v20-papel); }
+
+/* ---------- Hero: letreiro de cinema, chuva, veneziana, fumaça ---------- */
+.v20-hero { position: relative; min-height: 92svh; padding: clamp(3.5rem, 7vw, 6rem) 0 0; overflow: hidden; background: radial-gradient(circle at 72% 18%, rgba(243,243,243,.09), transparent 26rem), radial-gradient(circle at 15% 85%, rgba(243,243,243,.05), transparent 22rem), var(--v20-noir); }
+.v20-rain { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+/* Sombras duras de veneziana */
+.v20-venetian { position: absolute; z-index: 3; inset: 0; background: repeating-linear-gradient(102deg, rgba(4,4,4,.92) 0 22px, transparent 22px 58px); mask-image: linear-gradient(115deg, transparent 30%, black 62%); -webkit-mask-image: linear-gradient(115deg, transparent 30%, black 62%); pointer-events: none; }
+/* Fumaça leve à deriva */
+.v20-smoke { position: absolute; z-index: 2; inset: 0; overflow: hidden; pointer-events: none; }
+.v20-smoke span { position: absolute; width: 55vmax; aspect-ratio: 1.6; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(243,243,243,.10), transparent 65%); filter: blur(28px); animation: v20-smoke-drift 26s ease-in-out infinite alternate; }
+.v20-smoke span:first-child { top: 8%; left: -14%; }
+.v20-smoke span:last-child { right: -18%; bottom: 4%; animation-delay: -13s; animation-duration: 32s; }
+@keyframes v20-smoke-drift { from { transform: translate3d(0, 0, 0) rotate(0deg); } to { transform: translate3d(9vw, -4vh, 0) rotate(8deg); } }
+
+.v20-hero-grid { position: relative; z-index: 4; display: grid; align-items: center; gap: clamp(2.5rem, 6vw, 5rem); }
+
+/* Letreiro */
+.v20-marquee { position: relative; display: inline-block; margin: 0 0 1.4rem; padding: 1rem 1.3rem .8rem; border: 1px solid var(--v20-papel); color: var(--v20-papel); font-family: var(--v20-font-letreiro); font-size: clamp(.68rem, 1.6vw, .85rem); letter-spacing: .34em; text-transform: uppercase; }
+.v20-marquee-lights { position: absolute; top: 3px; right: 10px; left: 10px; height: 5px; background-image: radial-gradient(circle, var(--v20-papel) 1.6px, transparent 2.4px); background-size: 16px 5px; background-repeat: repeat-x; animation: v20-flicker 3.5s steps(2, end) infinite; }
+@keyframes v20-flicker { 0%, 88% { opacity: 1; } 89%, 93% { opacity: .25; } 94%, 100% { opacity: 1; } }
+
+.v20-hero h1 { max-width: 12ch; margin: 0; font-family: var(--v20-font-letreiro); font-size: clamp(2.5rem, 7.4vw, 6rem); letter-spacing: 0; line-height: .95; text-transform: uppercase; }
+.v20-hero h1 span { font-family: var(--v20-font-fala); font-style: italic; font-weight: 300; text-transform: lowercase; }
+.v20-narration { max-width: 56ch; margin: 1.6rem 0 0; color: rgba(243,243,243,.85); font-family: var(--v20-font-fala); font-size: clamp(1.05rem, 2vw, 1.35rem); font-style: italic; font-weight: 340; line-height: 1.55; }
+
+.v20-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.1rem; }
+.v20-button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: .7rem; padding: .85rem 1.35rem; border: 1px solid var(--v20-papel); border-radius: 0; color: var(--v20-papel); background: transparent; font-family: var(--v20-font-mono); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; transition: transform .2s ease, background-color .2s ease, color .2s ease; }
+.v20-button:hover { transform: translateY(-2px); color: var(--v20-noir); background: var(--v20-papel); }
+.v20-button-primary { color: var(--v20-noir); background: var(--v20-papel); }
+.v20-button-primary:hover { color: var(--v20-papel); background: transparent; }
+
+.v20-hero-stats { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 2.4rem 0 0; padding: 0; list-style: none; }
+.v20-hero-stats li { display: grid; padding-left: 1rem; border-left: 1px solid var(--v20-papel); }
+.v20-hero-stats strong { font-family: var(--v20-font-letreiro); font-size: 1.4rem; }
+.v20-hero-stats span { color: var(--v20-cinza); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+
+/* A máquina apreendida como evidência + a gota azul (única cor do site) */
+.v20-evidence { position: relative; margin: 0; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--v20-linha); background: rgba(243,243,243,.03); }
+.v20-evidence img { width: 100%; max-height: 46svh; object-fit: contain; }
+.v20-evidence figcaption { margin-top: 1rem; padding-top: .9rem; border-top: 1px dashed var(--v20-linha); color: var(--v20-cinza); font-size: .72rem; letter-spacing: .08em; line-height: 1.6; text-transform: uppercase; }
+.v20-drop { position: absolute; top: 6%; right: 8%; width: clamp(2.2rem, 4.5vw, 3.4rem); fill: var(--v20-azul); filter: drop-shadow(0 0 14px rgba(0,0,254,.55)); animation: v20-drop-sway 5s ease-in-out infinite alternate; }
+@keyframes v20-drop-sway { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(10px) rotate(4deg); } }
+
+/* Ticker de sessão contínua */
+.v20-ticker { position: relative; z-index: 4; margin-top: clamp(3rem, 6vw, 5rem); overflow: hidden; border-block: 1px solid var(--v20-noir); color: var(--v20-noir); background: var(--v20-papel); font-family: var(--v20-font-letreiro); font-size: clamp(.9rem, 2.2vw, 1.5rem); letter-spacing: .12em; line-height: 1; text-transform: uppercase; white-space: nowrap; }
+.v20-ticker span { display: block; width: max-content; padding: .85rem 0; animation: v20-marquee-run 26s linear infinite; }
+@keyframes v20-marquee-run { to { transform: translateX(-50%); } }
+
+/* ---------- Capítulo I (seção autoral) ---------- */
+.v20-case { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; border-bottom: 1px solid var(--v20-linha); background: var(--v20-noir-2); }
+.v20-case-grid { display: grid; align-items: center; gap: clamp(2.5rem, 6vw, 5rem); }
+.v20-stamp { display: inline-block; margin: 0 0 1.4rem; padding: .45rem .8rem; border: 2px solid var(--v20-papel); color: var(--v20-papel); font-family: var(--v20-font-mono); font-size: .7rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; transform: rotate(-2deg); }
+.v20-case h2 { max-width: 14ch; margin: 0; font-family: var(--v20-font-letreiro); font-size: clamp(1.9rem, 5vw, 3.8rem); line-height: 1; text-transform: uppercase; }
+.v20-case h2 span { display: block; font-family: var(--v20-font-fala); font-style: italic; font-weight: 300; text-transform: lowercase; }
+.v20-quote { margin: 1.6rem 0 0; padding-left: 1.2rem; border-left: 2px solid var(--v20-papel); color: var(--v20-papel); font-family: var(--v20-font-fala); font-size: clamp(1.05rem, 2vw, 1.3rem); font-style: italic; line-height: 1.55; }
+.v20-case-note { max-width: 60ch; margin: 1.6rem 0 0; color: var(--v20-cinza); font-size: .85rem; line-height: 1.75; }
+.v20-case-photo { margin: 0; padding: 1rem; border: 1px solid var(--v20-papel); background: var(--v20-papel); transform: rotate(1.2deg); box-shadow: 12px 12px 0 rgba(243,243,243,.07); }
+.v20-case-photo img { width: 100%; max-height: 60svh; object-fit: cover; }
+.v20-case-photo figcaption { padding-top: .8rem; color: var(--v20-noir); font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+
+/* ---------- ExperienceBody: o inquérito ---------- */
+.v20-section { position: relative; padding: clamp(4.5rem, 9vw, 7.5rem) 0; border-bottom: 1px solid var(--v20-linha); }
+.v20-eyebrow { display: inline-block; margin: 0 0 1.2rem; padding: .4rem .75rem; border: 1px solid currentColor; color: rgba(243,243,243,.8); font-family: var(--v20-font-mono); font-size: .68rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; transform: rotate(-1.2deg); }
+.v20-title { max-width: 20ch; margin: 0; font-family: var(--v20-font-letreiro); font-size: clamp(2rem, 5.2vw, 4.2rem); letter-spacing: 0; line-height: .98; text-transform: uppercase; }
+.v20-lead { max-width: 64ch; margin: 1.4rem 0 0; color: rgba(243,243,243,.72); font-size: .92rem; line-height: 1.75; }
+
+/* Capítulo II — fichas dos suspeitos (fundo claro: seguro para os JPEGs com xadrez) */
+.v20-products { display: grid; gap: 1.2rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.v20-product { position: relative; display: grid; grid-template-rows: auto auto auto 1fr auto; padding: 1.3rem; border: 1px solid var(--v20-noir); color: var(--v20-noir); background: var(--v20-papel); box-shadow: 8px 8px 0 rgba(243,243,243,.09); }
+.v20-index { position: absolute; top: 1rem; left: 1rem; z-index: 2; display: grid; width: 40px; aspect-ratio: 1; place-items: center; color: var(--v20-papel); background: var(--v20-noir); font-family: var(--v20-font-mono); font-size: .8rem; font-weight: 600; }
+.v20-product-photo { display: grid; min-height: 220px; place-items: center; overflow: hidden; border: 1px solid var(--v20-noir); background: #ffffff; }
+.v20-product-photo img { width: 82%; max-height: 220px; object-fit: contain; }
+.v20-tag { margin: 1.1rem 0 .3rem; color: #4a4a4a; font-family: var(--v20-font-mono); font-size: .66rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.v20-product h3 { margin: 0; font-family: var(--v20-font-letreiro); font-size: 1.15rem; line-height: 1.05; text-transform: uppercase; }
+.v20-product > p:not(.v20-tag) { margin: .7rem 0 0; font-size: .8rem; line-height: 1.65; }
+.v20-features { display: grid; gap: .45rem; margin: 1.1rem 0 0; padding: 1rem 0 0; border-top: 1px dashed rgba(10,10,10,.35); list-style: none; font-size: .74rem; font-weight: 500; }
+.v20-features li::before { content: '»'; margin-right: .55rem; }
+
+/* Capítulo III — modus operandi */
+.v20-process-layout { display: grid; gap: 2.5rem; margin-top: 3rem; }
+.v20-process { display: grid; margin: 0; padding: 0; list-style: none; }
+.v20-step { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1.1rem; padding: 1.3rem 0; border-top: 1px solid var(--v20-linha); }
+.v20-step > span { display: grid; width: 44px; aspect-ratio: 1; place-items: center; border: 1px solid var(--v20-papel); color: var(--v20-papel); font-family: var(--v20-font-mono); font-size: .85rem; font-weight: 600; }
+.v20-step h3 { margin: 0; font-family: var(--v20-font-letreiro); font-size: 1.05rem; text-transform: uppercase; }
+.v20-step p { margin: .5rem 0 0; color: rgba(243,243,243,.72); font-size: .84rem; line-height: 1.7; }
+.v20-process-photo { align-self: start; display: grid; min-height: 300px; place-items: center; padding: 1.1rem; border: 1px solid var(--v20-noir); background: var(--v20-papel); transform: rotate(-.8deg); box-shadow: 10px 10px 0 rgba(243,243,243,.07); }
+.v20-process-photo img { width: 100%; max-height: 420px; object-fit: contain; }
+
+/* Capítulo IV — as provas (relatório em papel) */
+.v20-simulator { display: grid; gap: 2.2rem; margin-top: 3rem; padding: clamp(1.4rem, 4vw, 3rem); border: 1px solid var(--v20-noir); color: var(--v20-noir); background: var(--v20-papel); box-shadow: 10px 10px 0 rgba(243,243,243,.09); }
+.v20-sim-input label { display: block; margin-bottom: 1rem; font-family: var(--v20-font-mono); font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.v20-sim-controls { display: grid; grid-template-columns: 1fr 96px; gap: 1rem; align-items: center; }
+.v20-sim-controls input[type="range"] { width: 100%; accent-color: var(--v20-noir); }
+.v20-sim-controls input[type="number"] { width: 100%; min-height: 52px; border: 1px solid var(--v20-noir); border-radius: 0; color: inherit; background: transparent; font-family: var(--v20-font-mono); font-size: 1.1rem; font-weight: 600; text-align: center; }
+.v20-premises { margin: 1.4rem 0 0; color: #555555; font-size: .7rem; line-height: 1.7; }
+.v20-results { display: grid; gap: .4rem; margin: 0; }
+.v20-result { display: flex; align-items: end; justify-content: space-between; gap: 1rem; padding: .95rem 0; border-bottom: 1px solid rgba(10,10,10,.22); }
+.v20-result dt { font-family: var(--v20-font-mono); font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.v20-result dd { margin: 0; font-family: var(--v20-font-letreiro); font-size: clamp(1.2rem, 2.6vw, 1.8rem); line-height: 1; text-align: right; }
+/* A economia é a gota de tinta: a prova final em azul */
+.v20-result-accent { padding: 1rem 1.1rem; border: 0; color: var(--v20-papel); background: var(--v20-noir); }
+.v20-result-accent dt { color: rgba(243,243,243,.75); }
+.v20-result-accent dd { color: var(--v20-azul); }
+
+/* Capítulo V — testemunhas */
+.v20-proof-number { margin: 2rem 0 0; font-family: var(--v20-font-letreiro); font-size: clamp(4.5rem, 16vw, 12rem); letter-spacing: 0; line-height: .85; }
+.v20-badges { display: grid; gap: .9rem; margin: 2.5rem 0 0; padding: 0; list-style: none; }
+.v20-badge { display: grid; min-height: 110px; aspect-ratio: 1; place-items: center; justify-self: center; width: min(100%, 170px); padding: 1rem; border: 2px solid var(--v20-papel); border-radius: 50%; font-family: var(--v20-font-mono); font-size: .66rem; font-weight: 600; letter-spacing: .1em; text-align: center; text-transform: uppercase; }
+.v20-badge:nth-child(odd) { transform: rotate(-3deg); }
+.v20-badge:nth-child(even) { transform: rotate(2deg); }
+.v20-testimonials { display: grid; gap: 1.4rem; margin: 2.5rem 0 0; padding: 0; list-style: none; }
+.v20-testimonials blockquote { margin: 0; padding-left: 1.3rem; border-left: 2px solid var(--v20-papel); }
+/* Depoimentos são falas: Fraunces itálica */
+.v20-testimonials blockquote p { margin: 0; font-family: var(--v20-font-fala); font-size: clamp(1.05rem, 2vw, 1.3rem); font-style: italic; line-height: 1.55; }
+.v20-testimonials footer { margin-top: .7rem; color: var(--v20-cinza); font-family: var(--v20-font-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+
+/* O motivo — sustentabilidade */
+.v20-eco-grid { display: grid; gap: 1rem; margin: 2.5rem 0 0; padding: 0; list-style: none; }
+.v20-eco-card { position: relative; padding: 1.5rem; border: 1px solid var(--v20-linha); }
+.v20-eco-card > span { color: rgba(243,243,243,.28); font-family: var(--v20-font-letreiro); font-size: 2.6rem; line-height: 1; }
+.v20-eco-card h3 { margin: .8rem 0 .5rem; font-family: var(--v20-font-letreiro); font-size: 1.05rem; text-transform: uppercase; }
+.v20-eco-card p { margin: 0; color: rgba(243,243,243,.72); font-size: .82rem; line-height: 1.7; }
+.v20-eco-card:nth-child(even) { border-color: var(--v20-noir); color: var(--v20-noir); background: var(--v20-papel); }
+.v20-eco-card:nth-child(even) > span { color: rgba(10,10,10,.28); }
+.v20-eco-card:nth-child(even) p { color: #3d3d3d; }
+
+/* Interrogatório — FAQ */
+.v20-faq { margin-top: 2.5rem; border-top: 1px solid var(--v20-linha); }
+.v20-faq details { border-bottom: 1px solid var(--v20-linha); }
+.v20-faq summary { display: grid; grid-template-columns: 2.6rem 1fr 2rem; gap: .8rem; align-items: center; min-height: 68px; padding: .7rem 0; font-family: var(--v20-font-mono); font-size: .9rem; font-weight: 600; cursor: pointer; list-style: none; }
+.v20-faq summary span { color: var(--v20-cinza); font-size: .75rem; }
+.v20-faq summary b { font-family: var(--v20-font-letreiro); font-size: 1.3rem; font-weight: 400; transition: transform .2s ease; }
+.v20-faq details[open] summary b { transform: rotate(45deg); }
+.v20-faq details > p { max-width: 72ch; margin: 0 0 1.5rem 3.4rem; color: rgba(243,243,243,.75); font-size: .85rem; line-height: 1.75; }
+
+/* Epílogo — contato */
+.v20-contact-card { position: relative; padding: clamp(2rem, 6vw, 4.5rem); border: 1px solid var(--v20-noir); color: var(--v20-noir); background: var(--v20-papel); box-shadow: 12px 12px 0 rgba(243,243,243,.09); text-align: center; }
+.v20-contact-card::after { position: absolute; top: 1.2rem; right: 1.2rem; padding: .4rem .8rem; border: 2px solid var(--v20-azul); color: var(--v20-azul); content: 'Caso encerrado'; font-family: var(--v20-font-mono); font-size: .62rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; transform: rotate(4deg); }
+.v20-contact-card .v20-eyebrow { color: var(--v20-noir); }
+.v20-contact-card h2 { max-width: 14ch; margin: 0 auto; font-family: var(--v20-font-letreiro); font-size: clamp(2.1rem, 6vw, 4.6rem); line-height: .96; text-transform: uppercase; }
+.v20-contact-card > p { max-width: 54ch; margin: 1.3rem auto 2rem; font-size: .88rem; line-height: 1.75; }
+.v20-contact-card .v20-button-primary { border-color: var(--v20-noir); color: var(--v20-papel); background: var(--v20-noir); }
+.v20-contact-card .v20-button-primary:hover { color: var(--v20-noir); background: transparent; }
+.v20-contact-links, .v20-social { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.4rem; margin: 2rem 0 0; padding: 0; list-style: none; font-size: .76rem; }
+.v20-contact-links a, .v20-social a { color: inherit; }
+.v20-social { color: #4a4a4a; }
+.v20-contact-note { margin-top: 1.5rem; font-size: .72rem; color: #4a4a4a; }
+
+.v20-footer { padding: 2.5rem 0; color: var(--v20-cinza); background: #050505; font-size: .76rem; }
+.v20-footer .v20-shell { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; }
+.v20-footer p { margin: 0; }
+.v20-footer strong { color: var(--v20-papel); font-family: var(--v20-font-letreiro); font-weight: 400; text-transform: uppercase; }
+.v20-footer a { color: var(--v20-papel); }
+
+/* ---------- Responsivo ---------- */
+@media (min-width: 720px) {
+  .v20-hero-grid { grid-template-columns: 1.05fr .95fr; }
+  .v20-case-grid { grid-template-columns: 1.1fr .9fr; }
+  .v20-products { grid-template-columns: repeat(2, 1fr); }
+  .v20-badges { grid-template-columns: repeat(3, 1fr); }
+  .v20-eco-grid { grid-template-columns: repeat(2, 1fr); }
+  .v20-simulator { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+@media (min-width: 1000px) {
+  .v20-products { grid-template-columns: repeat(3, 1fr); }
+  .v20-process-layout { grid-template-columns: 1.15fr .85fr; }
+  .v20-process-photo { position: sticky; top: 2rem; }
+}
+@media (max-width: 719px) {
+  .v20-topbar { gap: .8rem; }
+  .v20-topbar nav { display: none; }
+  .v20-mini-cta { margin-left: auto; }
+  .v20-hero { padding-top: 3rem; }
+  .v20-evidence { max-width: 460px; }
+  .v20-case-photo { transform: none; }
+  .v20-badge { width: min(100%, 150px); min-height: 100px; }
+  .v20-faq details > p { margin-left: 0; }
+  .v20-contact-card::after { position: static; display: inline-block; margin-bottom: 1.2rem; transform: rotate(-2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v20-ticker span, .v20-smoke span, .v20-marquee-lights, .v20-drop { animation: none; }
+  .v20-button:hover { transform: none; }
+}

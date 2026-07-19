@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import '@fontsource-variable/fraunces/index.css';
+import '@fontsource-variable/fraunces/wght-italic.css';
+import '@fontsource-variable/inter/index.css';
+import '../../styles/v17.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.kitCompleto, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Sala 02 · Acervo permanente',
+  produtosTitulo: 'Seis obras, um único ecossistema',
+  produtosTexto: 'Cada peça do acervo FILL foi desenhada para permanecer: máquina, pincel, tinta, apagador, refil e aplicativo em exposição contínua na sua escola.',
+  processoKicker: 'Sala 03 · Visita guiada',
+  processoTitulo: 'Do primeiro contato à mostra contínua',
+  processoTexto: 'A Allcanci dimensiona, instala, treina e acompanha — como um curador que monta a exposição e nunca abandona a sala.',
+  simuladorKicker: 'Sala 04 · Estação interativa',
+  simuladorTitulo: 'Calcule o lixo que sai de cena',
+  simuladorTexto: 'Ajuste o número de professores e veja, ao vivo, quantos descartáveis deixam de virar resíduo por ano.',
+  provaKicker: 'Sala 05 · Reconhecimento',
+  sustentabilidadeKicker: 'Sala 06 · Conservação do futuro',
+  faqTexto: 'As respostas estão na parede: tudo o que sua instituição precisa saber antes de entrar para o acervo.',
+  contatoTitulo: 'Última sala: sua escola entra para a coleção',
+  contatoTexto: `Converse com a ${empresa.nome} e receba uma proposta dimensionada para sua instituição — a visita guiada começa pelo WhatsApp.`,
+};
+---
+
+<Layout
+  title="Allcanci · Galeria Tinta Viva — a arte de nunca jogar tinta fora"
+  description="Uma exposição sobre a arte de não desperdiçar: o ecossistema FILL recarrega pincéis de quadro branco em 22 segundos e aposenta o descartável."
+  ogImage={ogImage.src}
+  bodyClass="v17"
+>
+  <a class="v17-skip" href="#hero">Pular para o conteúdo</a>
+  <header class="v17-topbar">
+    <a class="v17-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">allcanci <span>galeria tinta viva</span></a>
+    <nav aria-label="Navegação pela exposição">
+      <a href="#produtos">Acervo</a><a href="#como-funciona">Visita guiada</a><a href="#simulador">Estação interativa</a>
+    </nav>
+    <a class="v17-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Agendar visita ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v17-hero" aria-labelledby="v17-hero-title" data-experience-section>
+      <div class="v17-shell v17-hero-grid">
+        <div class="v17-hero-copy">
+          <p class="v17-room"><span class="v17-room-dot" aria-hidden="true"></span>Sala 01 · Exposição inaugural</p>
+          <h1 id="v17-hero-title">Tinta <em>viva</em>,<br />escrita infinita.</h1>
+          <p class="v17-lead">Uma exposição sobre a arte de não desperdiçar: o ecossistema FILL recarrega pincéis de quadro branco em {numeros.recargaSegundos} segundos — e aposenta o pincel descartável para sempre.</p>
+          <div class="v17-actions">
+            <a class="v17-button v17-button-primary" href="#produtos">Iniciar a visita <span aria-hidden="true">↓</span></a>
+            <a class="v17-button" href="#simulador">Estação interativa</a>
+          </div>
+          <ul class="v17-hero-stats" role="list" aria-label="Ficha técnica da exposição">
+            <li><strong>{numeros.recargaSegundos} s</strong><span>duração da recarga</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas no acervo</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita por recarga</span></li>
+          </ul>
+        </div>
+
+        <figure class="v17-hero-art">
+          <div class="v17-frame">
+            <div class="v17-art-window" data-ink-art>
+              <canvas id="v17-ink" class="v17-ink" aria-hidden="true"></canvas>
+              <div class="v17-hero-fallback" aria-hidden="true"></div>
+            </div>
+          </div>
+          <figcaption class="v17-plaque">
+            <strong>Tinta Viva, 2026</strong>
+            <span>Tinta azul, vermelha e preta sobre tela digital · obra interativa — mova o cursor (ou o dedo) sobre a tela</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v17" copy={copy} />
+  </main>
+  <script src="../../scripts/v17.js"></script>
+</Layout>

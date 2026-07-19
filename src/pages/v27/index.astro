@@ -1,0 +1,191 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import * as img from '../../data/imagens';
+import '@fontsource-variable/bricolage-grotesque/index.css';
+import '../../styles/v27.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: img.ecoMarkerTrioTampas, format: 'webp', width: 1200 });
+const copy = {
+  produtosKicker: 'Linha de montagem FILL',
+  produtosTitulo: 'Seis estações, zero descarte',
+  produtosTexto: 'Cada peça do ecossistema é uma estação da fábrica: o pincel entra vazio, a tinta desce pelos canos e a aula sai funcionando.',
+  processoKicker: 'Ordem de serviço',
+  processoTitulo: 'Como a fábrica se instala na sua escola',
+  processoTexto: 'Do primeiro aperto de mão à recarga diária: a Allcanci monta, liga e mantém a máquina rodando junto com a sua equipe.',
+  simuladorKicker: 'Painel de controle',
+  simuladorTitulo: 'Gire o dial e veja a economia sair na esteira',
+  simuladorTexto: 'Arraste o contador de professores e acompanhe a produção: recargas, descartáveis evitados e reais de volta no cofre.',
+  provaKicker: 'Selo de qualidade',
+  sustentabilidadeKicker: 'Setor de reaproveitamento',
+  faqTexto: 'O manual de instruções completo para colocar a fábrica para rodar na sua instituição.',
+  contatoTitulo: 'Aperte o botão e ligue a fábrica na sua escola',
+  contatoTexto: `Chame a ${empresa.nome} no WhatsApp e receba uma proposta em comodato dimensionada para sua instituição.`,
+};
+---
+
+<Layout
+  title="Allcanci Fábrica Maluca — a engenhoca que recarrega pincéis"
+  description="Uma máquina de Rube Goldberg lúdica apresenta o ecossistema FILL: a tinta desce pelos canos, aciona cada estação e recarrega pincéis em 22 segundos."
+  ogImage={ogImage.src}
+  bodyClass="v27"
+>
+  <a class="v27-skip" href="#hero">Pular para o conteúdo</a>
+
+  <!-- Trilho da fábrica: a gota de tinta desce com a rolagem e acende cada estação -->
+  <svg class="v27-rail" data-rail viewBox="0 0 120 1000" preserveAspectRatio="none" aria-hidden="true">
+    <g class="v27-rail-wiggle">
+      <path class="v27-rail-outline" d="M60 -20 C 112 130, 8 250, 60 400 C 112 550, 8 660, 60 810 C 96 910, 30 960, 60 1020" />
+      <path class="v27-rail-bed" data-rail-path d="M60 -20 C 112 130, 8 250, 60 400 C 112 550, 8 660, 60 810 C 96 910, 30 960, 60 1020" />
+      <path class="v27-rail-flow" d="M60 -20 C 112 130, 8 250, 60 400 C 112 550, 8 660, 60 810 C 96 910, 30 960, 60 1020" />
+    </g>
+    <g class="v27-rail-simple">
+      <path class="v27-rail-outline" d="M60 -20 V1020" />
+      <path class="v27-rail-bed" data-rail-path d="M60 -20 V1020" />
+      <path class="v27-rail-flow" d="M60 -20 V1020" />
+    </g>
+    <g class="v27-rail-deco" aria-hidden="true">
+      <g class="v27-gear v27-spin" transform="translate(88 292)">
+        <circle r="24" class="v27-gear-teeth" /><circle r="12" class="v27-gear-hub" /><circle r="4" class="v27-gear-axle" />
+      </g>
+      <g class="v27-gear v27-spin-rev" transform="translate(30 668)">
+        <circle r="17" class="v27-gear-teeth" /><circle r="8" class="v27-gear-hub" /><circle r="3" class="v27-gear-axle" />
+      </g>
+    </g>
+    <g data-rail-stations></g>
+    <g class="v27-rail-drop" data-rail-drop transform="translate(60 0)">
+      <circle r="9" class="v27-rail-drop-body" /><circle cx="-3" cy="-3" r="3" class="v27-rail-drop-shine" />
+    </g>
+  </svg>
+
+  <header class="v27-topbar">
+    <a class="v27-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="3.7 2.7" /><circle cx="12" cy="12" r="3.2" fill="#ff6a3d" /></svg>
+      allcanci<span>fábrica maluca</span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#instrucoes">Instruções</a><a href="#produtos">Estações</a><a href="#simulador">Painel</a><a href="#contato">Contato</a>
+    </nav>
+    <a class="v27-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Ligar a fábrica ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v27-hero" aria-labelledby="v27-hero-title" data-experience-section>
+      <div class="v27-shell v27-hero-grid">
+        <div class="v27-hero-copy">
+          <p class="v27-eyebrow"><span class="v27-onlight" aria-hidden="true"></span>Tecnologia 100% nacional e patenteada</p>
+          <h1 id="v27-hero-title">A fábrica <em>maluca</em> do pincel infinito.</h1>
+          <p class="v27-lead">Uma engenhoca muito séria disfarçada de brincadeira: a tinta desce pelos canos, as engrenagens giram e o seu pincel volta cheio em {numeros.recargaSegundos} segundos.</p>
+          <div class="v27-actions">
+            <a class="v27-button v27-button-primary" href="#instrucoes">Ver a engenhoca <span aria-hidden="true">↓</span></a>
+            <a class="v27-button" href="#simulador">Abrir o painel</a>
+          </div>
+          <ul class="v27-hero-stats" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>por recarga</span></li>
+            <li><strong>{numeros.escolas}</strong><span>escolas na linha</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita por carga</span></li>
+          </ul>
+        </div>
+
+        <div class="v27-machine" data-machine>
+          <svg class="v27-machine-svg" viewBox="0 0 480 560" role="img" aria-label="Máquina de Rube Goldberg: funil despeja tinta nos canos, engrenagens giram, dominós de pincel tombam e um balão sobe">
+            <!-- Canos com tinta -->
+            <path class="v27-pipe-outline" d="M96 118 C 96 142 96 140 120 140 H 322 C 346 140 344 140 344 164 V 238" />
+            <path class="v27-pipe-body" d="M96 118 C 96 142 96 140 120 140 H 322 C 346 140 344 140 344 164 V 238" />
+            <path class="v27-pipe-flow" d="M96 118 C 96 142 96 140 120 140 H 322 C 346 140 344 140 344 164 V 238" />
+            <text class="v27-svg-label" x="150" y="128">TINTA AZUL →</text>
+
+            <!-- Funil -->
+            <g>
+              <path class="v27-funnel" d="M42 22 H150 L112 66 V96 H80 V66 Z" />
+              <path class="v27-funnel-ink" d="M52 32 H140 L112 62 H80 Z" />
+              <line class="v27-stream" x1="96" y1="98" x2="96" y2="118" />
+              <g class="v27-stepnum" transform="translate(34 34)"><circle r="15" /><text y="5.5">1</text></g>
+            </g>
+
+            <!-- Engrenagens -->
+            <g class="v27-spin" transform="translate(344 292)">
+              <circle r="52" class="v27-gear-teeth" /><circle r="34" class="v27-gear-hub" /><circle r="9" class="v27-gear-axle" />
+            </g>
+            <g class="v27-spin-rev" transform="translate(268 330)">
+              <circle r="32" class="v27-gear-teeth" /><circle r="20" class="v27-gear-hub v27-gear-hub-coral" /><circle r="6" class="v27-gear-axle" />
+            </g>
+            <g class="v27-stepnum" transform="translate(420 262)"><circle r="15" /><text y="5.5">2</text></g>
+            <text class="v27-svg-label" x="310" y="368">GIRO 22s</text>
+
+            <!-- Gangorra -->
+            <g class="v27-seesaw" transform="translate(96 320)">
+              <path class="v27-fulcrum" d="M0 26 L18 -2 L36 26 Z" />
+              <g class="v27-plank">
+                <rect x="-52" y="-10" width="140" height="12" rx="6" />
+                <circle class="v27-ball" cx="-40" cy="-22" r="12" />
+              </g>
+            </g>
+
+            <!-- Dominós de pincel -->
+            <g class="v27-dominoes">
+              <g class="v27-domino" transform="translate(180 458)"><g class="v27-domino-tilt v27-domino-tilt-1"><rect x="-14" y="-78" width="28" height="78" rx="13" /><rect x="-14" y="-78" width="28" height="22" rx="11" class="v27-domino-cap" /></g></g>
+              <g class="v27-domino" transform="translate(236 462)"><g class="v27-domino-tilt v27-domino-tilt-2"><rect x="-14" y="-82" width="28" height="82" rx="13" /><rect x="-14" y="-82" width="28" height="22" rx="11" class="v27-domino-cap v27-domino-cap-yellow" /></g></g>
+              <g class="v27-domino" transform="translate(292 466)"><g class="v27-domino-tilt v27-domino-tilt-3"><rect x="-14" y="-86" width="28" height="86" rx="13" /><rect x="-14" y="-86" width="28" height="22" rx="11" class="v27-domino-cap v27-domino-cap-coral" /></g></g>
+              <g class="v27-stepnum" transform="translate(206 396)"><circle r="15" /><text y="5.5">3</text></g>
+            </g>
+
+            <!-- Balão -->
+            <g class="v27-balloon" transform="translate(396 470)">
+              <g class="v27-balloon-float">
+                <path class="v27-balloon-string" d="M0 0 C 6 -30 -8 -60 4 -96" />
+                <ellipse class="v27-balloon-body" cx="4" cy="-140" rx="34" ry="42" />
+                <path class="v27-balloon-knot" d="M-3 -100 L11 -100 L4 -90 Z" />
+                <circle class="v27-balloon-shine" cx="-8" cy="-154" r="7" />
+              </g>
+              <g class="v27-stepnum" transform="translate(46 -118)"><circle r="15" /><text y="5.5">4</text></g>
+            </g>
+          </svg>
+
+          <figure class="v27-output">
+            <div class="v27-belt" aria-hidden="true"></div>
+            <div class="v27-output-card">
+              <Image src={img.inkInjectorAberta} alt="Máquina FILL Ink Injector aberta saindo da linha de montagem, pronta para recarregar um pincel" widths={[320, 480, 640]} sizes="(min-width: 900px) 30vw, 70vw" loading="eager" />
+              <figcaption>SAÍDA: pincel cheio, pronto para a aula</figcaption>
+            </div>
+          </figure>
+        </div>
+      </div>
+      <div class="v27-ticker" aria-hidden="true"><span>PINGOU → GIROU → RECARREGOU → {numeros.recargaSegundos} SEGUNDOS → {numeros.escritaKm} KM DE ESCRITA → ZERO DESCARTE → PINGOU → GIROU → RECARREGOU → {numeros.recargaSegundos} SEGUNDOS → {numeros.escritaKm} KM DE ESCRITA → ZERO DESCARTE → </span></div>
+    </section>
+
+    <section id="instrucoes" class="v27-instructions" aria-labelledby="v27-instructions-title" data-experience-section>
+      <div class="v27-shell">
+        <p class="v27-eyebrow"><span class="v27-onlight" aria-hidden="true"></span>Manual pendurado na parede</p>
+        <h2 class="v27-title" id="v27-instructions-title">Instruções de operação</h2>
+        <p class="v27-lead">Três cartazes, três movimentos. É toda a técnica que a fábrica pede de quem opera o quadro branco.</p>
+        <ol class="v27-posters" role="list">
+          <li class="v27-poster v27-poster-blue">
+            <p class="v27-poster-step">Passo 1</p>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="18" y="6" width="12" height="30" rx="6" fill="#fefff0" stroke="#000066" stroke-width="2.5" /><rect x="18" y="6" width="12" height="9" rx="4.5" fill="#ffd100" stroke="#000066" stroke-width="2.5" /><path d="M21 40 h6 l-3 5 Z" fill="#000066" /></svg>
+            <h3>Encaixe o pincel</h3>
+            <p>O Eco Marker vazio entra no bocal da Ink Injector. Clique seco, máquina armada.</p>
+          </li>
+          <li class="v27-poster v27-poster-yellow">
+            <p class="v27-poster-step">Passo 2</p>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="26" r="14" fill="#ff6a3d" stroke="#000066" stroke-width="2.5" /><rect x="14" y="38" width="20" height="6" rx="3" fill="#000066" /><circle cx="19" cy="21" r="4" fill="#fefff0" /></svg>
+            <h3>Aperte o botão</h3>
+            <p>Um toque e a engrenagem acorda: a tinta desce pelos canos na medida exata.</p>
+          </li>
+          <li class="v27-poster v27-poster-coral">
+            <p class="v27-poster-step">Passo 3</p>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17" fill="#fefff0" stroke="#000066" stroke-width="2.5" /><path d="M24 14 V24 L32 29" fill="none" stroke="#0000fe" stroke-width="3.5" stroke-linecap="round" /></svg>
+            <h3>Volte a escrever</h3>
+            <p>22 segundos depois, o pincel sai pronto para mais 1 km de quadro branco.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v27" copy={copy} />
+  </main>
+  <script src="../../scripts/v27.js"></script>
+</Layout>

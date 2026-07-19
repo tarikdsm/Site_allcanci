@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ExperienceBody from '../../components/ExperienceBody.astro';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos } from '../../data/site';
+import maquinaRender from '../../assets/3d/maquina-fill-render.png';
+import maquinaPerfil from '../../assets/3d/maquina-fill-perfil.png';
+import '@fontsource-variable/fraunces/index.css';
+import '@fontsource-variable/fraunces/standard-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/700.css';
+import '../../styles/v24.css';
+
+const base = import.meta.env.BASE_URL;
+const ogImage = await getImage({ src: maquinaRender, format: 'webp', width: 1200 });
+
+const copy = {
+  produtosKicker: 'Capítulo I · Catálogo de engenhos',
+  produtosTitulo: 'O gabinete completo da invenção',
+  produtosTexto:
+    'Máquina, pincel, tinta, apagador, refil e créditos: cada peça do ecossistema FILL foi engendrada para operar em conjunto, ciclo após ciclo, sem descarte.',
+  processoKicker: 'Capítulo II · Do contrato de comodato',
+  processoTitulo: 'Como o engenho chega à sua escola',
+  processoTexto:
+    'A Allcanci dimensiona, entrega, instala e instrui. A máquina permanece em comodato — a escola investe apenas nas recargas, com suporte em toda a vigência.',
+  simuladorKicker: 'Capítulo III · Cálculos de economia',
+  simuladorTitulo: 'A aritmética da recarga automática',
+  simuladorTexto:
+    'Ajuste o número de professores no mostrador e observe os ponteiros revelarem a projeção anual da sua instituição, com as premissas abertas.',
+  provaKicker: 'Capítulo IV · Testemunhos autenticados',
+  sustentabilidadeKicker: 'Capítulo V · Contra o descarte',
+  faqTexto: 'Respostas do inventor às dúvidas mais frequentes sobre o engenho e o seu contrato de comodato.',
+  contatoTitulo: 'Requisite a invenção para sua escola',
+  contatoTexto: `Envie uma mensagem à ${empresa.nome} e receba uma proposta de comodato dimensionada para a sua instituição.`,
+};
+---
+
+<Layout
+  title="Allcanci · A Máquina Maravilhosa — a invenção que recarrega pincéis"
+  description="A FILL Ink Injector como uma invenção de 1889: cobre, latão e engrenagens para recarregar pincéis de quadro branco em 22 segundos, em comodato para escolas."
+  ogImage={ogImage.src}
+  bodyClass="v24"
+>
+  <a class="v24-skip" href="#hero">Pular para o conteúdo</a>
+
+  <svg class="v24-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="v24-gear" viewBox="-60 -60 120 120">
+      <g fill="currentColor">
+        <rect x="-6" y="-55" width="12" height="17" rx="3" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(30)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(60)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(90)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(120)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(150)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(180)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(210)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(240)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(270)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(300)" />
+        <rect x="-6" y="-55" width="12" height="17" rx="3" transform="rotate(330)" />
+        <circle r="37" fill="none" stroke="currentColor" stroke-width="15" />
+        <circle r="12" />
+      </g>
+      <g stroke="currentColor" stroke-width="9">
+        <line x1="-29" y1="0" x2="29" y2="0" />
+        <line x1="0" y1="-29" x2="0" y2="29" />
+      </g>
+    </symbol>
+  </svg>
+
+  <header class="v24-topbar">
+    <a class="v24-brand" href={`${base}/`} aria-label="Allcanci — voltar às propostas">
+      <svg class="v24-brand-gear" aria-hidden="true"><use href="#v24-gear" /></svg>
+      <span>allcanci <em>· máquina maravilhosa</em></span>
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#produtos">Catálogo</a>
+      <a href="#como-funciona">Comodato</a>
+      <a href="#simulador">Cálculos</a>
+      <a href="#contato">Requisição</a>
+    </nav>
+    <a class="v24-mini-cta" href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">Consultar ↗</a>
+  </header>
+
+  <main>
+    <section id="hero" class="v24-hero" aria-labelledby="v24-hero-title" data-experience-section>
+      <canvas class="v24-steam" aria-hidden="true"></canvas>
+      <div class="v24-gear-field" aria-hidden="true">
+        <svg class="v24-gear-svg v24-spin-a v24-field-1"><use href="#v24-gear" /></svg>
+        <svg class="v24-gear-svg v24-spin-b v24-field-2"><use href="#v24-gear" /></svg>
+        <svg class="v24-gear-svg v24-spin-a v24-field-3"><use href="#v24-gear" /></svg>
+      </div>
+
+      <div class="v24-shell v24-hero-grid">
+        <div class="v24-hero-copy">
+          <p class="v24-eyebrow">Grande exposição de invenções · 1889</p>
+          <h1 id="v24-hero-title">A <em>Máquina Maravilhosa</em> que devolve tinta aos pincéis.</h1>
+          <p class="v24-lead">
+            Um engenho de cobre, latão e precisão: a FILL Ink Injector recarrega um pincel de quadro branco
+            em <strong>{numeros.recargaSegundos} segundos</strong> — e aposenta para sempre o pincel descartável.
+          </p>
+          <div class="v24-actions">
+            <a class="v24-button v24-button-primary" href="#produtos">Abrir o catálogo <span aria-hidden="true">↓</span></a>
+            <a class="v24-button" href="#simulador">Ver os cálculos</a>
+          </div>
+
+          <div class="v24-gauges" role="list" aria-label="Medidores da invenção">
+            <div class="v24-gauge" role="listitem" data-gauge data-value="22" data-max="30">
+              <div class="v24-gauge-dial">
+                <svg viewBox="0 0 120 84" aria-hidden="true">
+                  <path class="v24-dial-track" d="M14 66 A 47 47 0 0 1 106 66" />
+                  <path class="v24-dial-ticks" d="M14 66 A 47 47 0 0 1 106 66" pathLength="60" />
+                  <line class="v24-needle" x1="60" y1="66" x2="60" y2="30" />
+                  <circle class="v24-dial-hub" cx="60" cy="66" r="5" />
+                </svg>
+                <strong class="v24-gauge-value"><span data-gauge-number>22</span><small>s</small></strong>
+              </div>
+              <span class="v24-gauge-label">por recarga</span>
+            </div>
+            <div class="v24-gauge" role="listitem" data-gauge data-value="500" data-max="600">
+              <div class="v24-gauge-dial">
+                <svg viewBox="0 0 120 84" aria-hidden="true">
+                  <path class="v24-dial-track" d="M14 66 A 47 47 0 0 1 106 66" />
+                  <path class="v24-dial-ticks" d="M14 66 A 47 47 0 0 1 106 66" pathLength="60" />
+                  <line class="v24-needle" x1="60" y1="66" x2="60" y2="30" />
+                  <circle class="v24-dial-hub" cx="60" cy="66" r="5" />
+                </svg>
+                <strong class="v24-gauge-value">+<span data-gauge-number>500</span></strong>
+              </div>
+              <span class="v24-gauge-label">escolas atendidas</span>
+            </div>
+            <div class="v24-gauge" role="listitem" data-gauge data-value="1" data-max="1.5">
+              <div class="v24-gauge-dial">
+                <svg viewBox="0 0 120 84" aria-hidden="true">
+                  <path class="v24-dial-track" d="M14 66 A 47 47 0 0 1 106 66" />
+                  <path class="v24-dial-ticks" d="M14 66 A 47 47 0 0 1 106 66" pathLength="60" />
+                  <line class="v24-needle" x1="60" y1="66" x2="60" y2="30" />
+                  <circle class="v24-dial-hub" cx="60" cy="66" r="5" />
+                </svg>
+                <strong class="v24-gauge-value"><span data-gauge-number>1</span><small>&nbsp;km</small></strong>
+              </div>
+              <span class="v24-gauge-label">de escrita por recarga</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="v24-hero-machine">
+          <svg class="v24-gear-svg v24-gear-big" data-gear-scroll="0.05" aria-hidden="true"><use href="#v24-gear" /></svg>
+          <svg class="v24-gear-svg v24-gear-small v24-spin-b" aria-hidden="true"><use href="#v24-gear" /></svg>
+          <div class="v24-porthole">
+            <Image
+              src={maquinaRender}
+              alt="Máquina FILL Ink Injector, a invenção de recarga automática de pincéis"
+              widths={[420, 640, 900]}
+              sizes="(min-width: 900px) 38vw, 80vw"
+              loading="eager"
+            />
+          </div>
+          <span class="v24-vent" aria-hidden="true"></span>
+          <p class="v24-machine-caption">Fig. 1 — Ink Injector, aparelho de recarga automática</p>
+        </div>
+      </div>
+
+      <div class="v24-ticker" aria-hidden="true">
+        <span>Patente nacional · {numeros.recargaSegundos} segundos por recarga · {numeros.escolas} escolas · {numeros.escritaKm} km de escrita · Patente nacional · {numeros.recargaSegundos} segundos por recarga · {numeros.escolas} escolas · {numeros.escritaKm} km de escrita · </span>
+      </div>
+    </section>
+
+    <section class="v24-blueprint" aria-labelledby="v24-blueprint-title">
+      <div class="v24-shell v24-blueprint-grid">
+        <figure class="v24-blueprint-figure">
+          <div class="v24-blueprint-paper">
+            <Image
+              src={maquinaPerfil}
+              alt="Vista de perfil da máquina FILL Ink Injector desenhada em planta técnica"
+              widths={[420, 640, 900]}
+              sizes="(min-width: 900px) 42vw, 86vw"
+              loading="lazy"
+            />
+            <span class="v24-dim v24-dim-v" aria-hidden="true"><i>recarga vertical</i></span>
+            <span class="v24-dim v24-dim-h" aria-hidden="true"><i>ciclo de {numeros.recargaSegundos} s</i></span>
+          </div>
+          <figcaption class="v24-note">“…admirável engenho: inserido o pincel exausto, restitui-o pleno de tinta antes que a campainha soe.”</figcaption>
+        </figure>
+        <div class="v24-blueprint-copy">
+          <p class="v24-eyebrow">Planta técnica · Fig. 2</p>
+          <h2 id="v24-blueprint-title">Desenhada como uma invenção de 1889. Fabricada em Betim.</h2>
+          <p>
+            Por trás do latão e do vapor, um sistema absolutamente moderno: tecnologia 100% nacional e
+            patenteada, em regime de comodato, que substitui milhares de pincéis descartáveis por um único
+            ciclo de uso, recarga e continuidade.
+          </p>
+          <ul class="v24-specs" role="list">
+            <li><strong>{numeros.recargaSegundos}s</strong><span>recarga automática</span></li>
+            <li><strong>R$ 10,99</strong><span>por crédito de recarga</span></li>
+            <li><strong>{numeros.escritaKm} km</strong><span>de escrita por carga</span></li>
+            <li><strong>100%</strong><span>tecnologia nacional</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="v24-patent" aria-labelledby="v24-patent-title">
+      <div class="v24-shell">
+        <div class="v24-certificate">
+          <p class="v24-cert-eyebrow">República Federativa do Brasil · Ofício de Registro de Invenções</p>
+          <h2 id="v24-patent-title">Certificado de Patente de Invenção</h2>
+          <p class="v24-cert-num">Aparelho automático para recarga de pincéis de quadro branco</p>
+          <p class="v24-cert-text">
+            Certifica-se que a {empresa.nome}, estabelecida em {empresa.cidade}, é a única fabricante
+            desta tecnologia no mundo, com patente registrada — um engenho que recarrega, conserva e
+            prolonga os pincéis das escolas brasileiras.
+          </p>
+          <div class="v24-cert-foot">
+            <div class="v24-cert-sign">
+              <p class="v24-sign">Allcanci Tecnologia</p>
+              <p class="v24-sign-role">Titular da invenção · Betim, Minas Gerais</p>
+            </div>
+            <div class="v24-seal" aria-hidden="true"><span>FILL<br />· 1889 ·</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ExperienceBody prefix="v24" copy={copy} />
+  </main>
+  <script src="../../scripts/v24.js"></script>
+</Layout>
