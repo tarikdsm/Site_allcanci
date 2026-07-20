@@ -1,8 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const read = (path) => readFileSync(path, 'utf8');
+
+function listSourceFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    return entry.isDirectory() ? listSourceFiles(path) : [path];
+  });
+}
 
 test('a página definitiva ocupa a raiz e usa nomes neutros', () => {
   assert.equal(existsSync('src/styles/site.css'), true);
@@ -45,6 +53,16 @@ test('não existem rotas nem implementações alternativas', () => {
     'design-system',
   ]) {
     assert.equal(existsSync(path), false, `${path} deve ter sido removido`);
+  }
+});
+
+test('os arquivos-fonte do produto não usam nomenclatura numerada', () => {
+  const numberedName = /\.v(?:\d+|N)-|\bv\d+(?:-|\b)|--v\d+-/i;
+  const sourceFiles = listSourceFiles('src')
+    .filter((path) => /\.(astro|css|js|ts)$/.test(path));
+
+  for (const path of sourceFiles) {
+    assert.doesNotMatch(read(path), numberedName, `${path} contém nomenclatura numerada`);
   }
 });
 

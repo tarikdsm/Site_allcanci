@@ -52,7 +52,7 @@ body { margin: 0; font-family: var(--font-texto); color: var(--preto); }
    max-height é a rede de segurança mobile: nenhuma imagem pode "explodir" em
    altura — neutraliza o bug do iOS Safari em que uma imagem cresce infinitamente
    dentro de um container flex/grid com aspect-ratio.
-   Convenção para "palcos" de foto (.vN-produto-foto, .vN-card-foto, etc.):
+   Convenção para palcos de foto de produto e de card:
    use max-width/max-height + width/height:auto — NUNCA height:100%. */
 img { display: block; max-width: 100%; height: auto; max-height: 100svh; }
 :focus-visible { outline: 3px solid var(--azul-claro); outline-offset: 3px; }

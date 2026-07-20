@@ -1,7 +1,16 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
 
 const htmlPath = 'dist/index.html';
 const problemas = [];
+
+function listHtmlFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) return listHtmlFiles(path);
+    return entry.isFile() && entry.name.toLowerCase().endsWith('.html') ? [path] : [];
+  });
+}
 
 if (!existsSync(htmlPath)) {
   problemas.push('dist/index.html ausente');
@@ -27,13 +36,13 @@ if (!existsSync(htmlPath)) {
   if (/30 propostas|propostas de design/i.test(html)) problemas.push('texto do seletor encontrado');
 }
 
-const routeDirs = existsSync('dist')
-  ? readdirSync('dist', { withFileTypes: true })
-      .filter((entry) => entry.isDirectory() && /^v\d+$/.test(entry.name))
-      .map((entry) => entry.name)
+const routeHtmlFiles = existsSync('dist')
+  ? listHtmlFiles('dist')
+      .filter((path) => relative('dist', path) !== 'index.html')
+      .map((path) => relative('dist', path).replaceAll(sep, '/'))
   : [];
 
-if (routeDirs.length) problemas.push(`rotas numeradas geradas: ${routeDirs.join(', ')}`);
+if (routeHtmlFiles.length) problemas.push(`arquivos HTML de rota gerados: ${routeHtmlFiles.join(', ')}`);
 
 if (problemas.length) {
   console.error(`FALHOU ${htmlPath}:\n- ${problemas.join('\n- ')}`);
