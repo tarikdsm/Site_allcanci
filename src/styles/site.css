@@ -1,22 +1,17 @@
-/* ============================================================
-   V3 — "Sala de Aula" · lúdico educacional
-   O site É um quadro branco: fundo branco com moldura de
-   alumínio fixa no viewport, títulos Nunito 900, doodles de
-   marcador nas tintas (azul, vermelho, preto), post-its em
-   amarelo/verde e stickers com sombra dura deslocada.
-   Carregado exclusivamente por /v3/.
-   ============================================================ */
+/* ================================================================
+   Site institucional Allcanci ? linguagem visual de sala de aula
+   ================================================================ */
 
-:root:has(body.v3) {
+:root:has(body.site) {
   background: var(--branco);
   scroll-padding-top: 5.5rem;
 }
 
-body.v3 {
-  --v3-pad: clamp(1.15rem, 4vw, 2.5rem);
-  --v3-borda: 3px solid var(--preto);
-  --v3-pauta: 2.3rem; /* altura da linha do caderno (FAQ) */
-  --v3-fator-rot: 1; /* rotações lúdicas — reduzidas no mobile */
+body.site {
+  --site-pad: clamp(1.15rem, 4vw, 2.5rem);
+  --site-borda: 3px solid var(--preto);
+  --site-pauta: 2.3rem; /* altura da linha do caderno (FAQ) */
+  --site-fator-rot: 1; /* rotações lúdicas — reduzidas no mobile */
   background: var(--branco);
   color: var(--preto);
   font-family: var(--font-texto);
@@ -27,19 +22,19 @@ body.v3 {
 }
 
 @media (max-width: 700px) {
-  body.v3 {
-    --v3-fator-rot: 0.3;
+  body.site {
+    --site-fator-rot: 0.3;
   }
 }
 
 /* Seleção de texto = marca-texto amarelo */
-.v3 ::selection {
+.site ::selection {
   background: var(--amarelo);
   color: var(--preto);
 }
 
 /* ── Moldura de alumínio do quadro branco (fixa no viewport) ── */
-body.v3::before {
+body.site::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -54,14 +49,14 @@ body.v3::before {
 
 /* ── Utilitários ──────────────────────────────────────────── */
 
-.v3-caixa {
+.site-caixa {
   width: 100%;
   max-width: var(--largura-conteudo);
   margin-inline: auto;
-  padding-inline: var(--v3-pad);
+  padding-inline: var(--site-pad);
 }
 
-.v3-skip {
+.site-skip {
   position: absolute;
   left: -999px;
   top: 0;
@@ -73,13 +68,13 @@ body.v3::before {
   font-weight: 900;
 }
 
-.v3-skip:focus-visible {
+.site-skip:focus-visible {
   left: 0;
 }
 
-.v3 h1,
-.v3 h2,
-.v3 h3 {
+.site h1,
+.site h2,
+.site h3 {
   margin: 0;
   font-family: var(--font-titulo);
   font-weight: 900;
@@ -89,7 +84,7 @@ body.v3::before {
 }
 
 /* Kicker com pincelada de marca-texto amarelo antes */
-.v3-kicker {
+.site-kicker {
   display: flex;
   align-items: center;
   gap: 0.55rem;
@@ -102,7 +97,7 @@ body.v3::before {
   color: var(--azul);
 }
 
-.v3-kicker::before {
+.site-kicker::before {
   content: '';
   width: 1.5rem;
   height: 0.5rem;
@@ -111,22 +106,22 @@ body.v3::before {
   transform: skewX(-16deg);
 }
 
-.v3-cabeca {
+.site-cabeca {
   max-width: 46rem;
 }
 
-.v3-titulo {
+.site-titulo {
   font-size: var(--titulo-md);
 }
 
-.v3-sub {
+.site-sub {
   margin: 1.1rem 0 0;
   max-width: 40rem;
   font-size: var(--texto-lg);
   line-height: 1.6;
 }
 
-.v3-secao {
+.site-secao {
   padding-top: var(--espaco-secao);
 }
 
@@ -134,20 +129,20 @@ body.v3::before {
    O JS mede cada path e o esconde via dashoffset; ao entrar
    na tela a seção ganha .desenhado e o traço se desenha.
    Sem JS, os paths ficam visíveis desde o início. */
-.v3 .traco path {
+.site .traco path {
   transition: stroke-dashoffset 900ms ease-out;
 }
 
-.v3 .traco path + path {
+.site .traco path + path {
   transition-delay: 260ms;
 }
 
-.v3 .traco.desenhado path {
+.site .traco.desenhado path {
   stroke-dashoffset: 0 !important;
 }
 
 /* Traço ondulado sob os títulos de seção */
-.v3-traco-titulo {
+.site-traco-titulo {
   display: block;
   width: min(20rem, 78%);
   height: clamp(0.55rem, 1.4vw, 0.85rem);
@@ -157,12 +152,12 @@ body.v3::before {
 
 /* ── Botões-sticker (sombra dura deslocada) ───────────────── */
 
-.v3-botao {
+.site-botao {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   padding: 0.85rem 1.7rem;
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-pill);
   font-family: var(--font-titulo);
   font-weight: 900;
@@ -171,40 +166,40 @@ body.v3::before {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.v3-botao--azul {
+.site-botao--azul {
   background: var(--azul);
   color: var(--branco);
   box-shadow: 0.45rem 0.45rem 0 var(--preto);
 }
 
 /* Verde-pílula: texto PRETO no verde (branco no verde falha contraste) */
-.v3-botao--verde {
+.site-botao--verde {
   background: var(--verde);
   color: var(--preto);
   box-shadow: 0.45rem 0.45rem 0 var(--preto);
 }
 
-.v3-botao--contorno {
+.site-botao--contorno {
   background: var(--branco);
   color: var(--preto);
   box-shadow: 0.45rem 0.45rem 0 var(--nevoa);
 }
 
-.v3-botao:hover {
+.site-botao:hover {
   transform: translate(0.2rem, 0.2rem);
   box-shadow: 0.25rem 0.25rem 0 var(--preto);
 }
 
-.v3-botao--contorno:hover {
+.site-botao--contorno:hover {
   box-shadow: 0.25rem 0.25rem 0 var(--nevoa);
 }
 
-.v3-botao:active {
+.site-botao:active {
   transform: translate(0.45rem, 0.45rem);
   box-shadow: 0 0 0 var(--preto);
 }
 
-.v3-botao--mini {
+.site-botao--mini {
   padding: 0.5rem 1.05rem;
   font-size: 0.92rem;
   border-width: 2.5px;
@@ -213,7 +208,7 @@ body.v3::before {
 
 /* ── Topo: a "calha de marcadores" do quadro ─────────────── */
 
-.v3-topo {
+.site-topo {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -222,7 +217,7 @@ body.v3::before {
   border-bottom: 3px solid var(--preto);
 }
 
-.v3-topo-linha {
+.site-topo-linha {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -230,7 +225,7 @@ body.v3::before {
   padding-block: 0.7rem;
 }
 
-.v3-marca {
+.site-marca {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -242,29 +237,29 @@ body.v3::before {
   white-space: nowrap;
 }
 
-.v3-marca span {
+.site-marca span {
   font-weight: 800;
   color: var(--azul);
 }
 
 /* Tampas dos três marcadores na calha */
-.v3-tampas {
+.site-tampas {
   display: inline-flex;
   gap: 0.28rem;
 }
 
-.v3-tampas i {
+.site-tampas i {
   width: 0.72rem;
   height: 0.72rem;
   border: 2px solid var(--preto);
   border-radius: 50%;
 }
 
-.v3-tampas i:nth-child(1) { background: var(--azul); }
-.v3-tampas i:nth-child(2) { background: var(--vermelho); }
-.v3-tampas i:nth-child(3) { background: var(--verde); }
+.site-tampas i:nth-child(1) { background: var(--azul); }
+.site-tampas i:nth-child(2) { background: var(--vermelho); }
+.site-tampas i:nth-child(3) { background: var(--verde); }
 
-.v3-menu {
+.site-menu {
   display: flex;
   gap: clamp(0.9rem, 2vw, 1.6rem);
   margin: 0;
@@ -272,31 +267,31 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-menu a {
+.site-menu a {
   font-weight: 800;
   font-size: var(--texto-sm);
   color: var(--preto);
   text-decoration: none;
 }
 
-.v3-menu a:hover {
+.site-menu a:hover {
   text-decoration: underline wavy var(--azul) 2px;
   text-underline-offset: 0.35em;
 }
 
 @media (max-width: 880px) {
-  .v3-nav {
+  .site-nav {
     display: none;
   }
 }
 
 /* Telas bem estreitas: a marca encurta para "allcanci" e o botão aperta */
 @media (max-width: 460px) {
-  .v3-marca > span:not(.v3-tampas) {
+  .site-marca > span:not(.site-tampas) {
     display: none;
   }
 
-  .v3-botao--mini {
+  .site-botao--mini {
     padding: 0.45rem 0.85rem;
     font-size: 0.85rem;
   }
@@ -304,26 +299,26 @@ body.v3::before {
 
 /* ── Hero ─────────────────────────────────────────────────── */
 
-.v3-hero {
+.site-hero {
   position: relative;
   padding-top: clamp(2.6rem, 6vw, 4.5rem);
 }
 
-.v3-hero-grade {
+.site-hero-grade {
   display: grid;
   gap: 2.6rem;
   align-items: center;
 }
 
 @media (min-width: 960px) {
-  .v3-hero-grade {
+  .site-hero-grade {
     grid-template-columns: 1.05fr 0.95fr;
     gap: 3.2rem;
   }
 }
 
 /* Etiqueta de crachá da escola */
-.v3-etiqueta {
+.site-etiqueta {
   display: inline-block;
   padding: 0.4rem 1rem;
   border: 2.5px solid var(--preto);
@@ -334,17 +329,17 @@ body.v3::before {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   box-shadow: 0.3rem 0.3rem 0 var(--amarelo);
-  transform: rotate(calc(-1.5deg * var(--v3-fator-rot)));
+  transform: rotate(calc(-1.5deg * var(--site-fator-rot)));
 }
 
-.v3-hero h1 {
+.site-hero h1 {
   margin-top: 1.4rem;
   font-size: var(--titulo-lg);
   max-width: 13ch;
 }
 
 /* Palavra circulada em vermelho-marcador */
-.v3-circulado {
+.site-circulado {
   position: relative;
   display: inline-block;
   padding: 0 0.08em;
@@ -352,7 +347,7 @@ body.v3::before {
   color: var(--vermelho);
 }
 
-.v3-circulado .traco {
+.site-circulado .traco {
   position: absolute;
   left: -0.38em;
   top: -0.3em;
@@ -362,14 +357,14 @@ body.v3::before {
   pointer-events: none;
 }
 
-.v3-hero-sub {
+.site-hero-sub {
   margin: 1.3rem 0 0;
   max-width: 34rem;
   font-size: var(--texto-lg);
   line-height: 1.6;
 }
 
-.v3-hero-ctas {
+.site-hero-ctas {
   display: flex;
   flex-wrap: wrap;
   gap: 1.2rem;
@@ -377,23 +372,23 @@ body.v3::before {
 }
 
 /* Foto no "cartão colado com fita" */
-.v3-quadro-foto {
+.site-quadro-foto {
   position: relative;
   margin: 0;
   padding: 1.2rem 1.2rem 0.9rem;
   background: var(--branco);
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-md);
   box-shadow: 0.6rem 0.6rem 0 var(--azul);
-  transform: rotate(calc(1.6deg * var(--v3-fator-rot)));
+  transform: rotate(calc(1.6deg * var(--site-fator-rot)));
 }
 
-.v3-quadro-foto img {
+.site-quadro-foto img {
   width: 100%;
   border-radius: var(--raio-sm);
 }
 
-.v3-quadro-foto figcaption {
+.site-quadro-foto figcaption {
   padding-top: 0.6rem;
   font-weight: 800;
   font-size: var(--texto-xs);
@@ -403,7 +398,7 @@ body.v3::before {
 }
 
 /* Fita adesiva translúcida */
-.v3-fita::before {
+.site-fita::before {
   content: '';
   position: absolute;
   top: -0.8rem;
@@ -418,7 +413,7 @@ body.v3::before {
 }
 
 /* Post-its amarelos com os números */
-.v3-postits {
+.site-postits {
   display: flex;
   flex-wrap: wrap;
   gap: 1.7rem 1.9rem;
@@ -427,7 +422,7 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-postit {
+.site-postit {
   position: relative;
   width: min(11.5rem, 100%);
   min-height: 8.6rem;
@@ -436,10 +431,10 @@ body.v3::before {
   color: var(--preto);
   border-radius: 2px;
   box-shadow: 0 0.5rem 0 rgba(8, 8, 8, 0.12);
-  transform: rotate(calc(var(--rot, 0deg) * var(--v3-fator-rot)));
+  transform: rotate(calc(var(--rot, 0deg) * var(--site-fator-rot)));
 }
 
-.v3-postit strong {
+.site-postit strong {
   display: block;
   font-family: var(--font-titulo);
   font-weight: 900;
@@ -447,7 +442,7 @@ body.v3::before {
   line-height: 1;
 }
 
-.v3-postit span {
+.site-postit span {
   display: block;
   margin-top: 0.35rem;
   font-weight: 700;
@@ -455,12 +450,12 @@ body.v3::before {
   line-height: 1.35;
 }
 
-.v3-postit:nth-child(1) { --rot: -2.4deg; }
-.v3-postit:nth-child(2) { --rot: 1.8deg; }
-.v3-postit:nth-child(3) { --rot: -1.1deg; }
+.site-postit:nth-child(1) { --rot: -2.4deg; }
+.site-postit:nth-child(2) { --rot: 1.8deg; }
+.site-postit:nth-child(3) { --rot: -1.1deg; }
 
 /* Seta-doodle do hero (some no mobile) */
-.v3-hero-doodle {
+.site-hero-doodle {
   position: absolute;
   top: clamp(7rem, 14vw, 10rem);
   left: 51%;
@@ -470,14 +465,14 @@ body.v3::before {
 }
 
 @media (max-width: 959px) {
-  .v3-hero-doodle {
+  .site-hero-doodle {
     display: none;
   }
 }
 
 /* ── #produtos: cards-sticker ─────────────────────────────── */
 
-.v3-produtos-grade {
+.site-produtos-grade {
   display: grid;
   gap: 2.2rem 2rem;
   margin: 2.8rem 0 0;
@@ -486,54 +481,54 @@ body.v3::before {
 }
 
 @media (min-width: 640px) {
-  .v3-produtos-grade {
+  .site-produtos-grade {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1000px) {
-  .v3-produtos-grade {
+  .site-produtos-grade {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.v3-produto {
+.site-produto {
   display: flex;
   flex-direction: column;
   background: var(--branco);
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-md);
-  box-shadow: 0.55rem 0.55rem 0 var(--v3-sombra-cor, var(--azul));
-  transform: rotate(calc(var(--rot, 0deg) * var(--v3-fator-rot)));
+  box-shadow: 0.55rem 0.55rem 0 var(--site-sombra-cor, var(--azul));
+  transform: rotate(calc(var(--rot, 0deg) * var(--site-fator-rot)));
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-.v3-produto:nth-child(3n + 1) { --v3-sombra-cor: var(--azul); }
-.v3-produto:nth-child(3n + 2) { --v3-sombra-cor: var(--vermelho); }
-.v3-produto:nth-child(3n) { --v3-sombra-cor: var(--verde); }
-.v3-produto:nth-child(odd) { --rot: -0.6deg; }
-.v3-produto:nth-child(even) { --rot: 0.7deg; }
+.site-produto:nth-child(3n + 1) { --site-sombra-cor: var(--azul); }
+.site-produto:nth-child(3n + 2) { --site-sombra-cor: var(--vermelho); }
+.site-produto:nth-child(3n) { --site-sombra-cor: var(--verde); }
+.site-produto:nth-child(odd) { --rot: -0.6deg; }
+.site-produto:nth-child(even) { --rot: 0.7deg; }
 
-.v3-produto:hover {
+.site-produto:hover {
   transform: rotate(0deg) translate(-0.2rem, -0.2rem);
-  box-shadow: 0.75rem 0.75rem 0 var(--v3-sombra-cor, var(--azul));
+  box-shadow: 0.75rem 0.75rem 0 var(--site-sombra-cor, var(--azul));
 }
 
-.v3-produto-foto {
+.site-produto-foto {
   display: grid;
   place-items: center;
   min-height: 13rem;
   padding: 1.4rem 1.4rem 0.6rem;
 }
 
-.v3-produto-foto img {
+.site-produto-foto img {
   width: auto;
   max-width: 100%;
   max-height: 11rem;
   object-fit: contain;
 }
 
-.v3-produto-corpo {
+.site-produto-corpo {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -541,7 +536,7 @@ body.v3::before {
   border-top: 3px dashed rgba(8, 8, 8, 0.22);
 }
 
-.v3-produto-tag {
+.site-produto-tag {
   align-self: flex-start;
   padding: 0.28rem 0.7rem;
   border-radius: 4px;
@@ -551,22 +546,22 @@ body.v3::before {
   font-size: var(--texto-xs);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  transform: rotate(calc(-1.2deg * var(--v3-fator-rot)));
+  transform: rotate(calc(-1.2deg * var(--site-fator-rot)));
 }
 
-.v3-produto h3 {
+.site-produto h3 {
   margin-top: 0.8rem;
   font-size: 1.4rem;
 }
 
-.v3-produto-desc {
+.site-produto-desc {
   margin: 0.6rem 0 0;
   font-size: var(--texto-sm);
   line-height: 1.6;
 }
 
 /* Checklist "de giz" com checks desenhados a marcador azul */
-.v3-checklist {
+.site-checklist {
   display: grid;
   gap: 0.5rem;
   margin: 1.1rem 0 0;
@@ -574,14 +569,14 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-checklist li {
+.site-checklist li {
   position: relative;
   padding-left: 1.75rem;
   font-weight: 700;
   font-size: var(--texto-sm);
 }
 
-.v3-checklist li::before {
+.site-checklist li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -594,7 +589,7 @@ body.v3::before {
 
 /* ── #como-funciona: trilha tracejada entre os cartões ────── */
 
-.v3-trilha {
+.site-trilha {
   display: flex;
   flex-direction: column;
   max-width: 62rem;
@@ -603,29 +598,29 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-etapa {
+.site-etapa {
   display: flex;
   flex-direction: column;
 }
 
-.v3-etapa-cartao {
+.site-etapa-cartao {
   display: flex;
   gap: 1.1rem;
   align-items: flex-start;
   width: min(30rem, 100%);
   padding: 1.4rem 1.6rem;
   background: var(--branco);
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-md);
   box-shadow: 0.45rem 0.45rem 0 var(--nevoa);
 }
 
-.v3-etapa:nth-child(even) .v3-etapa-cartao {
+.site-etapa:nth-child(even) .site-etapa-cartao {
   align-self: flex-end;
 }
 
 /* Conector: curva tracejada com ponta de seta, serpenteando */
-.v3-etapa:not(:last-child)::after {
+.site-etapa:not(:last-child)::after {
   content: '';
   align-self: center;
   width: min(13rem, 46%);
@@ -635,19 +630,19 @@ body.v3::before {
     center / 100% 100% no-repeat;
 }
 
-.v3-etapa:nth-child(even):not(:last-child)::after {
+.site-etapa:nth-child(even):not(:last-child)::after {
   transform: scaleX(-1);
 }
 
 @media (max-width: 640px) {
-  .v3-etapa:not(:last-child)::after {
+  .site-etapa:not(:last-child)::after {
     width: 4.5rem;
     height: 3.4rem;
   }
 }
 
 /* Número dentro de um círculo de marcador desenhado */
-.v3-etapa-num {
+.site-etapa-num {
   position: relative;
   display: grid;
   place-items: center;
@@ -659,7 +654,7 @@ body.v3::before {
   font-size: 1.45rem;
 }
 
-.v3-etapa-num svg {
+.site-etapa-num svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -667,11 +662,11 @@ body.v3::before {
   overflow: visible;
 }
 
-.v3-etapa-cartao h3 {
+.site-etapa-cartao h3 {
   font-size: 1.25rem;
 }
 
-.v3-etapa-cartao p {
+.site-etapa-cartao p {
   margin: 0.45rem 0 0;
   font-size: var(--texto-sm);
   line-height: 1.6;
@@ -679,25 +674,25 @@ body.v3::before {
 
 /* ── #simulador: a continha no quadro ─────────────────────── */
 
-.v3-conta {
+.site-conta {
   display: grid;
   gap: 2.4rem;
   margin-top: 2.8rem;
   padding: clamp(1.5rem, 4vw, 2.8rem);
   background: var(--branco);
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-lg);
   box-shadow: 0.7rem 0.7rem 0 var(--nevoa);
 }
 
 @media (min-width: 960px) {
-  .v3-conta {
+  .site-conta {
     grid-template-columns: 0.9fr 1.1fr;
     gap: 3rem;
   }
 }
 
-.v3-conta-label {
+.site-conta-label {
   display: block;
   font-family: var(--font-titulo);
   font-weight: 900;
@@ -705,14 +700,14 @@ body.v3::before {
   line-height: 1.25;
 }
 
-.v3-conta-controles {
+.site-conta-controles {
   display: flex;
   align-items: center;
   gap: 1.1rem;
   margin-top: 1.2rem;
 }
 
-.v3-conta-controles input[type='range'] {
+.site-conta-controles input[type='range'] {
   flex: 1;
   min-width: 0;
   height: 2.4rem;
@@ -723,7 +718,7 @@ body.v3::before {
 #sim-professores-num {
   width: 5.5ch;
   padding: 0.4rem 0.3rem;
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-sm);
   background: var(--branco);
   color: var(--preto);
@@ -733,7 +728,7 @@ body.v3::before {
   text-align: center;
 }
 
-.v3-premissas {
+.site-premissas {
   margin: 1.4rem 0 0;
   max-width: 34rem;
   font-size: var(--texto-xs);
@@ -742,13 +737,13 @@ body.v3::before {
 }
 
 /* As linhas da equação, escritas "a marcador" */
-.v3-conta-quadro {
+.site-conta-quadro {
   display: grid;
   gap: 1.3rem;
   align-content: center;
 }
 
-.v3-conta-linha {
+.site-conta-linha {
   margin: 0;
   font-family: var(--font-titulo);
   font-weight: 800;
@@ -756,7 +751,7 @@ body.v3::before {
   line-height: 1.5;
 }
 
-.v3-conta-rotulo {
+.site-conta-rotulo {
   display: block;
   margin-bottom: 0.15rem;
   font-family: var(--font-texto);
@@ -767,36 +762,36 @@ body.v3::before {
   color: rgba(8, 8, 8, 0.6);
 }
 
-.v3-conta-linha strong {
+.site-conta-linha strong {
   font-weight: 900;
 }
 
-.v3-op {
+.site-op {
   padding-inline: 0.18em;
   color: var(--azul);
   font-weight: 900;
 }
 
-.v3-custo-ruim {
+.site-custo-ruim {
   color: var(--vermelho);
 }
 
-.v3-custo-bom {
+.site-custo-bom {
   color: var(--azul);
 }
 
-.v3-conta-economia {
+.site-conta-economia {
   font-size: clamp(1.45rem, 1.2rem + 1.4vw, 2.1rem);
 }
 
 /* Resultado com sublinhado duplo de marcador verde */
-.v3-sublinhado {
+.site-sublinhado {
   position: relative;
   display: inline-block;
   padding-bottom: 0.3em;
 }
 
-.v3-sublinhado .traco {
+.site-sublinhado .traco {
   position: absolute;
   left: -0.2em;
   bottom: 0;
@@ -806,13 +801,13 @@ body.v3::before {
   pointer-events: none;
 }
 
-.v3-conta-bonus {
+.site-conta-bonus {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
 }
 
-.v3-folha {
+.site-folha {
   flex: none;
   width: 1.25em;
   height: 1.25em;
@@ -821,7 +816,7 @@ body.v3::before {
 
 /* ── #prova-social: carimbo + selos-adesivos ─────────────── */
 
-.v3-prova-grade {
+.site-prova-grade {
   display: grid;
   gap: 2.6rem;
   align-items: center;
@@ -829,12 +824,12 @@ body.v3::before {
 }
 
 @media (min-width: 900px) {
-  .v3-prova-grade {
+  .site-prova-grade {
     grid-template-columns: 1.15fr 0.85fr;
   }
 }
 
-.v3-carimbo {
+.site-carimbo {
   position: relative;
   justify-self: center;
   padding: 1.2rem 1.8rem 1.3rem;
@@ -848,10 +843,10 @@ body.v3::before {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transform: rotate(calc(-7deg * var(--v3-fator-rot)));
+  transform: rotate(calc(-7deg * var(--site-fator-rot)));
 }
 
-.v3-carimbo::before {
+.site-carimbo::before {
   content: '';
   position: absolute;
   inset: 5px;
@@ -859,7 +854,7 @@ body.v3::before {
   border-radius: 8px;
 }
 
-.v3-carimbo small {
+.site-carimbo small {
   display: block;
   margin-top: 0.3rem;
   font-family: var(--font-texto);
@@ -868,7 +863,7 @@ body.v3::before {
   letter-spacing: 0.2em;
 }
 
-.v3-selos {
+.site-selos {
   display: flex;
   flex-wrap: wrap;
   gap: 1.05rem 1.15rem;
@@ -877,7 +872,7 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-selo {
+.site-selo {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -887,29 +882,29 @@ body.v3::before {
   border-radius: var(--raio-pill);
   font-weight: 800;
   font-size: var(--texto-sm);
-  box-shadow: 0.3rem 0.3rem 0 var(--v3-selo-cor, var(--nevoa));
-  transform: rotate(calc(var(--rot, 0deg) * var(--v3-fator-rot)));
+  box-shadow: 0.3rem 0.3rem 0 var(--site-selo-cor, var(--nevoa));
+  transform: rotate(calc(var(--rot, 0deg) * var(--site-fator-rot)));
 }
 
-.v3-selo::before {
+.site-selo::before {
   content: '';
   flex: none;
   width: 0.7rem;
   height: 0.7rem;
   border: 2px solid var(--preto);
   border-radius: 50%;
-  background: var(--v3-selo-cor, var(--nevoa));
+  background: var(--site-selo-cor, var(--nevoa));
 }
 
-.v3-selo:nth-child(3n + 1) { --v3-selo-cor: var(--azul); }
-.v3-selo:nth-child(3n + 2) { --v3-selo-cor: var(--vermelho); }
-.v3-selo:nth-child(3n) { --v3-selo-cor: var(--verde); }
-.v3-selo:nth-child(odd) { --rot: -1.3deg; }
-.v3-selo:nth-child(even) { --rot: 1.1deg; }
+.site-selo:nth-child(3n + 1) { --site-selo-cor: var(--azul); }
+.site-selo:nth-child(3n + 2) { --site-selo-cor: var(--vermelho); }
+.site-selo:nth-child(3n) { --site-selo-cor: var(--verde); }
+.site-selo:nth-child(odd) { --rot: -1.3deg; }
+.site-selo:nth-child(even) { --rot: 1.1deg; }
 
 /* ── #sustentabilidade: post-its verdes/amarelos ─────────── */
 
-.v3-eco-grade {
+.site-eco-grade {
   display: grid;
   gap: 2rem 1.8rem;
   grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
@@ -918,25 +913,25 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-eco-postit {
+.site-eco-postit {
   position: relative;
   min-height: 11rem;
   padding: 1.8rem 1.4rem 1.5rem;
   color: var(--preto);
   border-radius: 2px;
   box-shadow: 0 0.5rem 0 rgba(8, 8, 8, 0.1);
-  transform: rotate(calc(var(--rot, 0deg) * var(--v3-fator-rot)));
+  transform: rotate(calc(var(--rot, 0deg) * var(--site-fator-rot)));
 }
 
-.v3-eco-postit:nth-child(odd) { background: var(--verde); --rot: -1.6deg; }
-.v3-eco-postit:nth-child(even) { background: var(--amarelo); --rot: 1.4deg; }
+.site-eco-postit:nth-child(odd) { background: var(--verde); --rot: -1.6deg; }
+.site-eco-postit:nth-child(even) { background: var(--amarelo); --rot: 1.4deg; }
 
-.v3-eco-postit h3 {
+.site-eco-postit h3 {
   font-size: 1.25rem;
   line-height: 1.2;
 }
 
-.v3-eco-postit p {
+.site-eco-postit p {
   margin: 0.55rem 0 0;
   font-weight: 600;
   font-size: var(--texto-sm);
@@ -945,11 +940,11 @@ body.v3::before {
 
 /* ── #faq: caderno pautado ────────────────────────────────── */
 
-.v3-caderno {
+.site-caderno {
   max-width: 54rem;
   margin-top: 2.8rem;
   padding: 1.15rem 1.7rem 1.15rem 3.7rem;
-  border: var(--v3-borda);
+  border: var(--site-borda);
   border-radius: var(--raio-sm);
   box-shadow: 0.6rem 0.6rem 0 var(--amarelo);
   background:
@@ -961,16 +956,16 @@ body.v3::before {
     ),
     repeating-linear-gradient(
       to bottom,
-      var(--branco) 0 calc(var(--v3-pauta) - 1px),
-      rgba(0, 138, 255, 0.3) calc(var(--v3-pauta) - 1px) var(--v3-pauta)
+      var(--branco) 0 calc(var(--site-pauta) - 1px),
+      rgba(0, 138, 255, 0.3) calc(var(--site-pauta) - 1px) var(--site-pauta)
     );
 }
 
-.v3-caderno details {
+.site-caderno details {
   margin: 0;
 }
 
-.v3-caderno summary {
+.site-caderno summary {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -979,40 +974,40 @@ body.v3::before {
   font-family: var(--font-titulo);
   font-weight: 800;
   font-size: 1.08rem;
-  line-height: var(--v3-pauta);
+  line-height: var(--site-pauta);
 }
 
-.v3-caderno summary::-webkit-details-marker {
+.site-caderno summary::-webkit-details-marker {
   display: none;
 }
 
-.v3-caderno summary:hover {
+.site-caderno summary:hover {
   color: var(--azul);
 }
 
-.v3-faq-seta {
+.site-faq-seta {
   flex: none;
   width: 1.1rem;
   transition: transform 0.25s ease;
 }
 
-.v3-caderno details[open] .v3-faq-seta {
+.site-caderno details[open] .site-faq-seta {
   transform: rotate(180deg);
 }
 
-.v3-caderno details[open] summary {
+.site-caderno details[open] summary {
   color: var(--azul);
 }
 
-.v3-faq-resposta {
+.site-faq-resposta {
   margin: 0 0 0 1.85rem;
   font-size: var(--texto-base);
-  line-height: var(--v3-pauta);
+  line-height: var(--site-pauta);
 }
 
 /* ── #contato: moldura de marcador azul desenhada ────────── */
 
-.v3-contato-card {
+.site-contato-card {
   position: relative;
   max-width: 62rem;
   margin-inline: auto;
@@ -1020,7 +1015,7 @@ body.v3::before {
   text-align: center;
 }
 
-.v3-moldura {
+.site-moldura {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1031,33 +1026,33 @@ body.v3::before {
 
 /* No mobile a moldura SVG esticaria demais: usa borda "torta" */
 @media (max-width: 820px) {
-  .v3-moldura {
+  .site-moldura {
     display: none;
   }
 
-  .v3-contato-card {
+  .site-contato-card {
     border: 4px solid var(--azul);
     border-radius: 28px 12px 30px 14px / 14px 30px 12px 28px;
   }
 }
 
-.v3-contato-card h2 {
+.site-contato-card h2 {
   font-size: var(--titulo-md);
   max-width: 20ch;
   margin-inline: auto;
 }
 
-.v3-contato-card > p {
+.site-contato-card > p {
   max-width: 38rem;
   margin: 1.1rem auto 0;
   font-size: var(--texto-lg);
 }
 
-.v3-contato-cta {
+.site-contato-cta {
   margin-top: 2rem;
 }
 
-.v3-contato-lista {
+.site-contato-lista {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1067,7 +1062,7 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-chip {
+.site-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -1083,12 +1078,12 @@ body.v3::before {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.v3-chip:hover {
+.site-chip:hover {
   transform: translate(0.12rem, 0.12rem);
   box-shadow: 0.12rem 0.12rem 0 var(--nevoa);
 }
 
-.v3-contato-card address {
+.site-contato-card address {
   margin-top: 1.5rem;
   font-style: normal;
   font-size: var(--texto-sm);
@@ -1096,7 +1091,7 @@ body.v3::before {
 }
 
 /* Redes com ícones rabiscados */
-.v3-redes {
+.site-redes {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1106,24 +1101,24 @@ body.v3::before {
   list-style: none;
 }
 
-.v3-redes .v3-chip {
+.site-redes .site-chip {
   color: var(--azul-900);
 }
 
-.v3-redes svg {
+.site-redes svg {
   width: 1.2rem;
   height: 1.2rem;
 }
 
 /* ── Rodapé ───────────────────────────────────────────────── */
 
-.v3-rodape {
+.site-rodape {
   margin-top: var(--espaco-secao);
   padding-block: 2.2rem 3.2rem;
   border-top: 3px dashed rgba(8, 8, 8, 0.35);
 }
 
-.v3-rodape-linha {
+.site-rodape-linha {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1131,13 +1126,13 @@ body.v3::before {
   gap: 1rem 2rem;
 }
 
-.v3-rodape p {
+.site-rodape p {
   margin: 0;
   font-size: var(--texto-sm);
   font-weight: 600;
 }
 
-.v3-rodape a {
+.site-rodape a {
   color: var(--azul);
   font-weight: 800;
   text-decoration: underline wavy var(--azul) 2px;
@@ -1146,7 +1141,7 @@ body.v3::before {
 
 /* ── Movimento reduzido: traços prontos, nada se mexe ─────── */
 @media (prefers-reduced-motion: reduce) {
-  .v3 .traco path {
+  .site .traco path {
     transition: none;
     stroke-dashoffset: 0 !important;
   }

@@ -26,8 +26,8 @@ if (!reduz) {
 }
 
 // Simulador (contrato de markup #sim-* — Task 5) + linha extra da continha:
-// o custo anual dos descartáveis (650 pincéis × R$ 4,50 = …) é exclusivo da V3.
+// O custo anual dos descartáveis é calculado com as premissas exibidas no simulador.
 bindSimulador((r) => {
-  const alvo = document.querySelector('#v3-custo-descartaveis');
+  const alvo = document.querySelector('#site-custo-descartaveis');
   if (alvo) alvo.textContent = reais(r.custoDescartaveis);
 });

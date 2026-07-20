@@ -1,796 +1,533 @@
 ---
+import type { ImageMetadata } from 'astro';
 import Layout from '../layouts/Layout.astro';
-import { getImage } from 'astro:assets';
-import { empresa, contatos, redes } from '../data/site';
-import { inkInjectorAberta } from '../data/imagens';
+import { Image, getImage } from 'astro:assets';
+import { empresa, numeros, contatos, redes } from '../data/site';
+import { produtos } from '../data/produtos';
+import { etapasComodato } from '../data/comodato';
+import { faq } from '../data/faq';
+import { provaSocial } from '../data/provaSocial';
+import { sustentabilidade } from '../data/sustentabilidade';
+import * as img from '../data/imagens';
+import { simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+import '../styles/site.css';
 
-const base = import.meta.env.BASE_URL;
 const ano = new Date().getFullYear();
 
-const ogImage = await getImage({ src: inkInjectorAberta, format: 'webp', width: 1200 });
+const ogImage = await getImage({ src: img.ecoMarkerTrio, format: 'webp', width: 1200 });
 
-const serie1 = [
-  {
-    num: 'V1',
-    slug: 'v1',
-    nome: 'Laboratório',
-    descricao: 'A máquina como protagonista, no escuro do laboratório.',
-    paleta: ['#080808', '#0000fe', '#008aff'],
-  },
-  {
-    num: 'V2',
-    slug: 'v2',
-    nome: 'Editorial',
-    descricao: 'Poppins gigante, grid suíço, confiança institucional.',
-    paleta: ['#fefff0', '#080808', '#0000fe'],
-  },
-  {
-    num: 'V3',
-    slug: 'v3',
-    nome: 'Sala de Aula',
-    descricao: 'O site é um quadro branco: traços de marcador ganham vida.',
-    paleta: ['#ffffff', '#0000fe', '#ff0c00', '#ffd100'],
-  },
-  {
-    num: 'V4',
-    slug: 'v4',
-    nome: 'Produto',
-    descricao: 'Um scroll, uma história: a recarga em 22 segundos.',
-    paleta: ['#ffffff', '#bbe0ef', '#0000fe'],
-  },
-  {
-    num: 'V5',
-    slug: 'v5',
-    nome: 'Tinta Viva',
-    descricao: 'A tinta reage ao seu cursor. O mais ousado.',
-    paleta: ['#fefff0', '#0000fe', '#ff0c00', '#080808'],
-  },
+// Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
+const professoresIniciais = 20;
+const sim0 = simular(professoresIniciais);
+
+// Post-its do hero — números vindos de src/data/site.ts
+const postits = [
+  { numero: numeros.escolas, rotulo: 'escolas já atendidas no Brasil' },
+  { numero: `${numeros.recargaSegundos}s`, rotulo: 'por recarga automática' },
+  { numero: `${numeros.escritaKm} km`, rotulo: 'de escrita por recarga' },
 ];
 
-const serie3d = [
-  {
-    num: 'V6',
-    slug: 'v6',
-    nome: 'Vitrine',
-    descricao: 'A máquina como peça de museu: gire a obra e toque nos detalhes.',
-    paleta: ['#0b0b0f', '#e6c87c', '#f6f1e4'],
+// Tintas do quadro — os círculos numerados da trilha alternam entre elas
+const tintas = ['var(--azul)', 'var(--vermelho)', 'var(--preto)'];
+
+// Variações do traço ondulado sob os títulos (mesma família de rabisco)
+const tracoA = 'M4 10 C 60 2, 120 14, 180 8 S 280 4, 316 9';
+const tracoB = 'M4 9 C 44 13, 92 3, 152 9 C 212 15, 262 4, 316 8';
+
+// Fotos dos produtos — página clara: todas as fotos são seguras aqui
+const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
+  'ink-injector': {
+    src: img.inkInjector,
+    alt: 'Máquina FILL Ink Injector vista de frente, com encaixes de recarga nas cores azul, preto e vermelho e visor digital aceso',
   },
-  {
-    num: 'V7',
-    slug: 'v7',
-    nome: 'Linha de Produção',
-    descricao: 'Prancheta de engenharia viva: a máquina gira conforme o scroll.',
-    paleta: ['#f3efe4', '#1d3fbf', '#ff5a1f'],
+  'eco-marker': {
+    src: img.ecoMarkerTrio,
+    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
   },
-  {
-    num: 'V8',
-    slug: 'v8',
-    nome: 'Quiosque Pop',
-    descricao: 'Neo-brutalismo pop: a máquina é o brinquedo da feira.',
-    paleta: ['#6c4df6', '#d9ff3f', '#ff7ac3', '#131313'],
+  'master-color': {
+    src: img.masterColorTrio,
+    alt: 'Três frascos de 500 ml de tinta FILL Master Color nas cores azul, vermelho e preto',
   },
-  {
-    num: 'V9',
-    slug: 'v9',
-    nome: 'Levitação',
-    descricao: 'Vidro, auroras e AR: veja a máquina em tamanho real na sua mesa.',
-    paleta: ['#fafbff', '#19c3b1', '#7b8cff', '#ffb2c7'],
+  'master-clean': {
+    src: img.masterClean,
+    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
   },
-  {
-    num: 'V10',
-    slug: 'v10',
-    nome: 'FILL OS',
-    descricao: 'O site é o firmware da máquina: boot, terminal e visor com raio-X.',
-    paleta: ['#060b1c', '#43e8ff', '#ffc14d'],
+  refil: {
+    src: img.ecoMarkerPreto,
+    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
   },
+  app: {
+    src: img.moedasCredito,
+    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+  },
+};
+
+const linksMenu = [
+  { href: '#produtos', rotulo: 'Produtos' },
+  { href: '#como-funciona', rotulo: 'Como funciona' },
+  { href: '#simulador', rotulo: 'Simulador' },
+  { href: '#sustentabilidade', rotulo: 'Sustentabilidade' },
+  { href: '#faq', rotulo: 'FAQ' },
+  { href: '#contato', rotulo: 'Contato' },
 ];
 
-const serieExperiencias = [
-  {
-    num: 'V11', slug: 'v11', nome: 'Ciclo Infinito',
-    descricao: 'Usar, recarregar e continuar em um circuito visual vivo.',
-    paleta: ['#f1efe7', '#0000fe', '#008f4c', '#d7ff54'],
-  },
-  {
-    num: 'V12', slug: 'v12', nome: 'Pitch 90s',
-    descricao: 'Uma apresentação imersiva que fala com cada decisor.',
-    paleta: ['#0d1026', '#4b5cff', '#ffd100', '#57e5ff'],
-  },
-  {
-    num: 'V13', slug: 'v13', nome: 'Corte o Desperdício',
-    descricao: 'Arraste a escola para o lado inteligente da comparação.',
-    paleta: ['#dedbd2', '#ff6a3d', '#fefff0', '#0000fe'],
-  },
-  {
-    num: 'V14', slug: 'v14', nome: 'Campus Vivo',
-    descricao: 'Explore o ecossistema FILL dentro de uma escola isométrica.',
-    paleta: ['#ccecff', '#dfffbd', '#0000fe', '#ffd100'],
-  },
-  {
-    num: 'V15', slug: 'v15', nome: 'Dossiê FILL',
-    descricao: 'A decisão institucional organizada em uma pasta viva.',
-    paleta: ['#10192f', '#f3ead8', '#1746d1', '#c93832'],
-  },
-];
-
-const serieDistopia = [
-  {
-    num: 'V16', slug: 'v16', nome: 'Distopia 2049',
-    descricao: 'Cyberpunk distópico: a resistência recarrega em 22 segundos.',
-    paleta: ['#05060a', '#00ff60', '#43e8ff', '#ff0c00'],
-  },
-  {
-    num: 'V20', slug: 'v20', nome: 'Noir: Pincel Desaparecido',
-    descricao: 'Cinema noir em P&B: a gota azul é a única pista.',
-    paleta: ['#0a0a0a', '#f3f3f3', '#0000fe'],
-  },
-  {
-    num: 'V21', slug: 'v21', nome: 'Órbita FILL',
-    descricao: 'O sistema FILL como sistema solar: descida do espaço à sala.',
-    paleta: ['#030014', '#7b8cff', '#43e8ff', '#fefff0'],
-  },
-  {
-    num: 'V25', slug: 'v25', nome: 'Gazeta de 2050',
-    descricao: 'Jornal de 2050: o fim histórico do pincel descartável.',
-    paleta: ['#f3efe4', '#080808', '#0000fe', '#ff0c00'],
-  },
-  {
-    num: 'V30', slug: 'v30', nome: 'Universo FILL', tag3d: true,
-    descricao: 'O grand finale: a FILL no centro de um universo 3D de tinta.',
-    paleta: ['#05060f', '#0000fe', '#43e8ff', '#ffd100'],
-  },
-];
-
-const serieArte = [
-  {
-    num: 'V17', slug: 'v17', nome: 'Galeria Tinta Viva',
-    descricao: 'Um museu onde a tinta nunca vira lixo.',
-    paleta: ['#f6f1e4', '#080808', '#0000fe', '#ff0c00'],
-  },
-  {
-    num: 'V19', slug: 'v19', nome: 'Zine Punk Xerox',
-    descricao: 'Colagem xerox punk: papel kraft, carimbos e anti-design.',
-    paleta: ['#f3ead8', '#080808', '#ff0c00', '#0000fe'],
-  },
-  {
-    num: 'V22', slug: 'v22', nome: 'Bauhaus Viva',
-    descricao: 'Cartaz construtivo: formas primárias que montam o reuso.',
-    paleta: ['#f3efe4', '#0000fe', '#ff0c00', '#ffd100'],
-  },
-  {
-    num: 'V26', slug: 'v26', nome: 'Tipografia Cinética',
-    descricao: 'A interface são as palavras: tipografia gigante coreografada.',
-    paleta: ['#0000fe', '#fefff0', '#ffd100'],
-  },
-  {
-    num: 'V29', slug: 'v29', nome: 'FILL: A Graphic Novel',
-    descricao: 'O fim do descartável contado em quadrinhos, quadro a quadro.',
-    paleta: ['#fff8e7', '#080808', '#ff0c00', '#0000fe'],
-  },
-];
-
-const serieMundos = [
-  {
-    num: 'V18', slug: 'v18', nome: 'Recarga Quest',
-    descricao: 'Ficha de arcade 8-bit: aperte start e zere o descarte.',
-    paleta: ['#0d0d1f', '#ffd100', '#00ff60', '#ff7ac3'],
-  },
-  {
-    num: 'V23', slug: 'v23', nome: 'Jardim Vivo',
-    descricao: 'Recarregar é regenerar: o FILL como um jardim vivo.',
-    paleta: ['#f1efe7', '#008f4c', '#00ff60', '#0000fe'],
-  },
-  {
-    num: 'V24', slug: 'v24', nome: 'A Máquina Maravilhosa',
-    descricao: 'Steampunk 1889: a FILL como invenção de Jules Verne.',
-    paleta: ['#1a120b', '#c98a3d', '#e6c87c', '#f3ead8'],
-  },
-  {
-    num: 'V27', slug: 'v27', nome: 'Fábrica Maluca',
-    descricao: 'Máquina Rube Goldberg em SVG que desce pela página.',
-    paleta: ['#fefff0', '#0000fe', '#ff6a3d', '#ffd100'],
-  },
-  {
-    num: 'V28', slug: 'v28', nome: 'Oceano de Tinta',
-    descricao: 'Mergulhe num mar de tinta até o fim do descartável.',
-    paleta: ['#001a33', '#008aff', '#43e8ff', '#bbe0ef'],
-  },
-];
+const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
 ---
 
 <Layout
-  title="Allcanci Tecnologia — 30 propostas para o futuro do site"
-  description="Trinta propostas de design para o novo site da Allcanci Tecnologia. Compare V1 a V30: série original, 3D interativo, experiências digitais e as novas séries Distópica, Artística e de Mundos."
+  title="Allcanci Tecnologia — Nenhum professor merece pincel seco"
+  description="Chega de pincel seco em sala de aula: pincéis FILL da Allcanci escrevem cerca de 1 km por recarga, em comodato para escolas de todo o Brasil."
   ogImage={ogImage.src}
+  bodyClass="site"
 >
-  <div class="pagina">
-    <header class="topo">
-      <p class="wordmark">allcanci<span> tecnologia</span></p>
-    </header>
+  <a class="site-skip" href="#hero">Pular para o conteúdo</a>
 
-    <main class="conteudo">
-      <section class="hero" aria-labelledby="titulo-hub">
-        <p class="etiqueta">30 propostas · 1 decisão</p>
-        <h1 id="titulo-hub">Escolha o <span class="destaque">futuro</span> do site da Allcanci</h1>
-        <p class="sub">
-          Trinta conceitos radicalmente diferentes para o novo site da {empresa.nome}: cinco
-          originais, cinco com 3D, cinco experiências interativas e quinze novas fronteiras —
-          distópicas, artísticas e lúdicas. Navegue e escolha a direção.
-        </p>
-      </section>
-
-      <section class="serie" aria-labelledby="titulo-distopia">
-        <h2 class="serie-titulo" id="titulo-distopia">
-          Série Distópica <span class="serie-badge serie-badge--distopia">novas · futuros possíveis</span>
-        </h2>
-        <ul class="grade" role="list">
-          {
-            serieDistopia.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    {v.tag3d && <span class="tag3d">3D</span>}
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Explorar experiência</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
+  <header class="site-topo">
+    <div class="site-caixa site-topo-linha">
+      <a class="site-marca" href="#hero">
+        <span class="site-tampas" aria-hidden="true"><i></i><i></i><i></i></span>
+        allcanci<span>&nbsp;tecnologia</span>
+      </a>
+      <nav class="site-nav" aria-label="Seções da página">
+        <ul class="site-menu" role="list">
+          {linksMenu.map((item) => (
+            <li><a href={item.href}>{item.rotulo}</a></li>
+          ))}
         </ul>
-      </section>
+      </nav>
+      <a
+        class="site-botao site-botao--verde site-botao--mini"
+        href={contatos.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </header>
 
-      <section class="serie" aria-labelledby="titulo-arte">
-        <h2 class="serie-titulo" id="titulo-arte">
-          Série Artística <span class="serie-badge serie-badge--arte">novas · arte aplicada</span>
-        </h2>
-        <ul class="grade" role="list">
-          {
-            serieArte.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Explorar experiência</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="serie" aria-labelledby="titulo-mundos">
-        <h2 class="serie-titulo" id="titulo-mundos">
-          Série de Mundos <span class="serie-badge serie-badge--mundos">novas · universos imersivos</span>
-        </h2>
-        <ul class="grade" role="list">
-          {
-            serieMundos.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Explorar experiência</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="serie" aria-labelledby="titulo-experiencias">
-        <h2 class="serie-titulo" id="titulo-experiencias">
-          Experiências <span class="serie-badge serie-badge--experiencia">novas · cinco interações autorais</span>
-        </h2>
-        <ul class="grade" role="list">
-          {
-            serieExperiencias.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    <span class="tag-interativa">Interativa</span>
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Explorar experiência</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => <span class="cor" style={`background:${cor}`} />)}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="serie" aria-labelledby="titulo-serie3d">
-        <h2 class="serie-titulo" id="titulo-serie3d">
-          Série 3D <span class="serie-badge">novas · máquina em 3D interativo</span>
-        </h2>
-        <ul class="grade" role="list">
-          {
-            serie3d.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    <span class="tag3d">3D</span>
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Ver proposta</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => (
-                      <span class="cor" style={`background:${cor}`} />
-                    ))}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="serie" aria-labelledby="titulo-serie1">
-        <h2 class="serie-titulo" id="titulo-serie1">Série original</h2>
-        <ul class="grade" role="list">
-          {
-            serie1.map((v) => (
-              <li>
-                <a class="card" href={`${base}/${v.slug}/`}>
-                  <span class="card-topo">
-                    <span class="num">{v.num}</span>
-                    <span class="seta" aria-hidden="true">→</span>
-                  </span>
-                  <span class="nome">{v.nome}</span>
-                  <span class="desc">{v.descricao}</span>
-                  <span class="ver">Ver proposta</span>
-                  <span class="paleta" aria-hidden="true">
-                    {v.paleta.map((cor) => (
-                      <span class="cor" style={`background:${cor}`} />
-                    ))}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-    </main>
-
-    <footer class="rodape">
-      <div class="rodape-grade">
-        <div>
-          <p class="rodape-marca">allcanci<span> tecnologia</span></p>
-          <p class="rodape-slogan">{empresa.slogan}</p>
-        </div>
-        <div>
-          <h2>Contato</h2>
-          <ul role="list">
-            <li><a href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
-            <li>
-              <a href={contatos.whatsappUrl} target="_blank" rel="noopener noreferrer">
-                WhatsApp — {contatos.telefone}
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section id="hero" class="site-hero" aria-labelledby="titulo-hero">
+      <div class="site-caixa">
+        <div class="site-hero-grade">
+          <div>
+            <p class="site-etiqueta">{empresa.nome} · {empresa.cidade}</p>
+            <h1 id="titulo-hero">
+              Nenhum professor merece
+              <span class="site-circulado">
+                pincel seco
+                <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+                  <path
+                    d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
+                    fill="none"
+                    stroke="var(--vermelho)"
+                    stroke-width="7"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>.
+            </h1>
+            <p class="site-hero-sub">{empresa.descricao}</p>
+            <div class="site-hero-ctas">
+              <a
+                class="site-botao site-botao--azul"
+                href={contatos.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                </svg>
+                Falar no WhatsApp
               </a>
-            </li>
-            <li class="endereco">{contatos.endereco}</li>
-          </ul>
+              <a class="site-botao site-botao--contorno" href="#simulador">Fazer a conta no quadro</a>
+            </div>
+          </div>
+
+          <figure class="site-quadro-foto site-fita">
+            <Image
+              src={img.ecoMarkerTrio}
+              alt="Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul"
+              widths={[420, 640, 900, 1240]}
+              sizes="(min-width: 960px) 34rem, 88vw"
+              loading="eager"
+            />
+            <figcaption>FILL Eco Marker — recarrega em {numeros.recargaSegundos}s, dura anos</figcaption>
+          </figure>
         </div>
-        <div>
-          <h2>Redes</h2>
+
+        <svg class="traco site-hero-doodle" viewBox="0 0 150 100" aria-hidden="true">
+          <path d="M10 14 C 56 6, 104 28, 128 70" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" />
+          <path d="M106 64 L130 72 L124 46" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+        <ul class="site-postits" role="list">
+          {postits.map((p) => (
+            <li class="site-postit site-fita">
+              <strong>{p.numero}</strong>
+              <span>{p.rotulo}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ PRODUTOS ═══ -->
+    <section id="produtos" class="site-secao" aria-labelledby="titulo-produtos">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Ecossistema FILL</p>
+          <h2 class="site-titulo" id="titulo-produtos">O material da lição de hoje</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            Seis itens que trabalham juntos para aposentar o pincel descartável — da máquina
+            de recarga ao aplicativo de gestão.
+          </p>
+        </header>
+
+        <ul class="site-produtos-grade" role="list">
+          {produtos.map((produto) => {
+            const foto = fotosProdutos[produto.id];
+            return (
+              <li class="site-produto">
+                {foto && (
+                  <div class="site-produto-foto">
+                    <Image
+                      src={foto.src}
+                      alt={foto.alt}
+                      widths={[320, 480, 680]}
+                      sizes="(min-width: 1000px) 340px, (min-width: 640px) 46vw, 88vw"
+                    />
+                  </div>
+                )}
+                <div class="site-produto-corpo">
+                  <span class="site-produto-tag">{produto.subtitulo}</span>
+                  <h3>{produto.nome}</h3>
+                  <p class="site-produto-desc">{produto.descricao}</p>
+                  <ul class="site-checklist" role="list">
+                    {produto.destaques.map((destaque) => (
+                      <li>{destaque}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ COMO FUNCIONA ═══ -->
+    <section id="como-funciona" class="site-secao" aria-labelledby="titulo-como">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Comodato em 6 etapas</p>
+          <h2 class="site-titulo" id="titulo-como">O passo a passo, desenhado no quadro</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoB} fill="none" stroke="var(--vermelho)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            Sem investimento inicial em equipamento: a Allcanci instala, treina e acompanha —
+            a sua equipe só usa. Siga a trilha.
+          </p>
+        </header>
+
+        <ol class="site-trilha" role="list">
+          {etapasComodato.map((etapa, i) => (
+            <li class="site-etapa">
+              <div class="site-etapa-cartao">
+                <span class="site-etapa-num" aria-hidden="true">
+                  <svg viewBox="0 0 44 44" aria-hidden="true">
+                    <path
+                      d="M22 3.5 C 33 3.5 40.5 10.5 40.5 21.5 C 40.5 33 33 40.5 21.5 40.5 C 10.5 40.5 3.5 33 3.5 21.5 C 3.5 11 11 3.5 25 4.5"
+                      fill="none"
+                      stroke={tintas[i % 3]}
+                      stroke-width="3.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  {i + 1}
+                </span>
+                <div>
+                  <h3>{etapa.titulo}</h3>
+                  <p>{etapa.texto}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══ SIMULADOR ═══ -->
+    <section id="simulador" class="site-secao" aria-labelledby="titulo-simulador">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Simulador de economia</p>
+          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a continha no quadro?</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            Diga quantos professores a sua instituição tem e a gente arma a conta do ano —
+            descartáveis de um lado, FILL do outro.
+          </p>
+        </header>
+
+        <div class="site-conta">
+          <div>
+            <label class="site-conta-label" for="sim-professores">
+              Quantos professores na sua escola?
+            </label>
+            <div class="site-conta-controles">
+              <input
+                type="range"
+                id="sim-professores"
+                min="1"
+                max="200"
+                step="1"
+                value={professoresIniciais}
+              />
+              <input
+                type="number"
+                id="sim-professores-num"
+                min="1"
+                max="999"
+                value={professoresIniciais}
+                aria-label="Número de professores"
+              />
+            </div>
+            <p class="site-premissas">
+              Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
+              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
+              recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
+              ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
+              ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+            </p>
+          </div>
+
+          <div class="site-conta-quadro">
+            <p class="site-conta-linha">
+              <span class="site-conta-rotulo">No modelo descartável</span>
+              <strong id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</strong>{' '}pincéis
+              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
+              {reais(PREMISSAS.precoDescartavelReais)}
+              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
+              <strong id="site-custo-descartaveis" class="site-custo-ruim">{reais(sim0.custoDescartaveis)}</strong>
+            </p>
+            <p class="site-conta-linha">
+              <span class="site-conta-rotulo">Com o ecossistema FILL</span>
+              <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
+              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
+              {reais(PREMISSAS.precoCreditoReais)}
+              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
+              <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
+            </p>
+            <p class="site-conta-linha site-conta-economia">
+              <span class="site-conta-rotulo">Economia estimada por ano</span>
+              <span class="site-sublinhado">
+                <strong id="sim-economia">{reais(sim0.economia)}</strong>
+                <svg class="traco" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M6 8 C 80 2, 200 12, 294 6" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
+                  <path d="M20 20 C 110 14, 210 24, 284 18" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
+                </svg>
+              </span>
+            </p>
+            <p class="site-conta-linha site-conta-bonus">
+              <svg class="site-folha" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 19 C 5 10, 10 5, 19 5 C 19 14, 14 19, 5 19 Z" stroke="var(--verde)" stroke-width="2.2" stroke-linejoin="round" />
+                <path d="M5 19 C 8 13.5, 11.5 9.8, 15 8" stroke="var(--verde)" stroke-width="2.2" stroke-linecap="round" />
+              </svg>
+              <span>
+                E de lição de casa: <strong id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</strong>{' '}de
+                plástico que não viram lixo.
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROVA SOCIAL ═══ -->
+    <section id="prova-social" class="site-secao" aria-labelledby="titulo-prova">
+      <div class="site-caixa">
+        <div class="site-prova-grade">
+          <header class="site-cabeca">
+            <p class="site-kicker">Confiança</p>
+            <h2 class="site-titulo" id="titulo-prova">{provaSocial.titulo}</h2>
+            <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+              <path d={tracoB} fill="none" stroke="var(--vermelho)" stroke-width="6" stroke-linecap="round" />
+            </svg>
+            <p class="site-sub">{provaSocial.texto}</p>
+          </header>
+
+          <p class="site-carimbo">
+            Tecnologia patenteada
+            <small>única fabricante no mundo</small>
+          </p>
+        </div>
+
+        <ul class="site-selos" role="list">
+          {provaSocial.selos.map((selo) => (
+            <li class="site-selo">{selo}</li>
+          ))}
+        </ul>
+
+        {provaSocial.depoimentos.length > 0 && (
           <ul role="list">
-            {
-              redes.map((rede) => (
-                <li>
-                  <a href={rede.url} target="_blank" rel="noopener noreferrer">
-                    {rede.nome}
-                  </a>
-                </li>
-              ))
-            }
+            {provaSocial.depoimentos.map((dep) => (
+              <li>
+                <blockquote>
+                  <p>{dep.citacao}</p>
+                  <footer>{dep.autor} — {dep.instituicao}</footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+
+    <!-- ═══ SUSTENTABILIDADE ═══ -->
+    <section id="sustentabilidade" class="site-secao" aria-labelledby="titulo-sustentabilidade">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Sustentabilidade</p>
+          <h2 class="site-titulo" id="titulo-sustentabilidade">{sustentabilidade.titulo}</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoA} fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">{sustentabilidade.texto}</p>
+        </header>
+
+        <ul class="site-eco-grade" role="list">
+          {sustentabilidade.pontos.map((ponto) => (
+            <li class="site-eco-postit site-fita">
+              <h3>{ponto.titulo}</h3>
+              <p>{ponto.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="site-secao" aria-labelledby="titulo-faq">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">FAQ</p>
+          <h2 class="site-titulo" id="titulo-faq">O caderno de dúvidas</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoB} fill="none" stroke="var(--preto)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            As perguntas que toda escola faz antes de aposentar o pincel descartável.
+          </p>
+        </header>
+
+        <div class="site-caderno">
+          {faq.map((item) => (
+            <details>
+              <summary>
+                <svg class="site-faq-seta" viewBox="0 0 20 12" fill="none" aria-hidden="true">
+                  <path d="M2 2.2 C 5.5 6.5, 8.5 9.3, 10 10 C 11.5 8.6, 15 5, 18 2.4" stroke="var(--azul)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                {item.pergunta}
+              </summary>
+              <p class="site-faq-resposta">{item.resposta}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTATO ═══ -->
+    <section id="contato" class="site-secao" aria-labelledby="titulo-contato">
+      <div class="site-caixa">
+        <div class="site-contato-card">
+          <svg class="traco site-moldura" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M96 22 C 300 12, 640 14, 916 24 C 962 26, 984 52, 982 108 C 988 240, 986 372, 978 470 C 976 516, 946 536, 886 534 C 650 544, 330 542, 108 532 C 56 530, 26 508, 26 452 C 16 340, 18 196, 26 96 C 30 48, 52 26, 150 22"
+              fill="none"
+              stroke="var(--azul)"
+              stroke-width="7"
+              stroke-linecap="round"
+            />
+          </svg>
+
+          <h2 id="titulo-contato">Vamos tirar o pincel seco da sua escola?</h2>
+          <p>
+            Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
+            entrega em até {numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+          </p>
+
+          <div class="site-contato-cta">
+            <a
+              class="site-botao site-botao--verde"
+              href={contatos.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+              </svg>
+              Chamar no WhatsApp
+            </a>
+          </div>
+
+          <ul class="site-contato-lista" role="list">
+            <li><a class="site-chip" href={`mailto:${contatos.email}`}>{contatos.email}</a></li>
+            <li><a class="site-chip" href={telefoneHref}>{contatos.telefone}</a></li>
+          </ul>
+
+          <address>{contatos.endereco}</address>
+
+          <ul class="site-redes" role="list">
+            {redes.map((rede) => (
+              <li>
+                <a class="site-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
+                  {rede.nome === 'Instagram' && (
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M7.2 3.8 C 11 3.4, 15.6 3.5, 18.2 4.1 C 19.8 4.5, 20.4 5.8, 20.4 8.4 C 20.6 12, 20.5 15.8, 20 17.9 C 19.6 19.5, 18.3 20.2, 15.6 20.2 C 12 20.5, 8.2 20.4, 6.2 19.8 C 4.6 19.4, 3.8 18.2, 3.8 15.6 C 3.6 12, 3.6 8, 4.2 6 C 4.6 4.6, 5.4 4, 7.6 3.9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                      <path d="M12 8.6 C 14.1 8.6, 15.5 10, 15.5 12 C 15.5 14.1, 14 15.5, 12 15.5 C 9.9 15.5, 8.5 14, 8.5 12 C 8.5 10, 10 8.5, 12.4 8.7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                      <circle cx="16.9" cy="7" r="1.2" fill="currentColor" />
+                    </svg>
+                  )}
+                  {rede.nome === 'LinkedIn' && (
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M6.4 3.9 C 10 3.5, 15.5 3.5, 18.3 4.2 C 19.9 4.6, 20.4 5.8, 20.4 8.4 C 20.6 12, 20.5 15.9, 20 17.9 C 19.6 19.5, 18.2 20.2, 15.5 20.2 C 12 20.5, 8 20.4, 6.1 19.8 C 4.6 19.3, 3.8 18.2, 3.8 15.5 C 3.6 12, 3.7 8, 4.2 6 C 4.6 4.6, 5.3 4.1, 6.8 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                      <path d="M8.3 10.6 L8.3 16.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                      <circle cx="8.3" cy="7.9" r="1.2" fill="currentColor" />
+                      <path d="M12 16.4 L12 10.7 M12 12.9 C 12.4 11.4, 13.4 10.4, 14.7 10.5 C 15.9 10.6, 16.3 11.5, 16.3 12.9 L16.3 16.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                    </svg>
+                  )}
+                  {rede.nome === 'YouTube' && (
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M7 5.9 C 10.5 5.5, 14.5 5.5, 17.5 6 C 19.4 6.3, 20.2 7.3, 20.4 9.2 C 20.6 11, 20.6 13, 20.3 14.9 C 20 16.8, 19.2 17.7, 17.2 17.9 C 14 18.3, 9.6 18.2, 6.9 17.8 C 5 17.5, 4.1 16.6, 3.9 14.7 C 3.7 12.9, 3.7 10.9, 4 9.1 C 4.3 7.2, 5.2 6.2, 7.3 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                      <path d="M10.2 9.3 L15.3 12 L10.2 14.7 Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" />
+                    </svg>
+                  )}
+                  {rede.nome}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
-      <p class="rodape-nota">© {ano} {empresa.nome} — {empresa.cidade}</p>
-    </footer>
-  </div>
+    </section>
+  </main>
+
+  <footer class="site-rodape">
+    <div class="site-caixa site-rodape-linha">
+      <p>© {ano} {empresa.nome} — {empresa.cidade} · {empresa.slogan}</p>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
 </Layout>
-
-<style>
-  :global(body) {
-    background-color: var(--azul);
-  }
-
-  .pagina {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--azul);
-    background-image:
-      radial-gradient(55rem 34rem at 50% -10rem, rgba(0, 138, 255, 0.3), transparent 70%),
-      radial-gradient(circle, rgba(254, 255, 240, 0.13) 1px, transparent 1.7px);
-    background-repeat: no-repeat, repeat;
-    background-size: auto, 28px 28px;
-    color: var(--branco);
-  }
-
-  /* ── Topo ─────────────────────────────────────────── */
-  .topo {
-    width: 100%;
-    max-width: var(--largura-conteudo);
-    margin: 0 auto;
-    padding: 2rem clamp(1.25rem, 4vw, 2.5rem) 0;
-  }
-
-  .wordmark,
-  .rodape-marca {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 1.35rem;
-    letter-spacing: -0.02em;
-    color: var(--branco);
-  }
-
-  .wordmark span,
-  .rodape-marca span {
-    font-weight: 500;
-    color: var(--nevoa);
-  }
-
-  /* ── Hero ─────────────────────────────────────────── */
-  .conteudo {
-    width: 100%;
-    max-width: var(--largura-conteudo);
-    margin: 0 auto;
-    padding: 0 clamp(1.25rem, 4vw, 2.5rem) var(--espaco-secao);
-    flex: 1;
-  }
-
-  .hero {
-    text-align: center;
-    padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem);
-  }
-
-  .etiqueta {
-    display: inline-block;
-    margin: 0 0 1.75rem;
-    padding: 0.45rem 1.1rem;
-    font-family: var(--font-titulo);
-    font-weight: 800;
-    font-size: var(--texto-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--creme);
-    border: 1px solid rgba(254, 255, 240, 0.35);
-    border-radius: var(--raio-pill);
-  }
-
-  .hero h1 {
-    margin: 0 auto;
-    max-width: 18ch;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--display-xl);
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-    color: var(--branco);
-  }
-
-  .destaque {
-    color: var(--amarelo);
-  }
-
-  .sub {
-    max-width: 46rem;
-    margin: 1.75rem auto 0;
-    font-size: var(--texto-lg);
-    line-height: 1.6;
-    color: var(--nevoa);
-  }
-
-  /* ── Séries ───────────────────────────────────────── */
-  .serie {
-    margin-top: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .serie:first-of-type {
-    margin-top: 0;
-  }
-
-  .serie-titulo {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-    margin: 0 0 1.25rem;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--titulo-sm);
-    letter-spacing: -0.01em;
-    color: var(--branco);
-  }
-
-  .serie-badge {
-    padding: 0.3rem 0.9rem;
-    font-family: var(--font-titulo);
-    font-weight: 800;
-    font-size: var(--texto-xs);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--preto);
-    background: var(--amarelo);
-    border-radius: var(--raio-pill);
-  }
-
-  .serie-badge--experiencia {
-    color: var(--azul-950);
-    background: var(--verde);
-  }
-
-  .serie-badge--distopia {
-    color: var(--branco);
-    background: var(--vermelho);
-  }
-
-  .serie-badge--arte {
-    color: var(--azul-950);
-    background: #43e8ff;
-  }
-
-  .serie-badge--mundos {
-    color: var(--preto);
-    background: #ff7ac3;
-  }
-
-  /* ── Grade de cards ───────────────────────────────── */
-  .grade {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  @media (min-width: 640px) {
-    .grade {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .grade > li:nth-child(5) {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .grade {
-      grid-template-columns: repeat(6, 1fr);
-    }
-    .grade > li {
-      grid-column: span 2;
-    }
-    .grade > li:nth-child(4) {
-      grid-column: 2 / span 2;
-    }
-    .grade > li:nth-child(5) {
-      grid-column: span 2;
-    }
-  }
-
-  .grade > li {
-    display: grid;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    height: 100%;
-    padding: clamp(1.5rem, 3vw, 2rem);
-    background: linear-gradient(180deg, var(--azul-800), var(--azul-950));
-    border: 1px solid rgba(254, 255, 240, 0.18);
-    border-radius: var(--raio-md);
-    color: var(--branco);
-    text-decoration: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 60, 0.35);
-    transition:
-      transform 0.25s ease,
-      border-color 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
-    border-color: var(--azul-claro);
-    box-shadow:
-      0 26px 60px rgba(0, 0, 40, 0.5),
-      0 0 0 1px var(--azul-claro);
-  }
-
-  .card:focus-visible {
-    outline: 3px solid var(--amarelo);
-    outline-offset: 4px;
-  }
-
-  .card-topo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .card-topo .seta {
-    margin-left: auto;
-  }
-
-  .tag3d,
-  .tag-interativa {
-    padding: 0.3rem 0.7rem;
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--texto-xs);
-    letter-spacing: 0.1em;
-    color: var(--preto);
-    background: var(--amarelo);
-    border-radius: var(--raio-pill);
-  }
-
-  .tag-interativa {
-    background: var(--verde);
-  }
-
-  .num {
-    padding: 0.3rem 0.85rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--texto-sm);
-    letter-spacing: 0.12em;
-    color: var(--creme);
-    border: 1px solid rgba(254, 255, 240, 0.3);
-    border-radius: var(--raio-pill);
-  }
-
-  .seta {
-    font-size: 1.35rem;
-    color: var(--nevoa);
-    transition: transform 0.25s ease;
-  }
-
-  .card:hover .seta {
-    transform: translateX(6px);
-    color: var(--branco);
-  }
-
-  .nome {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--titulo-sm);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .desc {
-    font-size: var(--texto-base);
-    line-height: 1.55;
-    color: var(--nevoa);
-  }
-
-  .ver {
-    margin-top: auto;
-    font-family: var(--font-titulo);
-    font-weight: 800;
-    font-size: var(--texto-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--creme);
-  }
-
-  .paleta {
-    display: flex;
-    gap: 6px;
-  }
-
-  .cor {
-    height: 10px;
-    flex: 1;
-    border-radius: var(--raio-pill);
-    box-shadow: inset 0 0 0 1px rgba(254, 255, 240, 0.28);
-  }
-
-  /* ── Rodapé ───────────────────────────────────────── */
-  .rodape {
-    border-top: 1px solid rgba(254, 255, 240, 0.2);
-    background: rgba(0, 0, 97, 0.35);
-  }
-
-  .rodape-grade {
-    width: 100%;
-    max-width: var(--largura-conteudo);
-    margin: 0 auto;
-    padding: 3rem clamp(1.25rem, 4vw, 2.5rem) 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.25rem;
-  }
-
-  @media (min-width: 720px) {
-    .rodape-grade {
-      grid-template-columns: 1.4fr 1fr 1fr;
-    }
-  }
-
-  .rodape-slogan {
-    margin: 0.5rem 0 0;
-    max-width: 26rem;
-    font-size: var(--texto-sm);
-    line-height: 1.55;
-    color: var(--nevoa);
-  }
-
-  .rodape h2 {
-    margin: 0 0 0.9rem;
-    font-family: var(--font-titulo);
-    font-weight: 900;
-    font-size: var(--texto-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--creme);
-  }
-
-  .rodape ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.55rem;
-    font-size: var(--texto-sm);
-  }
-
-  .rodape a {
-    color: var(--branco);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-color: rgba(255, 255, 255, 0.45);
-  }
-
-  .rodape a:hover {
-    color: var(--amarelo);
-    text-decoration-color: currentColor;
-  }
-
-  .endereco {
-    color: var(--nevoa);
-    line-height: 1.5;
-  }
-
-  .rodape-nota {
-    margin: 0;
-    padding: 0 clamp(1.25rem, 4vw, 2.5rem) 2rem;
-    text-align: center;
-    font-size: var(--texto-xs);
-    color: var(--nevoa);
-  }
-</style>
