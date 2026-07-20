@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, sep } from 'node:path';
 
 const read = (path) => readFileSync(path, 'utf8');
 
@@ -57,11 +57,13 @@ test('não existem rotas nem implementações alternativas', () => {
 });
 
 test('os arquivos-fonte do produto não usam nomenclatura numerada', () => {
-  const numberedName = /\.v(?:\d+|N)-|\bv\d+(?:-|\b)|--v\d+-/i;
+  const numberedName = /\bv(?:\d+|N)(?:-|\b)/i;
   const sourceFiles = listSourceFiles('src')
     .filter((path) => /\.(astro|css|js|ts)$/.test(path));
 
   for (const path of sourceFiles) {
+    const sourcePath = relative('src', path).replaceAll(sep, '/');
+    assert.doesNotMatch(sourcePath, numberedName, `${sourcePath} tem caminho com nomenclatura numerada`);
     assert.doesNotMatch(read(path), numberedName, `${path} contém nomenclatura numerada`);
   }
 });
