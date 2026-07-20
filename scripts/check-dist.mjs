@@ -1,26 +1,43 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
-const page = process.argv[2] ?? '';
-const path = `dist/${page ? page + '/' : ''}index.html`;
-const html = readFileSync(path, 'utf8');
+const htmlPath = 'dist/index.html';
 const problemas = [];
 
-if (!/<title>[^<]{5,}<\/title>/.test(html)) problemas.push('title ausente/curto');
-if (!html.includes('lang="pt-BR"')) problemas.push('lang pt-BR ausente');
+if (!existsSync(htmlPath)) {
+  problemas.push('dist/index.html ausente');
+} else {
+  const html = readFileSync(htmlPath, 'utf8');
+  if (!/<title>[^<]{5,}<\/title>/.test(html)) problemas.push('title ausente ou curto');
+  if (!html.includes('lang="pt-BR"')) problemas.push('lang pt-BR ausente');
 
-if (page) {
-  for (const id of ['hero', 'produtos', 'como-funciona', 'simulador', 'prova-social', 'sustentabilidade', 'faq', 'contato']) {
+  for (const id of [
+    'hero',
+    'produtos',
+    'como-funciona',
+    'simulador',
+    'prova-social',
+    'sustentabilidade',
+    'faq',
+    'contato',
+  ]) {
     if (!html.includes(`id="${id}"`)) problemas.push(`seção #${id} ausente`);
   }
-} else {
-  const versoes = Array.from({ length: 30 }, (_, i) => `v${i + 1}`);
-  for (const v of versoes) {
-    if (!html.includes(`/Site_allcanci/${v}/`)) problemas.push(`link para /${v}/ ausente`);
-  }
+
+  if (/\/Site_allcanci\/v\d+\//i.test(html)) problemas.push('link para rota numerada encontrado');
+  if (/30 propostas|propostas de design/i.test(html)) problemas.push('texto do seletor encontrado');
 }
 
+const routeDirs = existsSync('dist')
+  ? readdirSync('dist', { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && /^v\d+$/.test(entry.name))
+      .map((entry) => entry.name)
+  : [];
+
+if (routeDirs.length) problemas.push(`rotas numeradas geradas: ${routeDirs.join(', ')}`);
+
 if (problemas.length) {
-  console.error(`FALHOU ${path}:\n- ${problemas.join('\n- ')}`);
+  console.error(`FALHOU ${htmlPath}:\n- ${problemas.join('\n- ')}`);
   process.exit(1);
 }
-console.log(`OK ${path}`);
+
+console.log(`OK ${htmlPath}: somente o site definitivo foi gerado`);

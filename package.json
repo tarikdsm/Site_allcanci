@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "test": "node --test \"scripts/**/*.test.js\""
+    "test": "node --test \"scripts/**/*.test.js\"",
+    "verify": "npm test && astro check && astro build && node scripts/check-dist.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

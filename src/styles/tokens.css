@@ -48,7 +48,7 @@ html { scroll-behavior: smooth; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 body { margin: 0; font-family: var(--font-texto); color: var(--preto); }
-/* Base segura para TODAS as versões (inclusive futuras).
+/* Base segura para o site institucional.
    max-height é a rede de segurança mobile: nenhuma imagem pode "explodir" em
    altura — neutraliza o bug do iOS Safari em que uma imagem cresce infinitamente
    dentro de um container flex/grid com aspect-ratio.
