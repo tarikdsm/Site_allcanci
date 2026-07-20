@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 const read = (path) => readFileSync(path, 'utf8');
 
@@ -23,4 +23,27 @@ test('a página definitiva ocupa a raiz e usa nomes neutros', () => {
   assert.equal(existsSync('src/pages/v3/index.astro'), false);
   assert.equal(existsSync('src/styles/v3.css'), false);
   assert.equal(existsSync('src/scripts/v3.js'), false);
+});
+
+test('não existem rotas nem implementações alternativas', () => {
+  const routeDirs = readdirSync('src/pages', { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && /^v\d+$/.test(entry.name))
+    .map((entry) => entry.name);
+  assert.deepEqual(routeDirs, []);
+
+  const numberedStyles = readdirSync('src/styles')
+    .filter((name) => /^v\d+\.css$/.test(name));
+  const numberedScripts = readdirSync('src/scripts')
+    .filter((name) => /^v\d+\.js$/.test(name));
+  assert.deepEqual(numberedStyles, []);
+  assert.deepEqual(numberedScripts, []);
+
+  for (const path of [
+    'src/components/ExperienceBody.astro',
+    'src/scripts/experiencias-core.js',
+    'scripts/experiencias-core.test.js',
+    'design-system',
+  ]) {
+    assert.equal(existsSync(path), false, `${path} deve ter sido removido`);
+  }
 });
