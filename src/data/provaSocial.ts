@@ -1,3 +1,5 @@
+import { CONSTANTES_NEGOCIO } from './constantes-negocio.js';
+
 export const provaSocial = {
   titulo: 'Quem usou, aprovou',
   texto:
@@ -8,7 +10,7 @@ export const provaSocial = {
     'Documentação para licitações',
     'Garantia total de satisfação',
     'Suporte por toda a vida útil',
-    'Entrega em até 15 dias úteis',
+    `Entrega em até ${CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis`,
   ],
   depoimentos: [] as { citacao: string; autor: string; instituicao: string }[],
 };

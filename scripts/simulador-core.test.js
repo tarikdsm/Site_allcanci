@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { simular, reais, PREMISSAS } from '../src/scripts/simulador-core.js';
+import {
+  LIMITES_PROFESSORES,
+  simular,
+  reais,
+  PREMISSAS,
+} from '../src/scripts/simulador-core.js';
 
 test('simular com 10 professores usa as premissas padrão', () => {
   const r = simular(10);
@@ -13,9 +18,24 @@ test('simular com 10 professores usa as premissas padrão', () => {
 });
 
 test('professores inválido retorna zeros', () => {
-  const r = simular(0);
+  const r = simular(Number.NaN);
   assert.equal(r.recargasAno, 0);
   assert.equal(r.economia, 0);
+  assert.ok(Object.values(r).every(Number.isFinite));
+});
+
+test('simular limita underflow e overflow ao intervalo de professores', () => {
+  const minimo = simular(0);
+  const maximo = simular(Number.MAX_VALUE);
+
+  assert.deepEqual(LIMITES_PROFESSORES, { minimo: 1, maximo: 999, inicial: 20 });
+  assert.equal(minimo.recargasAno, PREMISSAS.recargasPorProfessorAno);
+  assert.equal(
+    maximo.recargasAno,
+    LIMITES_PROFESSORES.maximo * PREMISSAS.recargasPorProfessorAno,
+  );
+  assert.ok(Object.values(minimo).every(Number.isFinite));
+  assert.ok(Object.values(maximo).every(Number.isFinite));
 });
 
 test('reais formata em BRL', () => {

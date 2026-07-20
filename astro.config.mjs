@@ -5,5 +5,13 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://tarikdsm.github.io',
   base: '/Site_allcanci',
+  build: {
+    inlineStylesheets: 'never',
+  },
   integrations: [sitemap({ filter: (page) => page.endsWith('/') })],
+  vite: {
+    build: {
+      assetsInlineLimit: (filePath) => (filePath.endsWith('.js') ? false : undefined),
+    },
+  },
 });

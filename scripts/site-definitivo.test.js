@@ -30,6 +30,23 @@ test('a página definitiva ocupa a raiz e usa nomes neutros', () => {
 
 });
 
+test('a imagem candidata a LCP no hero recebe prioridade alta sem preload', () => {
+  const page = read('src/pages/index.astro');
+  const heroImage = page.match(/<figure class="site-quadro-foto site-fita">\s*<Image([\s\S]*?)\/>\s*<figcaption>/);
+
+  assert.ok(heroImage, 'a imagem do hero deve continuar dentro da figura principal');
+  assert.match(heroImage[1], /loading="eager"/);
+  assert.match(heroImage[1], /fetchpriority="high"/);
+  assert.doesNotMatch(page, /<link\s+[^>]*rel=["']preload["'][^>]*as=["']image["']/i);
+});
+
+test('o link de pular para o conteudo leva ao marco principal focavel', () => {
+  const page = read('src/pages/index.astro');
+
+  assert.match(page, /<a\s+class="site-skip"\s+href="#conteudo">/);
+  assert.match(page, /<main\s+id="conteudo"\s+tabindex="-1">/);
+});
+
 test('não existem rotas nem implementações alternativas', () => {
   const routeDirs = readdirSync('src/pages', { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && /^v\d+$/.test(entry.name))
@@ -98,7 +115,6 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     '@astrojs/sitemap',
     '@fontsource/nunito',
     '@fontsource/nunito-sans',
-    '@fontsource/poppins',
     'astro',
   ]);
 });

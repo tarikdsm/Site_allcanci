@@ -3,28 +3,41 @@ import type { ImageMetadata } from 'astro';
 import Layout from '../layouts/Layout.astro';
 import { Image, getImage } from 'astro:assets';
 import { empresa, numeros, contatos, redes } from '../data/site';
+import type { IconeRedeSocial } from '../data/site';
 import { produtos } from '../data/produtos';
 import { etapasComodato } from '../data/comodato';
 import { faq } from '../data/faq';
 import { provaSocial } from '../data/provaSocial';
 import { sustentabilidade } from '../data/sustentabilidade';
+import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 import * as img from '../data/imagens';
-import { simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+import { LIMITES_PROFESSORES, simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+import IconWhatsapp from '../components/IconWhatsapp.astro';
+import IconInstagram from '../components/IconInstagram.astro';
+import IconLinkedin from '../components/IconLinkedin.astro';
+import IconYoutube from '../components/IconYoutube.astro';
 import '../styles/site.css';
 
 const ano = new Date().getFullYear();
 
+const iconesRedes = {
+  instagram: IconInstagram,
+  linkedin: IconLinkedin,
+  youtube: IconYoutube,
+} satisfies Record<IconeRedeSocial, typeof IconInstagram>;
+
 const ogImage = await getImage({ src: img.ecoMarkerTrio, format: 'webp', width: 1200 });
+const ecoMarkerTrioAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul';
 
 // Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
-const professoresIniciais = 20;
+const professoresIniciais = LIMITES_PROFESSORES.inicial;
 const sim0 = simular(professoresIniciais);
 
-// Post-its do hero — números vindos de src/data/site.ts
+// Post-its do hero — dados institucionais e constantes compartilhadas de produto
 const postits = [
   { numero: numeros.escolas, rotulo: 'escolas já atendidas no Brasil' },
-  { numero: `${numeros.recargaSegundos}s`, rotulo: 'por recarga automática' },
-  { numero: `${numeros.escritaKm} km`, rotulo: 'de escrita por recarga' },
+  { numero: `${CONSTANTES_NEGOCIO.recargaSegundos}s`, rotulo: 'por recarga automática' },
+  { numero: `${CONSTANTES_NEGOCIO.kmPorRecarga} km`, rotulo: 'de escrita por recarga' },
 ];
 
 // Tintas do quadro — os círculos numerados da trilha alternam entre elas
@@ -42,7 +55,7 @@ const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
   },
   'eco-marker': {
     src: img.ecoMarkerTrio,
-    alt: 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul',
+    alt: ecoMarkerTrioAlt,
   },
   'master-color': {
     src: img.masterColorTrio,
@@ -76,11 +89,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
 
 <Layout
   title="Allcanci Tecnologia — Nenhum professor merece pincel seco"
-  description="Chega de pincel seco em sala de aula: pincéis FILL da Allcanci escrevem cerca de 1 km por recarga, em comodato para escolas de todo o Brasil."
-  ogImage={ogImage.src}
+  description={`Chega de pincel seco em sala de aula: pincéis FILL da Allcanci escrevem cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km por recarga, em comodato para escolas de todo o Brasil.`}
+  ogImage={ogImage}
+  ogImageAlt={ecoMarkerTrioAlt}
   bodyClass="site"
 >
-  <a class="site-skip" href="#hero">Pular para o conteúdo</a>
+  <a class="site-skip" href="#conteudo">Pular para o conteúdo</a>
 
   <header class="site-topo">
     <div class="site-caixa site-topo-linha">
@@ -101,15 +115,13 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
         target="_blank"
         rel="noopener noreferrer"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-        </svg>
+        <IconWhatsapp size={16} />
         WhatsApp
       </a>
     </div>
   </header>
 
-  <main>
+  <main id="conteudo" tabindex="-1">
     <!-- ═══ HERO ═══ -->
     <section id="hero" class="site-hero" aria-labelledby="titulo-hero">
       <div class="site-caixa">
@@ -139,9 +151,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-                </svg>
+                <IconWhatsapp size={18} />
                 Falar no WhatsApp
               </a>
               <a class="site-botao site-botao--contorno" href="#simulador">Fazer a conta no quadro</a>
@@ -155,8 +165,9 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               widths={[420, 640, 900, 1240]}
               sizes="(min-width: 960px) 34rem, 88vw"
               loading="eager"
+              fetchpriority="high"
             />
-            <figcaption>FILL Eco Marker — recarrega em {numeros.recargaSegundos}s, dura anos</figcaption>
+            <figcaption>FILL Eco Marker — recarrega em {CONSTANTES_NEGOCIO.recargaSegundos}s, dura anos</figcaption>
           </figure>
         </div>
 
@@ -289,16 +300,17 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <input
                 type="range"
                 id="sim-professores"
-                min="1"
-                max="200"
+                min={LIMITES_PROFESSORES.minimo}
+                max={LIMITES_PROFESSORES.maximo}
                 step="1"
                 value={professoresIniciais}
               />
               <input
                 type="number"
                 id="sim-professores-num"
-                min="1"
-                max="999"
+                min={LIMITES_PROFESSORES.minimo}
+                max={LIMITES_PROFESSORES.maximo}
+                step="1"
                 value={professoresIniciais}
                 aria-label="Número de professores"
               />
@@ -319,7 +331,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
               {reais(PREMISSAS.precoDescartavelReais)}
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong id="site-custo-descartaveis" class="site-custo-ruim">{reais(sim0.custoDescartaveis)}</strong>
+              <strong id="sim-custo-descartaveis" class="site-custo-ruim">{reais(sim0.custoDescartaveis)}</strong>
             </p>
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Com o ecossistema FILL</span>
@@ -349,6 +361,13 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
                 plástico que não viram lixo.
               </span>
             </p>
+            <p
+              id="sim-resultado-status"
+              class="visually-hidden"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
           </div>
         </div>
       </div>
@@ -464,7 +483,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <h2 id="titulo-contato">Vamos tirar o pincel seco da sua escola?</h2>
           <p>
             Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
-            entrega em até {numeros.entregaDiasUteis} dias úteis para todo o Brasil.
+            entrega em até {CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis para todo o Brasil.
           </p>
 
           <div class="site-contato-cta">
@@ -474,9 +493,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               target="_blank"
               rel="noopener noreferrer"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 12a8.5 8.5 0 0 1-12.4 7.5L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-              </svg>
+              <IconWhatsapp size={20} />
               Chamar no WhatsApp
             </a>
           </div>
@@ -486,37 +503,23 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             <li><a class="site-chip" href={telefoneHref}>{contatos.telefone}</a></li>
           </ul>
 
-          <address>{contatos.endereco}</address>
+          <address>
+            {contatos.endereco.logradouro} — {contatos.endereco.cidade}/{contatos.endereco.estado}
+          </address>
 
           <ul class="site-redes" role="list">
-            {redes.map((rede) => (
-              <li>
-                <a class="site-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
-                  {rede.nome === 'Instagram' && (
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7.2 3.8 C 11 3.4, 15.6 3.5, 18.2 4.1 C 19.8 4.5, 20.4 5.8, 20.4 8.4 C 20.6 12, 20.5 15.8, 20 17.9 C 19.6 19.5, 18.3 20.2, 15.6 20.2 C 12 20.5, 8.2 20.4, 6.2 19.8 C 4.6 19.4, 3.8 18.2, 3.8 15.6 C 3.6 12, 3.6 8, 4.2 6 C 4.6 4.6, 5.4 4, 7.6 3.9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                      <path d="M12 8.6 C 14.1 8.6, 15.5 10, 15.5 12 C 15.5 14.1, 14 15.5, 12 15.5 C 9.9 15.5, 8.5 14, 8.5 12 C 8.5 10, 10 8.5, 12.4 8.7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                      <circle cx="16.9" cy="7" r="1.2" fill="currentColor" />
-                    </svg>
-                  )}
-                  {rede.nome === 'LinkedIn' && (
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M6.4 3.9 C 10 3.5, 15.5 3.5, 18.3 4.2 C 19.9 4.6, 20.4 5.8, 20.4 8.4 C 20.6 12, 20.5 15.9, 20 17.9 C 19.6 19.5, 18.2 20.2, 15.5 20.2 C 12 20.5, 8 20.4, 6.1 19.8 C 4.6 19.3, 3.8 18.2, 3.8 15.5 C 3.6 12, 3.7 8, 4.2 6 C 4.6 4.6, 5.3 4.1, 6.8 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                      <path d="M8.3 10.6 L8.3 16.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                      <circle cx="8.3" cy="7.9" r="1.2" fill="currentColor" />
-                      <path d="M12 16.4 L12 10.7 M12 12.9 C 12.4 11.4, 13.4 10.4, 14.7 10.5 C 15.9 10.6, 16.3 11.5, 16.3 12.9 L16.3 16.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                    </svg>
-                  )}
-                  {rede.nome === 'YouTube' && (
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7 5.9 C 10.5 5.5, 14.5 5.5, 17.5 6 C 19.4 6.3, 20.2 7.3, 20.4 9.2 C 20.6 11, 20.6 13, 20.3 14.9 C 20 16.8, 19.2 17.7, 17.2 17.9 C 14 18.3, 9.6 18.2, 6.9 17.8 C 5 17.5, 4.1 16.6, 3.9 14.7 C 3.7 12.9, 3.7 10.9, 4 9.1 C 4.3 7.2, 5.2 6.2, 7.3 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-                      <path d="M10.2 9.3 L15.3 12 L10.2 14.7 Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" />
-                    </svg>
-                  )}
-                  {rede.nome}
-                </a>
-              </li>
-            ))}
+            {redes.map((rede) => {
+              const IconeRede = iconesRedes[rede.icone];
+
+              return (
+                <li>
+                  <a class="site-chip" href={rede.url} target="_blank" rel="noopener noreferrer">
+                    <IconeRede />
+                    {rede.nome}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

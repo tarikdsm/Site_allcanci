@@ -2,7 +2,7 @@
    Site institucional Allcanci — linguagem visual de sala de aula
    ================================================================ */
 
-:root:has(body.site) {
+:root {
   background: var(--branco);
   scroll-padding-top: 5.5rem;
 }
@@ -773,7 +773,7 @@ body.site::before {
 }
 
 .site-custo-ruim {
-  color: var(--vermelho);
+  color: var(--vermelho-texto);
 }
 
 .site-custo-bom {

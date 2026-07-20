@@ -25,9 +25,9 @@ if (!reduz) {
   document.querySelectorAll('.traco').forEach((s) => io.observe(s));
 }
 
-// Simulador (contrato de markup #sim-* — Task 5) + linha extra da continha:
+// Linha extra da conta do simulador, seguindo o mesmo contrato de markup #sim-*:
 // O custo anual dos descartáveis é calculado com as premissas exibidas no simulador.
 bindSimulador((r) => {
-  const alvo = document.querySelector('#site-custo-descartaveis');
+  const alvo = document.querySelector('#sim-custo-descartaveis');
   if (alvo) alvo.textContent = reais(r.custoDescartaveis);
 });

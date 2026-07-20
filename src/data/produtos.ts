@@ -1,3 +1,5 @@
+import { CONSTANTES_NEGOCIO } from './constantes-negocio.js';
+
 export type Produto = {
   id: string;
   nome: string;
@@ -12,16 +14,16 @@ export const produtos: Produto[] = [
     nome: 'FILL Ink Injector',
     subtitulo: 'Máquina de recarga automática',
     descricao:
-      'A máquina que recarrega pincéis de quadro branco de forma automática, precisa e sem sujeira — em cerca de 22 segundos.',
-    destaques: ['Recarga automática em ~22s', 'Sem contato com a tinta, sem sujeira', 'Carrega azul, preto e vermelho'],
+      `A máquina que recarrega pincéis de quadro branco de forma automática, precisa e sem sujeira — em cerca de ${CONSTANTES_NEGOCIO.recargaSegundos} segundos.`,
+    destaques: [`Recarga automática em ~${CONSTANTES_NEGOCIO.recargaSegundos}s`, 'Sem contato com a tinta, sem sujeira', 'Carrega azul, preto e vermelho'],
   },
   {
     id: 'eco-marker',
     nome: 'FILL Eco Marker',
     subtitulo: 'Pincel reutilizável',
     descricao:
-      'O pincel que não precisa ser aberto para recarregar. Cada recarga rende cerca de 1 km de escrita, com traço sempre uniforme.',
-    destaques: ['Recarga sem abrir o pincel', '~1 km de escrita por recarga', 'Feito para durar anos'],
+      `O pincel que não precisa ser aberto para recarregar. Cada recarga rende cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita, com traço sempre uniforme.`,
+    destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Feito para durar anos'],
   },
   {
     id: 'master-color',

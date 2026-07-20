@@ -11,13 +11,13 @@
   --verde: #00ff60;
   --amarelo: #ffd100;
   --vermelho: #ff0c00;
+  --vermelho-texto: #d00a00;
   /* Sombras do azul */
   --azul-700: #0000db;
   --azul-800: #0000b3;
   --azul-900: #00008a;
   --azul-950: #000061;
   /* Tipografia */
-  --font-display: 'Poppins', system-ui, sans-serif;
   --font-titulo: 'Nunito', system-ui, sans-serif;
   --font-texto: 'Nunito Sans', system-ui, sans-serif;
   /* Escala tipográfica fluida */

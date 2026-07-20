@@ -3,5 +3,11 @@ dist/
 .astro/
 .superpowers/
 .worktrees/
+.playwright-cli/
 lh-*.json
 versoes_extras/
+
+# Arquivos locais de ambiente e chaves privadas
+.env*
+!.env.example
+*.pem
