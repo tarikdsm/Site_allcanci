@@ -47,3 +47,30 @@ test('não existem rotas nem implementações alternativas', () => {
     assert.equal(existsSync(path), false, `${path} deve ter sido removido`);
   }
 });
+
+test('somente recursos usados pelo site definitivo permanecem', () => {
+  const assets = readdirSync('src/assets', { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name)
+    .sort();
+  assert.deepEqual(assets, [
+    'eco-marker-preto.jpg',
+    'eco-marker-trio.jpg',
+    'ink-injector-frontal.jpg',
+    'master-clean.jpg',
+    'master-color-trio.jpg',
+    'moedas-credito.jpg',
+  ]);
+  assert.equal(existsSync('src/assets/3d'), false);
+  assert.equal(existsSync('public/models'), false);
+  assert.equal(existsSync('public/favicon.ico'), false);
+
+  const pkg = JSON.parse(read('package.json'));
+  assert.deepEqual(Object.keys(pkg.dependencies).sort(), [
+    '@astrojs/sitemap',
+    '@fontsource/nunito',
+    '@fontsource/nunito-sans',
+    '@fontsource/poppins',
+    'astro',
+  ]);
+});
