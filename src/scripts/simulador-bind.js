@@ -2,7 +2,7 @@ import { simular, reais } from './simulador-core.js';
 
 /**
  * Liga o simulador ao markup padrão da seção #simulador.
- * @param {(r: ReturnType<typeof simular>) => void} [aoRenderizar] efeito extra por versão
+ * @param {(r: ReturnType<typeof simular>) => void} [aoRenderizar] efeito opcional após cada atualização
  */
 export function bindSimulador(aoRenderizar) {
   const faixa = document.querySelector('#sim-professores');

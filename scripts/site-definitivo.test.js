@@ -53,6 +53,17 @@ test('não existem rotas nem implementações alternativas', () => {
   }
 });
 
+test('somente a documentação neutra atual permanece', () => {
+  const docs = listSourceFiles('docs/superpowers')
+    .map((path) => relative('docs/superpowers', path).replaceAll(sep, '/'))
+    .sort();
+
+  assert.deepEqual(docs, [
+    'plans/2026-07-20-site-definitivo.md',
+    'specs/2026-07-20-site-definitivo-design.md',
+  ]);
+});
+
 test('os arquivos-fonte do produto não usam nomenclatura numerada', () => {
   const numberedName = /\bv(?:\d+|N)(?:-|\b)/i;
   const sourceFiles = listSourceFiles('src')
