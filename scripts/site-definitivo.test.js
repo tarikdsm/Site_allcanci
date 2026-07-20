@@ -16,6 +16,11 @@ test('a página definitiva ocupa a raiz e usa nomes neutros', () => {
 
   const css = read('src/styles/site.css');
   const script = read('src/scripts/site.js');
+  assert.match(css, /Site institucional Allcanci — linguagem visual de sala de aula/);
   assert.doesNotMatch(css, /\bv\d+\b|v\d+-|--v\d+-/i);
   assert.doesNotMatch(script, /\bv\d+\b|v\d+-/i);
+
+  assert.equal(existsSync('src/pages/v3/index.astro'), false);
+  assert.equal(existsSync('src/styles/v3.css'), false);
+  assert.equal(existsSync('src/scripts/v3.js'), false);
 });
