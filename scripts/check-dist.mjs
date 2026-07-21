@@ -256,6 +256,7 @@ if (!existsSync(htmlPath)) {
     }
   }
 
+  let ultimaSecao = -1;
   for (const id of [
     'hero',
     'produtos',
@@ -264,9 +265,17 @@ if (!existsSync(htmlPath)) {
     'prova-social',
     'sustentabilidade',
     'faq',
+    'depoimentos',
     'contato',
   ]) {
-    if (!html.includes(`id="${id}"`)) problemas.push(`seção #${id} ausente`);
+    const posicao = html.indexOf(`id="${id}"`);
+    if (posicao === -1) {
+      problemas.push(`seção #${id} ausente`);
+    } else if (posicao < ultimaSecao) {
+      problemas.push(`seção #${id} fora de ordem`);
+    } else {
+      ultimaSecao = posicao;
+    }
   }
 
   if (/\/Site_allcanci\/v\d+\//i.test(html)) problemas.push('link para rota numerada encontrado');

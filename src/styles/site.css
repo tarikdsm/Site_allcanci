@@ -1005,6 +1005,89 @@ body.site::before {
   line-height: var(--site-pauta);
 }
 
+/* ── #depoimentos: cartões de relatos autorizados ────────── */
+
+.site-depoimentos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: 1.5rem;
+  margin: 2.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-depoimento {
+  min-width: 0;
+}
+
+.site-depoimento-card,
+.site-depoimentos-vazio {
+  position: relative;
+  margin: 0;
+  padding: 2rem 1.6rem 1.6rem;
+  background: var(--branco);
+  border: var(--site-borda);
+  border-radius: var(--raio-sm);
+  box-shadow: 0.55rem 0.55rem 0 var(--amarelo);
+}
+
+.site-depoimento-card {
+  height: 100%;
+}
+
+.site-depoimento-card::before {
+  content: '“';
+  position: absolute;
+  top: -0.55rem;
+  left: 1rem;
+  color: var(--vermelho);
+  font-family: var(--font-titulo);
+  font-size: 4.4rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.site-depoimento-card > p {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.site-depoimento-card footer {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 2px dashed rgba(8, 8, 8, 0.22);
+}
+
+.site-depoimento-card footer strong {
+  font-family: var(--font-titulo);
+  font-size: 1rem;
+}
+
+.site-depoimento-card footer span {
+  color: rgba(8, 8, 8, 0.72);
+  font-size: var(--texto-sm);
+  font-weight: 700;
+}
+
+.site-depoimentos-vazio {
+  max-width: 54rem;
+  margin-top: 2.8rem;
+  border-style: dashed;
+  box-shadow: 0.55rem 0.55rem 0 var(--nevoa);
+}
+
+.site-depoimentos-vazio p {
+  max-width: 48rem;
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
 /* ── #contato: moldura de marcador azul desenhada ────────── */
 
 .site-contato-card {

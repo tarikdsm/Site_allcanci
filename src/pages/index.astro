@@ -398,18 +398,6 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           ))}
         </ul>
 
-        {provaSocial.depoimentos.length > 0 && (
-          <ul role="list">
-            {provaSocial.depoimentos.map((dep) => (
-              <li>
-                <blockquote>
-                  <p>{dep.citacao}</p>
-                  <footer>{dep.autor} — {dep.instituicao}</footer>
-                </blockquote>
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
     </section>
 
@@ -463,6 +451,45 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </details>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- ═══ DEPOIMENTOS ═══ -->
+    <section id="depoimentos" class="site-secao" aria-labelledby="titulo-depoimentos">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Depoimentos</p>
+          <h2 class="site-titulo" id="titulo-depoimentos">Quem usa FILL conta</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoA} fill="none" stroke="var(--vermelho)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            Histórias de escolas que escolheram uma rotina sem pincel seco e com menos descarte.
+          </p>
+        </header>
+
+        {provaSocial.depoimentos.length > 0 ? (
+          <ul class="site-depoimentos-grade" role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li class="site-depoimento">
+                <blockquote class="site-depoimento-card">
+                  <p>{dep.citacao}</p>
+                  <footer>
+                    <strong>{dep.autor}</strong>
+                    <span>{dep.instituicao}</span>
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="site-depoimentos-vazio">
+            <p>
+              Estamos reunindo relatos de escolas parceiras para publicar aqui com a autorização
+              de cada instituição.
+            </p>
+          </div>
+        )}
       </div>
     </section>
 
