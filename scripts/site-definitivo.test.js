@@ -100,7 +100,7 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     .sort();
   assert.deepEqual(assets, [
     'eco-marker-preto.jpg',
-    'eco-marker-trio.jpg',
+    'eco-marker-trio.png',
     'ink-injector-frontal.jpg',
     'master-clean.jpg',
     'master-color-trio.jpg',

@@ -27,7 +27,7 @@ const iconesRedes = {
 } satisfies Record<IconeRedeSocial, typeof IconInstagram>;
 
 const ogImage = await getImage({ src: img.ecoMarkerTrio, format: 'webp', width: 1200 });
-const ecoMarkerTrioAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul';
+const ecoMarkerTrioAlt = 'Infográfico com três pincéis recarregáveis FILL Eco Marker em vermelho, preto e azul e detalhes do reservatório, corpo e ponta';
 
 // Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
 const professoresIniciais = LIMITES_PROFESSORES.inicial;
@@ -161,7 +161,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <figure class="site-quadro-foto site-fita">
             <Image
               src={img.ecoMarkerTrio}
-              alt="Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul"
+              alt={ecoMarkerTrioAlt}
               widths={[420, 640, 900, 1240]}
               sizes="(min-width: 960px) 34rem, 88vw"
               loading="eager"
