@@ -43,7 +43,7 @@ export const produtos: Produto[] = [
   },
   {
     id: 'refil',
-    nome: 'Refil Removível FILL',
+    nome: 'Ponteira Removível FILL',
     subtitulo: 'Ponteiras substituíveis',
     descricao:
       'O feltro do Eco Marker é substituível: quando a ponta desgasta, troca-se só o refil — o pincel continua.',
