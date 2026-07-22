@@ -38,9 +38,6 @@ const seletoresSimulador = [
   '#sim-professores-num',
   '#sim-recargas',
   '#sim-custo-fill',
-  '#sim-descartaveis',
-  '#sim-economia',
-  '#sim-plastico',
   '#sim-resultado-status',
 ];
 
@@ -81,7 +78,7 @@ test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', 
     assert.equal(status.escritas, 1);
     assert.equal(
       status.textContent,
-      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, custo FILL de ${reais(resultado.custoFill)}, ${resultado.descartaveis.toLocaleString('pt-BR')} pincéis descartáveis, economia anual de ${reais(resultado.economia)} e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico evitado.`,
+      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(resultado.custoFill)}.`,
     );
   } finally {
     delete globalThis.document;

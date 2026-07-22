@@ -11,16 +11,13 @@ test('simular com 10 professores usa as premissas padrão', () => {
   const r = simular(10);
   assert.equal(r.recargasAno, 260);
   assert.ok(Math.abs(r.custoFill - 2857.4) < 1e-9);
-  assert.equal(r.descartaveis, 650); // 260 recargas × 1000m / 400m
-  assert.ok(Math.abs(r.custoDescartaveis - 2925) < 1e-9);
-  assert.ok(Math.abs(r.economia - 67.6) < 1e-9);
-  assert.ok(Math.abs(r.plasticoEvitadoKg - 13) < 1e-9);
+  assert.deepEqual(Object.keys(r), ['recargasAno', 'custoFill']);
 });
 
 test('professores inválido retorna zeros', () => {
   const r = simular(Number.NaN);
   assert.equal(r.recargasAno, 0);
-  assert.equal(r.economia, 0);
+  assert.equal(r.custoFill, 0);
   assert.ok(Object.values(r).every(Number.isFinite));
 });
 

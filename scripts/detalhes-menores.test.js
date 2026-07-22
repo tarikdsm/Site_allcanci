@@ -13,16 +13,14 @@ test('declara a cor do chrome do navegador igual ao fundo principal', async () =
   assert.match(layout, /<meta name="theme-color" content="#ffffff" \/>/);
 });
 
-test('mantem o custo de descartaveis no namespace de ids do simulador', async () => {
+test('remove do simulador os cálculos ligados aos descartáveis', async () => {
   const [page, script] = await Promise.all([
     readFile(pagePath, 'utf8'),
     readFile(scriptPath, 'utf8'),
   ]);
 
-  assert.match(page, /id="sim-custo-descartaveis"/);
-  assert.doesNotMatch(page, /id="site-custo-descartaveis"/);
-  assert.match(script, /querySelector\('#sim-custo-descartaveis'\)/);
-  assert.doesNotMatch(script, /Task 5|#site-custo-descartaveis/);
+  assert.doesNotMatch(page, /id="sim-(?:descartaveis|custo-descartaveis|economia|plastico)"/);
+  assert.doesNotMatch(script, /custoDescartaveis|sim-custo-descartaveis/);
 });
 
 test('o estilo exclusivo da pagina nao depende de seletor relacional', async () => {

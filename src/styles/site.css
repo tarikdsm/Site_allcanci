@@ -772,46 +772,8 @@ body.site::before {
   font-weight: 900;
 }
 
-.site-custo-ruim {
-  color: var(--vermelho-texto);
-}
-
 .site-custo-bom {
   color: var(--azul);
-}
-
-.site-conta-economia {
-  font-size: clamp(1.45rem, 1.2rem + 1.4vw, 2.1rem);
-}
-
-/* Resultado com sublinhado duplo de marcador verde */
-.site-sublinhado {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 0.3em;
-}
-
-.site-sublinhado .traco {
-  position: absolute;
-  left: -0.2em;
-  bottom: 0;
-  width: calc(100% + 0.4em);
-  height: 0.62em;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.site-conta-bonus {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.site-folha {
-  flex: none;
-  width: 1.25em;
-  height: 1.25em;
-  align-self: center;
 }
 
 /* ── #prova-social: carimbo + selos-adesivos ─────────────── */

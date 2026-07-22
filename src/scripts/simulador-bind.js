@@ -7,9 +7,8 @@ import {
 
 /**
  * Liga o simulador ao markup padrão da seção #simulador.
- * @param {(r: ReturnType<typeof simular>) => void} [aoRenderizar] efeito opcional após cada atualização
  */
-export function bindSimulador(aoRenderizar) {
+export function bindSimulador() {
   const faixa = document.querySelector('#sim-professores');
   const numero = document.querySelector('#sim-professores-num');
   const status = document.querySelector('#sim-resultado-status');
@@ -20,13 +19,9 @@ export function bindSimulador(aoRenderizar) {
     const r = simular(n);
     set('#sim-recargas', r.recargasAno.toLocaleString('pt-BR'));
     set('#sim-custo-fill', reais(r.custoFill));
-    set('#sim-descartaveis', r.descartaveis.toLocaleString('pt-BR'));
-    set('#sim-economia', reais(r.economia));
-    set('#sim-plastico', `${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg`);
     if (anunciar && status) {
-      status.textContent = `Para ${n.toLocaleString('pt-BR')} professores: ${r.recargasAno.toLocaleString('pt-BR')} recargas por ano, custo FILL de ${reais(r.custoFill)}, ${r.descartaveis.toLocaleString('pt-BR')} pincéis descartáveis, economia anual de ${reais(r.economia)} e ${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico evitado.`;
+      status.textContent = `Para ${n.toLocaleString('pt-BR')} professores: ${r.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(r.custoFill)}.`;
     }
-    aoRenderizar?.(r);
   };
   let ultimoValido = LIMITES_PROFESSORES.inicial;
   const sync = (v, anunciar = false) => {
