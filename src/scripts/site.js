@@ -22,7 +22,14 @@ if (!reduz) {
       }),
     { threshold: 0.4 }
   );
-  document.querySelectorAll('.traco').forEach((s) => io.observe(s));
+  // Aguarda o navegador pintar o estado oculto antes de observar os traços.
+  // Assim, os elementos que já começam visíveis (como o círculo do hero)
+  // também exibem o movimento de desenho em vez de aparecerem prontos.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.traco').forEach((s) => io.observe(s));
+    });
+  });
 }
 
 // Linha extra da conta do simulador, seguindo o mesmo contrato de markup #sim-*:
