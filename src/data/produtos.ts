@@ -39,7 +39,7 @@ export const produtos: Produto[] = [
     subtitulo: 'Estojo apagador',
     descricao:
       'Estojo com apagador que armazena e protege até 3 pincéis, mantendo tudo organizado na mesa do professor.',
-    destaques: ['Armazena 3 pincéis', 'Capa protetora', 'Apagador integrado'],
+    destaques: ['Armazena 3 pincéis', 'Capa protetora', 'Refil com 3 feltros'],
   },
   {
     id: 'refil',
