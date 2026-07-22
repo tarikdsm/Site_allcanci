@@ -18,6 +18,7 @@ export function bindSimulador() {
   const render = (n, anunciar = false) => {
     const r = simular(n);
     set('#sim-recargas', r.recargasAno.toLocaleString('pt-BR'));
+    set('#sim-recargas-plastico', r.recargasAno.toLocaleString('pt-BR'));
     set('#sim-custo-fill', reais(r.custoFill));
     set('#sim-plastico', `${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg`);
     if (anunciar && status) {

@@ -330,6 +330,10 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </p>
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <strong id="sim-recargas-plastico">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
+              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
+              {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g
+              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
               <strong class="site-plastico-economizado" id="sim-plastico">
                 {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
               </strong>

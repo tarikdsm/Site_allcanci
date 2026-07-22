@@ -37,6 +37,7 @@ const seletoresSimulador = [
   '#sim-professores',
   '#sim-professores-num',
   '#sim-recargas',
+  '#sim-recargas-plastico',
   '#sim-custo-fill',
   '#sim-plastico',
   '#sim-resultado-status',
@@ -110,6 +111,8 @@ test('valor numerico valido sincroniza imediatamente os dois controles', () => {
     assert.equal(elementos.get('#sim-professores').value, '30');
     assert.equal(numero.value, '30');
     assert.equal(elementos.get('#sim-recargas').textContent, '780');
+    assert.equal(elementos.get('#sim-recargas-plastico').textContent, '780');
+    assert.equal(elementos.get('#sim-plastico').textContent, '39 kg');
   } finally {
     delete globalThis.document;
   }
