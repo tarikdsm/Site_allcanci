@@ -342,6 +342,7 @@ body.site::before {
 .site-circulado {
   position: relative;
   display: inline-block;
+  margin-right: 0.42em;
   padding: 0 0.08em;
   white-space: nowrap;
   color: var(--vermelho);
