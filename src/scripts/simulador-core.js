@@ -12,7 +12,7 @@ export const PREMISSAS = {
   precoCreditoReais: CONSTANTES_NEGOCIO.precoCreditoReais,
   kmPorRecarga: CONSTANTES_NEGOCIO.kmPorRecarga,
   metrosPorDescartavel: 400,
-  precoDescartavelReais: 4.5,
+  precoDescartavelReais: 7.99,
   kgPlasticoPorDescartavel: 0.02,
 };
 

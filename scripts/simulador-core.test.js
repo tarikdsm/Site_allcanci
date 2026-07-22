@@ -12,8 +12,8 @@ test('simular com 10 professores usa as premissas padrão', () => {
   assert.equal(r.recargasAno, 260);
   assert.ok(Math.abs(r.custoFill - 2857.4) < 1e-9);
   assert.equal(r.descartaveis, 650); // 260 recargas × 1000m / 400m
-  assert.ok(Math.abs(r.custoDescartaveis - 2925) < 1e-9);
-  assert.ok(Math.abs(r.economia - 67.6) < 1e-9);
+  assert.ok(Math.abs(r.custoDescartaveis - 5193.5) < 1e-9);
+  assert.ok(Math.abs(r.economia - 2336.1) < 1e-9);
   assert.ok(Math.abs(r.plasticoEvitadoKg - 13) < 1e-9);
 });
 
@@ -39,7 +39,7 @@ test('simular limita underflow e overflow ao intervalo de professores', () => {
 });
 
 test('reais formata em BRL', () => {
-  assert.match(reais(10.99), /R\$\s?10,99/);
+  assert.match(reais(7.99), /R\$\s?7,99/);
 });
 
 test('premissas expostas para exibir no site', () => {
