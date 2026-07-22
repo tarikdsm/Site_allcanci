@@ -133,8 +133,9 @@ body.site::before {
   transition: stroke-dashoffset 900ms ease-out;
 }
 
-.site .site-circulado .traco path {
-  transition-duration: 1600ms;
+.site .site-circulado .traco path,
+.site .site-hero-doodle path {
+  transition-duration: 2600ms;
 }
 
 .site .traco path + path {
