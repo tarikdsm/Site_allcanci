@@ -19,7 +19,8 @@ test('remove do simulador os cálculos ligados aos descartáveis', async () => {
     readFile(scriptPath, 'utf8'),
   ]);
 
-  assert.doesNotMatch(page, /id="sim-(?:descartaveis|custo-descartaveis|economia|plastico)"/);
+  assert.doesNotMatch(page, /id="sim-(?:descartaveis|custo-descartaveis|economia)"/);
+  assert.match(page, /id="sim-plastico"/);
   assert.doesNotMatch(script, /custoDescartaveis|sim-custo-descartaveis/);
 });
 

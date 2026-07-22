@@ -314,7 +314,8 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </div>
             <p class="site-premissas">
               Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
-              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)}.
+              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · cada
+              recarga economiza aproximadamente {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
             </p>
           </div>
 
@@ -326,6 +327,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               {reais(PREMISSAS.precoCreditoReais)}
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
               <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
+            </p>
+            <p class="site-conta-linha">
+              <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <strong class="site-plastico-economizado" id="sim-plastico">
+                {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
+              </strong>
             </p>
             <p
               id="sim-resultado-status"
