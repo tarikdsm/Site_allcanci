@@ -134,7 +134,7 @@ body.site::before {
 }
 
 .site .site-circulado .traco path {
-  transition-duration: 1100ms;
+  transition-duration: 1300ms;
 }
 
 .site .traco path + path {
