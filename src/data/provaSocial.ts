@@ -7,7 +7,7 @@ export const provaSocial = {
   selos: [
     'Tecnologia patenteada',
     'Única fabricante no mundo',
-    'Documentação para licitações',
+    'Documentação para inexigibilidade',
     'Garantia total de satisfação',
     'Suporte por toda a vida útil',
     `Entrega em até ${CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis`,
