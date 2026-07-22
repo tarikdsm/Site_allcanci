@@ -109,6 +109,8 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
   assert.equal(existsSync('src/assets/3d'), false);
   assert.equal(existsSync('public/models'), false);
   assert.equal(existsSync('public/favicon.ico'), false);
+  assert.equal(existsSync('public/favicon.svg'), false);
+  assert.equal(existsSync('public/favicon.png'), true);
 
   const pkg = JSON.parse(read('package.json'));
   assert.deepEqual(Object.keys(pkg.dependencies).sort(), [
