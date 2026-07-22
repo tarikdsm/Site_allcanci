@@ -102,7 +102,7 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     'eco-marker-preto.jpg',
     'eco-marker-trio.jpg',
     'ink-injector-frontal.jpg',
-    'master-clean.jpg',
+    'master-clean.png',
     'master-color-trio.jpg',
     'moedas-credito.jpg',
   ]);
