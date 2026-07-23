@@ -358,6 +358,7 @@ body.site::before {
 .site-hero-ctas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.2rem;
   margin-top: 2rem;
 }
@@ -420,6 +421,7 @@ body.site::before {
 .site-postits {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.7rem 1.9rem;
   margin: clamp(2.4rem, 5vw, 3.6rem) 0 0;
   padding: 0;
@@ -462,10 +464,11 @@ body.site::before {
 .site-hero-doodle {
   position: absolute;
   top: -3.7rem;
-  left: -4.4rem;
+  left: 50%;
   width: 7.5rem;
   overflow: visible;
   pointer-events: none;
+  transform: translateX(-85%);
 }
 
 @media (max-width: 959px) {
