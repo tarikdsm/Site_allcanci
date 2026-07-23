@@ -109,12 +109,12 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     'app-allcanci.png',
     'eco-marker-hero-infografico.png',
     'eco-marker-hero.png',
-    'eco-marker-preto.jpg',
     'eco-marker-trio.png',
     'ink-injector-frontal.png',
     'logo-allcanci.png',
     'master-clean.png',
     'master-color-trio.png',
+    'ponteira-removivel-fill.png',
   ]);
   assert.equal(existsSync('src/assets/3d'), false);
   assert.equal(existsSync('public/models'), false);
