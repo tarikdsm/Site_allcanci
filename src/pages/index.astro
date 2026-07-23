@@ -217,7 +217,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             return (
               <li class="site-produto">
                 {foto && (
-                  <div class:list={['site-produto-foto', produto.id === 'app' && 'site-produto-foto--mesclada']}>
+                  <div class="site-produto-foto">
                     <Image
                       src={foto.src}
                       alt={foto.alt}
