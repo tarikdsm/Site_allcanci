@@ -137,8 +137,7 @@ body.site::before {
   transition-duration: 1200ms;
 }
 
-.site .site-circulado .traco path,
-.site .site-hero-doodle path {
+.site .site-circulado .traco path {
   transition-duration: 2600ms;
 }
 
@@ -469,23 +468,6 @@ body.site::before {
 .site-postit:nth-child(1) { --rot: -2.4deg; }
 .site-postit:nth-child(2) { --rot: 1.8deg; }
 .site-postit:nth-child(3) { --rot: -1.1deg; }
-
-/* Seta-doodle do hero (some no mobile) */
-.site-hero-doodle {
-  position: absolute;
-  top: -3.7rem;
-  left: 50%;
-  width: 7.5rem;
-  overflow: visible;
-  pointer-events: none;
-  transform: translateX(-85%);
-}
-
-@media (max-width: 959px) {
-  .site-hero-doodle {
-    display: none;
-  }
-}
 
 /* ── #produtos: cards-sticker ─────────────────────────────── */
 
