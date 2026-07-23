@@ -133,6 +133,15 @@ body.site::before {
   transition: stroke-dashoffset 900ms ease-out;
 }
 
+.site .site-traco-titulo path {
+  transition-duration: 1200ms;
+}
+
+.site .site-circulado .traco path,
+.site .site-hero-doodle path {
+  transition-duration: 2600ms;
+}
+
 .site .traco path + path {
   transition-delay: 260ms;
 }
@@ -144,7 +153,7 @@ body.site::before {
 /* Traço ondulado sob os títulos de seção */
 .site-traco-titulo {
   display: block;
-  width: min(20rem, 78%);
+  width: 100%;
   height: clamp(0.55rem, 1.4vw, 0.85rem);
   margin-top: 0.45rem;
   overflow: visible;
@@ -226,38 +235,24 @@ body.site::before {
 }
 
 .site-marca {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-titulo);
-  font-weight: 900;
-  font-size: 1.25rem;
-  color: var(--preto);
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 8.5rem;
+  aspect-ratio: 604 / 314;
+  overflow: hidden;
   text-decoration: none;
-  white-space: nowrap;
 }
 
-.site-marca span {
-  font-weight: 800;
-  color: var(--azul);
+.site-marca img {
+  position: absolute;
+  top: -54%;
+  left: -32.4%;
+  display: block;
+  width: 165.6%;
+  max-width: none;
+  height: auto;
 }
-
-/* Tampas dos três marcadores na calha */
-.site-tampas {
-  display: inline-flex;
-  gap: 0.28rem;
-}
-
-.site-tampas i {
-  width: 0.72rem;
-  height: 0.72rem;
-  border: 2px solid var(--preto);
-  border-radius: 50%;
-}
-
-.site-tampas i:nth-child(1) { background: var(--azul); }
-.site-tampas i:nth-child(2) { background: var(--vermelho); }
-.site-tampas i:nth-child(3) { background: var(--verde); }
 
 .site-menu {
   display: flex;
@@ -285,10 +280,10 @@ body.site::before {
   }
 }
 
-/* Telas bem estreitas: a marca encurta para "allcanci" e o botão aperta */
+/* Telas bem estreitas: a marca e o botão ficam mais compactos */
 @media (max-width: 460px) {
-  .site-marca > span:not(.site-tampas) {
-    display: none;
+  .site-marca {
+    width: 6.5rem;
   }
 
   .site-botao--mini {
@@ -342,6 +337,7 @@ body.site::before {
 .site-circulado {
   position: relative;
   display: inline-block;
+  margin-right: 0.42em;
   padding: 0 0.08em;
   white-space: nowrap;
   color: var(--vermelho);
@@ -639,7 +635,7 @@ body.site::before {
   width: min(13rem, 46%);
   height: 4.2rem;
   margin: 0.5rem 0 0.4rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 64' fill='none'%3E%3Cpath d='M16 6 C 64 10, 94 26, 102 54' stroke='%23080808' stroke-width='3' stroke-linecap='round' stroke-dasharray='8 9'/%3E%3Cpath d='M88 50 L103 56 L98 40' stroke='%23080808' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 64' fill='none'%3E%3Cdefs%3E%3Cmarker id='ponta' viewBox='0 0 12 12' refX='11' refY='6' markerWidth='18' markerHeight='18' markerUnits='userSpaceOnUse' orient='auto'%3E%3Cpath d='M2 1 L11 6 L2 11' fill='none' stroke='%23080808' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/marker%3E%3C/defs%3E%3Cpath d='M16 6 C 64 10, 94 26, 102 54' pathLength='1' fill='none' stroke='%23080808' stroke-width='3' stroke-linecap='round' stroke-dasharray='.055 .045' stroke-dashoffset='.045' marker-end='url(%23ponta)'/%3E%3C/svg%3E")
     center / 100% 100% no-repeat;
 }
 
@@ -785,46 +781,12 @@ body.site::before {
   font-weight: 900;
 }
 
-.site-custo-ruim {
-  color: var(--vermelho-texto);
-}
-
 .site-custo-bom {
   color: var(--azul);
 }
 
-.site-conta-economia {
-  font-size: clamp(1.45rem, 1.2rem + 1.4vw, 2.1rem);
-}
-
-/* Resultado com sublinhado duplo de marcador verde */
-.site-sublinhado {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 0.3em;
-}
-
-.site-sublinhado .traco {
-  position: absolute;
-  left: -0.2em;
-  bottom: 0;
-  width: calc(100% + 0.4em);
-  height: 0.62em;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.site-conta-bonus {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.site-folha {
-  flex: none;
-  width: 1.25em;
-  height: 1.25em;
-  align-self: center;
+.site-plastico-economizado {
+  color: var(--verde);
 }
 
 /* ── #prova-social: carimbo + selos-adesivos ─────────────── */
@@ -1016,6 +978,89 @@ body.site::before {
   margin: 0 0 0 1.85rem;
   font-size: var(--texto-base);
   line-height: var(--site-pauta);
+}
+
+/* ── #depoimentos: cartões de relatos autorizados ────────── */
+
+.site-depoimentos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: 1.5rem;
+  margin: 2.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-depoimento {
+  min-width: 0;
+}
+
+.site-depoimento-card,
+.site-depoimentos-vazio {
+  position: relative;
+  margin: 0;
+  padding: 2rem 1.6rem 1.6rem;
+  background: var(--branco);
+  border: var(--site-borda);
+  border-radius: var(--raio-sm);
+  box-shadow: 0.55rem 0.55rem 0 var(--amarelo);
+}
+
+.site-depoimento-card {
+  height: 100%;
+}
+
+.site-depoimento-card::before {
+  content: '“';
+  position: absolute;
+  top: -0.55rem;
+  left: 1rem;
+  color: var(--vermelho);
+  font-family: var(--font-titulo);
+  font-size: 4.4rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.site-depoimento-card > p {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.site-depoimento-card footer {
+  display: grid;
+  gap: 0.15rem;
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 2px dashed rgba(8, 8, 8, 0.22);
+}
+
+.site-depoimento-card footer strong {
+  font-family: var(--font-titulo);
+  font-size: 1rem;
+}
+
+.site-depoimento-card footer span {
+  color: rgba(8, 8, 8, 0.72);
+  font-size: var(--texto-sm);
+  font-weight: 700;
+}
+
+.site-depoimentos-vazio {
+  max-width: 54rem;
+  margin-top: 2.8rem;
+  border-style: dashed;
+  box-shadow: 0.55rem 0.55rem 0 var(--nevoa);
+}
+
+.site-depoimentos-vazio p {
+  max-width: 48rem;
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 /* ── #contato: moldura de marcador azul desenhada ────────── */

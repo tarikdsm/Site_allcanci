@@ -23,7 +23,7 @@ export const produtos: Produto[] = [
     subtitulo: 'Pincel reutilizável',
     descricao:
       `O pincel que não precisa ser aberto para recarregar. Cada recarga rende cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita, com traço sempre uniforme.`,
-    destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Feito para durar anos'],
+    destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Fácil de apagar'],
   },
   {
     id: 'master-color',
@@ -39,14 +39,14 @@ export const produtos: Produto[] = [
     subtitulo: 'Estojo apagador',
     descricao:
       'Estojo com apagador que armazena e protege até 3 pincéis, mantendo tudo organizado na mesa do professor.',
-    destaques: ['Armazena 3 pincéis', 'Capa protetora', 'Apagador integrado'],
+    destaques: ['Armazena 3 pincéis', 'Capa protetora', 'Refil com 3 feltros'],
   },
   {
     id: 'refil',
-    nome: 'Refil Removível FILL',
-    subtitulo: 'Feltro trocável',
+    nome: 'Ponteira Removível FILL',
+    subtitulo: 'Ponteiras substituíveis',
     descricao:
-      'O feltro do Eco Marker é substituível: quando a ponta desgasta, troca-se só o refil — o pincel continua.',
+      'A ponteira do Eco Marker é substituível: quando a ponta desgasta, troca-se só o refil — o pincel continua.',
     destaques: ['Troca em segundos', 'Prolonga a vida útil do pincel', 'Menos plástico descartado'],
   },
   {

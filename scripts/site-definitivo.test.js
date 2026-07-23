@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
 const read = (path) => readFileSync(path, 'utf8');
@@ -99,18 +99,22 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     .map((entry) => entry.name)
     .sort();
   assert.deepEqual(assets, [
+    'app-allcanci.png',
     'eco-marker-hero-infografico.png',
     'eco-marker-hero.png',
     'eco-marker-preto.jpg',
     'eco-marker-trio.png',
-    'ink-injector-frontal.jpg',
-    'master-clean.jpg',
-    'master-color-trio.jpg',
-    'moedas-credito.jpg',
+    'ink-injector-frontal.png',
+    'logo-allcanci.png',
+    'master-clean.png',
+    'master-color-trio.png',
   ]);
   assert.equal(existsSync('src/assets/3d'), false);
   assert.equal(existsSync('public/models'), false);
   assert.equal(existsSync('public/favicon.ico'), false);
+  assert.equal(existsSync('public/favicon.svg'), false);
+  assert.equal(existsSync('public/favicon.png'), true);
+  assert.ok(statSync('public/favicon.png').size < 16_000, 'favicon deve permanecer abaixo de 16 KB');
 
   const pkg = JSON.parse(read('package.json'));
   assert.deepEqual(Object.keys(pkg.dependencies).sort(), [

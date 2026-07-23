@@ -29,7 +29,7 @@ const iconesRedes = {
 const ogImage = await getImage({ src: img.ecoMarkerHero, format: 'webp', width: 1200 });
 const ecoMarkerHeroAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul sobre fundo branco';
 const ecoMarkerInfograficoAlt = 'Infográfico da FILL Eco Marker com três pincéis recarregáveis, cores disponíveis, reservatório transparente, corpo reutilizável e ponta substituível';
-const ecoMarkerTrioAlt = 'Infográfico com três pincéis recarregáveis FILL Eco Marker em vermelho, preto e azul e detalhes do reservatório, corpo e ponta';
+const ecoMarkerTrioAlt = 'Três pincéis FILL Eco Marker fechados nas cores vermelho, preto e azul, ao lado de um pincel preto aberto mostrando a ponta e o reservatório';
 
 // Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
 const professoresIniciais = LIMITES_PROFESSORES.inicial;
@@ -65,15 +65,15 @@ const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
   },
   'master-clean': {
     src: img.masterClean,
-    alt: 'Estojo apagador FILL Master Clean 3P na cor azul, com feltro apagador na base',
+    alt: 'Estojo apagador FILL azul aberto, armazenando pincéis recarregáveis',
   },
   refil: {
     src: img.ecoMarkerPreto,
     alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
   },
   app: {
-    src: img.moedasCredito,
-    alt: 'Três moedas azuis de crédito de recarga FILL com gota de tinta em relevo',
+    src: img.appAllcanci,
+    alt: 'Tela de acesso do aplicativo Allcanci exibida em um celular, com a máquina FILL Ink Printer e três marcadores',
   },
 };
 
@@ -90,7 +90,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
 ---
 
 <Layout
-  title="Allcanci Tecnologia — Nenhum professor merece pincel seco"
+  title="Allcanci Tecnologia — Quem transforma vidas merece o melhor para ensinar."
   description={`Chega de pincel seco em sala de aula: pincéis FILL da Allcanci escrevem cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km por recarga, em comodato para escolas de todo o Brasil.`}
   ogImage={ogImage}
   ogImageAlt={ecoMarkerHeroAlt}
@@ -101,8 +101,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
   <header class="site-topo">
     <div class="site-caixa site-topo-linha">
       <a class="site-marca" href="#hero">
-        <span class="site-tampas" aria-hidden="true"><i></i><i></i><i></i></span>
-        allcanci<span>&nbsp;tecnologia</span>
+        <Image
+          src={img.logoAllcanci}
+          alt="Allcanci Tecnologia"
+          width={512}
+          loading="eager"
+        />
       </a>
       <nav class="site-nav" aria-label="Seções da página">
         <ul class="site-menu" role="list">
@@ -131,9 +135,9 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <div>
             <p class="site-etiqueta">{empresa.nome} · {empresa.cidade}</p>
             <h1 id="titulo-hero">
-              Nenhum professor merece
+              Quem transforma vidas merece{' '}
               <span class="site-circulado">
-                pincel seco
+                o melhor
                 <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
                   <path
                     d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
@@ -143,7 +147,8 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
                     stroke-linecap="round"
                   />
                 </svg>
-              </span>.
+              </span>{' '}
+              para ensinar.
             </h1>
             <p class="site-hero-sub">{empresa.descricao}</p>
             <div class="site-hero-ctas">
@@ -200,8 +205,8 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
           </svg>
           <p class="site-sub">
-            Seis itens que trabalham juntos para aposentar o pincel descartável — da máquina
-            de recarga ao aplicativo de gestão.
+            Seis itens que trabalham juntos para aposentar o pincel descartável — do pincel
+            recarregável ao aplicativo de gestão.
           </p>
         </header>
 
@@ -283,15 +288,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
     <section id="simulador" class="site-secao" aria-labelledby="titulo-simulador">
       <div class="site-caixa">
         <header class="site-cabeca">
-          <p class="site-kicker">Simulador de economia</p>
-          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a continha no quadro?</h2>
+          <p class="site-kicker">Simulador FILL</p>
+          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a conta no quadro?</h2>
           <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
             <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
           </svg>
-          <p class="site-sub">
-            Diga quantos professores a sua instituição tem e a gente arma a conta do ano —
-            descartáveis de um lado, FILL do outro.
-          </p>
+          <p class="site-sub">Diga quantos professores a sua instituição tem e a gente faz a conta.</p>
         </header>
 
         <div class="site-conta">
@@ -320,22 +322,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </div>
             <p class="site-premissas">
               Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
-              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
-              recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
-              ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
-              ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · cada
+              recarga economiza aproximadamente {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
             </p>
           </div>
 
           <div class="site-conta-quadro">
-            <p class="site-conta-linha">
-              <span class="site-conta-rotulo">No modelo descartável</span>
-              <strong id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</strong>{' '}pincéis
-              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
-              {reais(PREMISSAS.precoDescartavelReais)}
-              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong id="sim-custo-descartaveis" class="site-custo-ruim">{reais(sim0.custoDescartaveis)}</strong>
-            </p>
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Com o ecossistema FILL</span>
               <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
@@ -344,25 +336,15 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
               <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
             </p>
-            <p class="site-conta-linha site-conta-economia">
-              <span class="site-conta-rotulo">Economia estimada por ano</span>
-              <span class="site-sublinhado">
-                <strong id="sim-economia">{reais(sim0.economia)}</strong>
-                <svg class="traco" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M6 8 C 80 2, 200 12, 294 6" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
-                  <path d="M20 20 C 110 14, 210 24, 284 18" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
-                </svg>
-              </span>
-            </p>
-            <p class="site-conta-linha site-conta-bonus">
-              <svg class="site-folha" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 19 C 5 10, 10 5, 19 5 C 19 14, 14 19, 5 19 Z" stroke="var(--verde)" stroke-width="2.2" stroke-linejoin="round" />
-                <path d="M5 19 C 8 13.5, 11.5 9.8, 15 8" stroke="var(--verde)" stroke-width="2.2" stroke-linecap="round" />
-              </svg>
-              <span>
-                E de lição de casa: <strong id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</strong>{' '}de
-                plástico que não viram lixo.
-              </span>
+            <p class="site-conta-linha">
+              <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <strong id="sim-recargas-plastico">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
+              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
+              {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g
+              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
+              <strong class="site-plastico-economizado" id="sim-plastico">
+                {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
+              </strong>
             </p>
             <p
               id="sim-resultado-status"
@@ -401,18 +383,6 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           ))}
         </ul>
 
-        {provaSocial.depoimentos.length > 0 && (
-          <ul role="list">
-            {provaSocial.depoimentos.map((dep) => (
-              <li>
-                <blockquote>
-                  <p>{dep.citacao}</p>
-                  <footer>{dep.autor} — {dep.instituicao}</footer>
-                </blockquote>
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
     </section>
 
@@ -466,6 +436,45 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </details>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- ═══ DEPOIMENTOS ═══ -->
+    <section id="depoimentos" class="site-secao" aria-labelledby="titulo-depoimentos">
+      <div class="site-caixa">
+        <header class="site-cabeca">
+          <p class="site-kicker">Depoimentos</p>
+          <h2 class="site-titulo" id="titulo-depoimentos">Quem usa FILL conta</h2>
+          <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d={tracoA} fill="none" stroke="var(--vermelho)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+          <p class="site-sub">
+            Histórias de escolas que escolheram uma rotina sem pincel seco e com menos descarte.
+          </p>
+        </header>
+
+        {provaSocial.depoimentos.length > 0 ? (
+          <ul class="site-depoimentos-grade" role="list">
+            {provaSocial.depoimentos.map((dep) => (
+              <li class="site-depoimento">
+                <blockquote class="site-depoimento-card">
+                  <p>{dep.citacao}</p>
+                  <footer>
+                    <strong>{dep.autor}</strong>
+                    <span>{dep.instituicao}</span>
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="site-depoimentos-vazio">
+            <p>
+              Estamos reunindo relatos de escolas parceiras para publicar aqui com a autorização
+              de cada instituição.
+            </p>
+          </div>
+        )}
       </div>
     </section>
 

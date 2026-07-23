@@ -3,17 +3,13 @@ import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 999, inicial: 20 });
 
 /**
- * Núcleo puro do simulador de economia FILL (sem DOM).
- * Premissas conservadoras — exibidas no site e ajustáveis pela Allcanci:
- * rendimento e custo da recarga, rendimento e custo do descartável e plástico por pincel.
+ * Núcleo puro do simulador FILL (sem DOM).
+ * Premissas exibidas no site e ajustáveis pela Allcanci.
  */
 export const PREMISSAS = {
   recargasPorProfessorAno: CONSTANTES_NEGOCIO.recargasPorProfessorAno,
   precoCreditoReais: CONSTANTES_NEGOCIO.precoCreditoReais,
-  kmPorRecarga: CONSTANTES_NEGOCIO.kmPorRecarga,
-  metrosPorDescartavel: 400,
-  precoDescartavelReais: 4.5,
-  kgPlasticoPorDescartavel: 0.02,
+  kgPlasticoEvitadoPorRecarga: 0.05,
 };
 
 export function normalizarProfessores(valor, fallback = 0) {
@@ -30,15 +26,10 @@ export function simular(professores, premissas = PREMISSAS) {
   const n = normalizarProfessores(professores);
   const recargasAno = n * premissas.recargasPorProfessorAno;
   const custoFill = recargasAno * premissas.precoCreditoReais;
-  const descartaveis = Math.ceil((recargasAno * premissas.kmPorRecarga * 1000) / premissas.metrosPorDescartavel);
-  const custoDescartaveis = descartaveis * premissas.precoDescartavelReais;
   return {
     recargasAno,
     custoFill,
-    descartaveis,
-    custoDescartaveis,
-    economia: custoDescartaveis - custoFill,
-    plasticoEvitadoKg: descartaveis * premissas.kgPlasticoPorDescartavel,
+    plasticoEvitadoKg: recargasAno * premissas.kgPlasticoEvitadoPorRecarga,
   };
 }
 

@@ -11,16 +11,15 @@ test('simular com 10 professores usa as premissas padrão', () => {
   const r = simular(10);
   assert.equal(r.recargasAno, 260);
   assert.ok(Math.abs(r.custoFill - 2857.4) < 1e-9);
-  assert.equal(r.descartaveis, 650); // 260 recargas × 1000m / 400m
-  assert.ok(Math.abs(r.custoDescartaveis - 2925) < 1e-9);
-  assert.ok(Math.abs(r.economia - 67.6) < 1e-9);
   assert.ok(Math.abs(r.plasticoEvitadoKg - 13) < 1e-9);
+  assert.deepEqual(Object.keys(r), ['recargasAno', 'custoFill', 'plasticoEvitadoKg']);
 });
 
 test('professores inválido retorna zeros', () => {
   const r = simular(Number.NaN);
   assert.equal(r.recargasAno, 0);
-  assert.equal(r.economia, 0);
+  assert.equal(r.custoFill, 0);
+  assert.equal(r.plasticoEvitadoKg, 0);
   assert.ok(Object.values(r).every(Number.isFinite));
 });
 
@@ -39,9 +38,10 @@ test('simular limita underflow e overflow ao intervalo de professores', () => {
 });
 
 test('reais formata em BRL', () => {
-  assert.match(reais(10.99), /R\$\s?10,99/);
+  assert.match(reais(PREMISSAS.precoCreditoReais), /R\$\s?10,99/);
 });
 
 test('premissas expostas para exibir no site', () => {
   assert.equal(PREMISSAS.recargasPorProfessorAno, 26);
+  assert.equal(PREMISSAS.kgPlasticoEvitadoPorRecarga, 0.05);
 });
