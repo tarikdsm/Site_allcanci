@@ -28,7 +28,7 @@ const iconesRedes = {
 
 const ogImage = await getImage({ src: img.ecoMarkerHero, format: 'webp', width: 1200 });
 const ecoMarkerHeroAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul sobre fundo branco';
-const ecoMarkerTrioAlt = 'Infográfico com três pincéis recarregáveis FILL Eco Marker em vermelho, preto e azul e detalhes do reservatório, corpo e ponta';
+const ecoMarkerTrioAlt = 'Três pincéis FILL Eco Marker fechados nas cores vermelho, preto e azul, ao lado de um pincel preto aberto mostrando a ponta e o reservatório';
 
 // Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
 const professoresIniciais = LIMITES_PROFESSORES.inicial;
@@ -287,7 +287,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
       <div class="site-caixa">
         <header class="site-cabeca">
           <p class="site-kicker">Simulador FILL</p>
-          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a continha no quadro?</h2>
+          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a conta no quadro?</h2>
           <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
             <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
           </svg>

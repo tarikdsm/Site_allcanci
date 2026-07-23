@@ -1,15 +1,18 @@
 import inkInjector from '../assets/ink-injector-frontal.png';
-import ecoMarkerTrio from '../assets/eco-marker-trio.jpg';
+import ecoMarkerHero from '../assets/eco-marker-hero.png';
+import ecoMarkerTrio from '../assets/eco-marker-trio.png';
 import ecoMarkerPreto from '../assets/eco-marker-preto.jpg';
+import appAllcanci from '../assets/app-allcanci.png';
+import logoAllcanci from '../assets/logo-allcanci.png';
 import masterColorTrio from '../assets/master-color-trio.png';
-import masterClean from '../assets/master-clean.jpg';
-import moedasCredito from '../assets/moedas-credito.jpg';
+import masterClean from '../assets/master-clean.png';
 
 export {
   inkInjector,
   ecoMarkerHero,
   ecoMarkerTrio,
   ecoMarkerPreto,
+  appAllcanci,
   logoAllcanci,
   masterColorTrio,
   masterClean,

@@ -38,7 +38,7 @@ test('simular limita underflow e overflow ao intervalo de professores', () => {
 });
 
 test('reais formata em BRL', () => {
-  assert.match(reais(PREMISSAS.precoDescartavelReais), /R\$\s?4,99/);
+  assert.match(reais(PREMISSAS.precoCreditoReais), /R\$\s?10,99/);
 });
 
 test('premissas expostas para exibir no site', () => {
