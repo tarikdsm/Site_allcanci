@@ -151,6 +151,27 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               para ensinar.
             </h1>
             <p class="site-hero-sub">{empresa.descricao}</p>
+
+            <div class="site-hero-imagem">
+              <svg class="traco site-hero-doodle" viewBox="0 0 150 100" aria-hidden="true">
+                <path d="M10 14 C 56 6, 104 28, 128 70" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" />
+                <path d="M106 64 L130 72 L124 46" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
+              <figure class="site-quadro-foto site-fita">
+                <Image
+                  class="site-quadro-foto-infografico"
+                  src={img.ecoMarkerHeroInfografico}
+                  alt={ecoMarkerInfograficoAlt}
+                  widths={[420, 640, 900, 1240]}
+                  sizes="(min-width: 960px) 42rem, 88vw"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+                <figcaption>Fill Eco Marker</figcaption>
+              </figure>
+            </div>
+
             <div class="site-hero-ctas">
               <a
                 class="site-botao site-botao--azul"
@@ -164,25 +185,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <a class="site-botao site-botao--contorno" href="#simulador">Fazer a conta no quadro</a>
             </div>
           </div>
-
-          <figure class="site-quadro-foto site-fita">
-            <Image
-              class="site-quadro-foto-infografico"
-              src={img.ecoMarkerHeroInfografico}
-              alt={ecoMarkerInfograficoAlt}
-              widths={[420, 640, 900, 1240]}
-              sizes="(min-width: 960px) 34rem, 88vw"
-              loading="eager"
-              fetchpriority="high"
-            />
-            <figcaption>Fill Eco Marker</figcaption>
-          </figure>
         </div>
-
-        <svg class="traco site-hero-doodle" viewBox="0 0 150 100" aria-hidden="true">
-          <path d="M10 14 C 56 6, 104 28, 128 70" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" />
-          <path d="M106 64 L130 72 L124 46" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
 
         <ul class="site-postits" role="list">
           {postits.map((p) => (

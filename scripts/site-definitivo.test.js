@@ -33,8 +33,15 @@ test('a página definitiva ocupa a raiz e usa nomes neutros', () => {
 test('a imagem candidata a LCP no hero recebe prioridade alta sem preload', () => {
   const page = read('src/pages/index.astro');
   const heroImage = page.match(/<figure class="site-quadro-foto site-fita">\s*<Image([\s\S]*?)\/>\s*<figcaption>/);
+  const descriptionPosition = page.indexOf('<p class="site-hero-sub">{empresa.descricao}</p>');
+  const imagePosition = page.indexOf('<div class="site-hero-imagem">');
+  const ctaPosition = page.indexOf('<div class="site-hero-ctas">');
 
   assert.ok(heroImage, 'a imagem do hero deve continuar dentro da figura principal');
+  assert.ok(
+    descriptionPosition < imagePosition && imagePosition < ctaPosition,
+    'a imagem do hero deve aparecer logo após a descrição e antes dos botões',
+  );
   assert.match(heroImage[1], /loading="eager"/);
   assert.match(heroImage[1], /fetchpriority="high"/);
   assert.doesNotMatch(page, /<link\s+[^>]*rel=["']preload["'][^>]*as=["']image["']/i);

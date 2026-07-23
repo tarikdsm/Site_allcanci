@@ -300,16 +300,7 @@ body.site::before {
 }
 
 .site-hero-grade {
-  display: grid;
-  gap: 2.6rem;
-  align-items: center;
-}
-
-@media (min-width: 960px) {
-  .site-hero-grade {
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 3.2rem;
-  }
+  max-width: 64rem;
 }
 
 /* Etiqueta de crachá da escola */
@@ -358,6 +349,12 @@ body.site::before {
   max-width: 34rem;
   font-size: var(--texto-lg);
   line-height: 1.6;
+}
+
+.site-hero-imagem {
+  position: relative;
+  width: min(100%, 42rem);
+  margin-top: 2.4rem;
 }
 
 .site-hero-ctas {
@@ -466,8 +463,8 @@ body.site::before {
 /* Seta-doodle do hero (some no mobile) */
 .site-hero-doodle {
   position: absolute;
-  top: clamp(7rem, 14vw, 10rem);
-  left: 51%;
+  top: -3.7rem;
+  left: -4.4rem;
   width: 7.5rem;
   overflow: visible;
   pointer-events: none;
