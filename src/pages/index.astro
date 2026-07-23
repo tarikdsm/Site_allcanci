@@ -135,20 +135,23 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <div>
             <p class="site-etiqueta">{empresa.nome} · {empresa.cidade}</p>
             <h1 id="titulo-hero">
-              Quem transforma vidas merece{' '}
-              <span class="site-circulado">
-                o melhor
-                <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
-                  <path
-                    d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
-                    fill="none"
-                    stroke="var(--vermelho)"
-                    stroke-width="7"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>{' '}
-              para ensinar.
+              <span class="site-hero-linha">Quem transforma vidas</span>
+              <span class="site-hero-linha">
+                merece{' '}
+                <span class="site-circulado">
+                  o melhor
+                  <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+                    <path
+                      d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
+                      fill="none"
+                      stroke="var(--vermelho)"
+                      stroke-width="7"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span class="site-hero-linha">para ensinar.</span>
             </h1>
             <p class="site-hero-sub">{empresa.descricao}</p>
 

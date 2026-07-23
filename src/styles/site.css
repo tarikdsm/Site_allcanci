@@ -317,8 +317,18 @@ body.site::before {
 .site-hero h1 {
   margin: 1.4rem auto 0;
   font-size: var(--titulo-lg);
-  max-width: 13ch;
+  max-width: 20ch;
   text-align: center;
+}
+
+.site-hero-linha {
+  display: block;
+}
+
+@media (min-width: 700px) {
+  .site-hero-linha {
+    white-space: nowrap;
+  }
 }
 
 /* Palavra circulada em vermelho-marcador */
