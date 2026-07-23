@@ -299,10 +299,6 @@ body.site::before {
   padding-top: clamp(2.6rem, 6vw, 4.5rem);
 }
 
-.site-hero-grade {
-  max-width: 64rem;
-}
-
 /* Etiqueta de crachá da escola */
 .site-etiqueta {
   display: inline-block;
@@ -354,7 +350,7 @@ body.site::before {
 .site-hero-imagem {
   position: relative;
   width: min(100%, 42rem);
-  margin-top: 2.4rem;
+  margin: 2.4rem auto 0;
 }
 
 .site-hero-ctas {
