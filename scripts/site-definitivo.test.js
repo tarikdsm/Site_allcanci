@@ -99,13 +99,12 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     .map((entry) => entry.name)
     .sort();
   assert.deepEqual(assets, [
-    'eco-marker-hero.png',
+    'app-allcanci.png',
     'eco-marker-preto.jpg',
     'eco-marker-trio.png',
     'ink-injector-frontal.jpg',
     'master-clean.jpg',
     'master-color-trio.jpg',
-    'moedas-credito.jpg',
   ]);
   assert.equal(existsSync('src/assets/3d'), false);
   assert.equal(existsSync('public/models'), false);
