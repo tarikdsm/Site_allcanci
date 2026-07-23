@@ -28,6 +28,7 @@ const iconesRedes = {
 
 const ogImage = await getImage({ src: img.ecoMarkerHero, format: 'webp', width: 1200 });
 const ecoMarkerHeroAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul sobre fundo branco';
+const ecoMarkerInfograficoAlt = 'Infográfico da FILL Eco Marker com três pincéis recarregáveis, cores disponíveis, reservatório transparente, corpo reutilizável e ponta substituível';
 const ecoMarkerTrioAlt = 'Três pincéis FILL Eco Marker fechados nas cores vermelho, preto e azul, ao lado de um pincel preto aberto mostrando a ponta e o reservatório';
 
 // Estado inicial do simulador (renderizado no servidor para funcionar sem JS)
@@ -166,8 +167,9 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
 
           <figure class="site-quadro-foto site-fita">
             <Image
-              src={img.ecoMarkerHeroTransparent}
-              alt={ecoMarkerHeroAlt}
+              class="site-quadro-foto-infografico"
+              src={img.ecoMarkerHeroInfografico}
+              alt={ecoMarkerInfograficoAlt}
               widths={[420, 640, 900, 1240]}
               sizes="(min-width: 960px) 34rem, 88vw"
               loading="eager"

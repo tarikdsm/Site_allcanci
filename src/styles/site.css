@@ -385,6 +385,18 @@ body.site::before {
   border-radius: var(--raio-sm);
 }
 
+.site-quadro-foto .site-quadro-foto-infografico {
+  filter: brightness(1.02);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 1.75%, #000 98.25%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 1.75%, #000 98.25%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 1.75%, #000 98.25%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 1.75%, #000 98.25%, transparent 100%);
+  mask-composite: intersect;
+}
+
 .site-quadro-foto figcaption {
   padding-top: 0.6rem;
   font-weight: 800;
