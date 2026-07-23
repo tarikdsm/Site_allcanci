@@ -101,9 +101,8 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
   assert.deepEqual(assets, [
     'app-allcanci.png',
     'eco-marker-preto.jpg',
-    'eco-marker-trio.png',
-    'ink-injector-frontal.jpg',
-    'logo-allcanci.png',
+    'eco-marker-trio.jpg',
+    'ink-injector-frontal.png',
     'master-clean.jpg',
     'master-color-trio.jpg',
   ]);
