@@ -137,8 +137,7 @@ body.site::before {
   transition-duration: 1200ms;
 }
 
-.site .site-circulado .traco path,
-.site .site-hero-doodle path {
+.site .site-circulado .traco path {
   transition-duration: 2600ms;
 }
 
@@ -299,19 +298,6 @@ body.site::before {
   padding-top: clamp(2.6rem, 6vw, 4.5rem);
 }
 
-.site-hero-grade {
-  display: grid;
-  gap: 2.6rem;
-  align-items: center;
-}
-
-@media (min-width: 960px) {
-  .site-hero-grade {
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 3.2rem;
-  }
-}
-
 /* Etiqueta de crachá da escola */
 .site-etiqueta {
   display: inline-block;
@@ -328,9 +314,20 @@ body.site::before {
 }
 
 .site-hero h1 {
-  margin-top: 1.4rem;
+  margin: 1.4rem auto 0;
   font-size: var(--titulo-lg);
-  max-width: 13ch;
+  max-width: 20ch;
+  text-align: center;
+}
+
+.site-hero-linha {
+  display: block;
+}
+
+@media (min-width: 700px) {
+  .site-hero-linha {
+    white-space: nowrap;
+  }
 }
 
 /* Palavra circulada em vermelho-marcador */
@@ -354,15 +351,23 @@ body.site::before {
 }
 
 .site-hero-sub {
-  margin: 1.3rem 0 0;
+  margin: 1.3rem auto 0;
   max-width: 34rem;
   font-size: var(--texto-lg);
   line-height: 1.6;
+  text-align: center;
+}
+
+.site-hero-imagem {
+  position: relative;
+  width: min(100%, 42rem);
+  margin: 2.4rem auto 0;
 }
 
 .site-hero-ctas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.2rem;
   margin-top: 2rem;
 }
@@ -425,6 +430,7 @@ body.site::before {
 .site-postits {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1.7rem 1.9rem;
   margin: clamp(2.4rem, 5vw, 3.6rem) 0 0;
   padding: 0;
@@ -462,22 +468,6 @@ body.site::before {
 .site-postit:nth-child(1) { --rot: -2.4deg; }
 .site-postit:nth-child(2) { --rot: 1.8deg; }
 .site-postit:nth-child(3) { --rot: -1.1deg; }
-
-/* Seta-doodle do hero (some no mobile) */
-.site-hero-doodle {
-  position: absolute;
-  top: clamp(7rem, 14vw, 10rem);
-  left: 51%;
-  width: 7.5rem;
-  overflow: visible;
-  pointer-events: none;
-}
-
-@media (max-width: 959px) {
-  .site-hero-doodle {
-    display: none;
-  }
-}
 
 /* ── #produtos: cards-sticker ─────────────────────────────── */
 

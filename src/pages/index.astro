@@ -68,12 +68,12 @@ const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
     alt: 'Estojo apagador FILL azul aberto, armazenando pincéis recarregáveis',
   },
   refil: {
-    src: img.ecoMarkerPreto,
-    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+    src: img.ponteiraRemovivelFill,
+    alt: 'Três ponteiras removíveis FILL brancas alinhadas sobre fundo branco',
   },
   app: {
     src: img.appAllcanci,
-    alt: 'Tela de acesso do aplicativo Allcanci exibida em um celular, com a máquina FILL Ink Printer e três marcadores',
+    alt: 'Tela de detalhes de equipamento do aplicativo Allcanci exibida em um celular, com dados de conexão, nível e recargas',
   },
 };
 
@@ -135,22 +135,41 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <div>
             <p class="site-etiqueta">{empresa.nome} · {empresa.cidade}</p>
             <h1 id="titulo-hero">
-              Quem transforma vidas merece{' '}
-              <span class="site-circulado">
-                o melhor
-                <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
-                  <path
-                    d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
-                    fill="none"
-                    stroke="var(--vermelho)"
-                    stroke-width="7"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>{' '}
-              para ensinar.
+              <span class="site-hero-linha">Quem transforma vidas</span>
+              <span class="site-hero-linha">
+                merece{' '}
+                <span class="site-circulado">
+                  o melhor
+                  <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+                    <path
+                      d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
+                      fill="none"
+                      stroke="var(--vermelho)"
+                      stroke-width="7"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span class="site-hero-linha">para ensinar.</span>
             </h1>
             <p class="site-hero-sub">{empresa.descricao}</p>
+
+            <div class="site-hero-imagem">
+              <figure class="site-quadro-foto site-fita">
+                <Image
+                  class="site-quadro-foto-infografico"
+                  src={img.ecoMarkerHeroInfografico}
+                  alt={ecoMarkerInfograficoAlt}
+                  widths={[420, 640, 900, 1240]}
+                  sizes="(min-width: 960px) 42rem, 88vw"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+                <figcaption>Fill Eco Marker</figcaption>
+              </figure>
+            </div>
+
             <div class="site-hero-ctas">
               <a
                 class="site-botao site-botao--azul"
@@ -164,25 +183,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <a class="site-botao site-botao--contorno" href="#simulador">Fazer a conta no quadro</a>
             </div>
           </div>
-
-          <figure class="site-quadro-foto site-fita">
-            <Image
-              class="site-quadro-foto-infografico"
-              src={img.ecoMarkerHeroInfografico}
-              alt={ecoMarkerInfograficoAlt}
-              widths={[420, 640, 900, 1240]}
-              sizes="(min-width: 960px) 34rem, 88vw"
-              loading="eager"
-              fetchpriority="high"
-            />
-            <figcaption>FILL Eco Marker</figcaption>
-          </figure>
         </div>
-
-        <svg class="traco site-hero-doodle" viewBox="0 0 150 100" aria-hidden="true">
-          <path d="M10 14 C 56 6, 104 28, 128 70" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" />
-          <path d="M106 64 L130 72 L124 46" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
 
         <ul class="site-postits" role="list">
           {postits.map((p) => (
@@ -492,7 +493,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             />
           </svg>
 
-          <h2 id="titulo-contato">Vamos tirar o pincel seco da sua escola?</h2>
+          <h2 id="titulo-contato">Vamos tirar o pincel descartável da sua escola?</h2>
           <p>
             Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
             entrega em até {CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis para todo o Brasil.
