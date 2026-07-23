@@ -133,6 +133,11 @@ body.site::before {
   transition: stroke-dashoffset 900ms ease-out;
 }
 
+.site .site-circulado .traco path,
+.site .site-hero-doodle path {
+  transition-duration: 2600ms;
+}
+
 .site .traco path + path {
   transition-delay: 260ms;
 }
@@ -328,6 +333,7 @@ body.site::before {
 .site-circulado {
   position: relative;
   display: inline-block;
+  margin-right: 0.42em;
   padding: 0 0.08em;
   white-space: nowrap;
   color: var(--vermelho);
