@@ -103,8 +103,9 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     'eco-marker-preto.jpg',
     'eco-marker-trio.jpg',
     'ink-injector-frontal.jpg',
-    'master-clean.png',
-    'master-color-trio.jpg',
+    'master-clean.jpg',
+    'master-color-trio.png',
+    'moedas-credito.jpg',
   ]);
   assert.equal(existsSync('src/assets/3d'), false);
   assert.equal(existsSync('public/models'), false);
