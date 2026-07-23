@@ -73,7 +73,7 @@ const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
   },
   app: {
     src: img.appAllcanci,
-    alt: 'Tela de acesso do aplicativo Allcanci exibida em um celular, com a máquina FILL Ink Printer e três marcadores',
+    alt: 'Tela de detalhes de equipamento do aplicativo Allcanci exibida em um celular, com dados de conexão, nível e recargas',
   },
 };
 
@@ -217,7 +217,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             return (
               <li class="site-produto">
                 {foto && (
-                  <div class="site-produto-foto">
+                  <div class:list={['site-produto-foto', produto.id === 'app' && 'site-produto-foto--mesclada']}>
                     <Image
                       src={foto.src}
                       alt={foto.alt}
