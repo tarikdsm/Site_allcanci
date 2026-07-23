@@ -133,9 +133,8 @@ body.site::before {
   transition: stroke-dashoffset 900ms ease-out;
 }
 
-.site .site-circulado .traco path,
-.site .site-hero-doodle path {
-  transition-duration: 2600ms;
+.site .site-traco-titulo path {
+  transition-duration: 1200ms;
 }
 
 .site .traco path + path {
@@ -149,7 +148,7 @@ body.site::before {
 /* Traço ondulado sob os títulos de seção */
 .site-traco-titulo {
   display: block;
-  width: min(20rem, 78%);
+  width: 100%;
   height: clamp(0.55rem, 1.4vw, 0.85rem);
   margin-top: 0.45rem;
   overflow: visible;

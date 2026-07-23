@@ -3,6 +3,27 @@ import { reais } from './simulador-core.js';
 
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Faz o traço terminar junto da frase, mesmo depois de a fonte carregar
+// ou de o título quebrar em outra linha em telas menores.
+const ajustarLarguraTracosTitulo = () => {
+  document.querySelectorAll('.site-traco-titulo').forEach((traco) => {
+    const titulo = traco.previousElementSibling;
+    if (!(titulo instanceof HTMLHeadingElement)) return;
+
+    const faixaDoTexto = document.createRange();
+    faixaDoTexto.selectNodeContents(titulo);
+    const largura = Math.min(
+      titulo.getBoundingClientRect().width,
+      faixaDoTexto.getBoundingClientRect().width
+    );
+    traco.style.width = `${Math.ceil(largura)}px`;
+  });
+};
+
+ajustarLarguraTracosTitulo();
+document.fonts.ready.then(ajustarLarguraTracosTitulo);
+addEventListener('resize', ajustarLarguraTracosTitulo, { passive: true });
+
 // Traços de marcador (SVG paths com classe .traco): cada path recebe o próprio
 // comprimento como dasharray e "se desenha" quando a seção entra na tela.
 // Com movimento reduzido, os traços já nascem prontos (dashoffset 0).
