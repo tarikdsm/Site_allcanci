@@ -102,8 +102,8 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     'app-allcanci.png',
     'eco-marker-preto.jpg',
     'eco-marker-trio.jpg',
-    'ink-injector-frontal.png',
-    'master-clean.jpg',
+    'ink-injector-frontal.jpg',
+    'master-clean.png',
     'master-color-trio.jpg',
   ]);
   assert.equal(existsSync('src/assets/3d'), false);
