@@ -23,7 +23,7 @@ export const produtos: Produto[] = [
     subtitulo: 'Pincel reutilizável',
     descricao:
       `O pincel que não precisa ser aberto para recarregar. Cada recarga rende cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita, com traço sempre uniforme.`,
-    destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Feito para durar anos'],
+    destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Fácil de apagar'],
   },
   {
     id: 'master-color',
