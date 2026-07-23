@@ -103,6 +103,7 @@ test('somente recursos usados pelo site definitivo permanecem', () => {
     'eco-marker-preto.jpg',
     'eco-marker-trio.png',
     'ink-injector-frontal.jpg',
+    'logo-allcanci.png',
     'master-clean.jpg',
     'master-color-trio.jpg',
   ]);

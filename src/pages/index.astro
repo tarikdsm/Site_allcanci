@@ -100,8 +100,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
   <header class="site-topo">
     <div class="site-caixa site-topo-linha">
       <a class="site-marca" href="#hero">
-        <span class="site-tampas" aria-hidden="true"><i></i><i></i><i></i></span>
-        allcanci<span>&nbsp;tecnologia</span>
+        <Image
+          src={img.logoAllcanci}
+          alt="Allcanci Tecnologia"
+          width={512}
+          loading="eager"
+        />
       </a>
       <nav class="site-nav" aria-label="Seções da página">
         <ul class="site-menu" role="list">
