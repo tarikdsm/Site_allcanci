@@ -194,7 +194,7 @@ if (!existsSync(htmlPath)) {
   }
 
   const socialImage = getMetaContent(html, 'property', 'og:image');
-  const socialImageAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul';
+  const socialImageAlt = 'Três pincéis recarregáveis FILL Eco Marker nas cores vermelho, preto e azul sobre fundo branco';
   const socialWidth = Number(getMetaContent(html, 'property', 'og:image:width'));
   const socialHeight = Number(getMetaContent(html, 'property', 'og:image:height'));
   if (getMetaContent(html, 'property', 'og:site_name') !== 'Allcanci Tecnologia') {

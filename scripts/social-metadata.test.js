@@ -21,8 +21,8 @@ test('metadados sociais usam a imagem processada com dimensões e texto alternat
   assert.match(layout, /<meta name="twitter:image" content=\{ogImageUrl\} \/>/);
   assert.match(layout, /<meta name="twitter:image:alt" content=\{ogImageAlt\} \/>/);
 
-  assert.match(page, /const ecoMarkerTrioAlt = '[^']+';/);
+  assert.match(page, /const ecoMarkerHeroAlt = '[^']+';/);
   assert.match(page, /ogImage=\{ogImage\}/);
-  assert.match(page, /ogImageAlt=\{ecoMarkerTrioAlt\}/);
+  assert.match(page, /ogImageAlt=\{ecoMarkerHeroAlt\}/);
   assert.doesNotMatch(page, /getImage\(\{[^}]*format:\s*'jpe?g'/);
 });
