@@ -286,15 +286,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
     <section id="simulador" class="site-secao" aria-labelledby="titulo-simulador">
       <div class="site-caixa">
         <header class="site-cabeca">
-          <p class="site-kicker">Simulador de economia</p>
-          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a conta no quadro?</h2>
+          <p class="site-kicker">Simulador FILL</p>
+          <h2 class="site-titulo" id="titulo-simulador">Vamos fazer a continha no quadro?</h2>
           <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
             <path d={tracoA} fill="none" stroke="var(--azul)" stroke-width="6" stroke-linecap="round" />
           </svg>
-          <p class="site-sub">
-            Diga quantos professores a sua instituição tem e a gente faz a conta —
-            descartáveis de um lado, FILL do outro.
-          </p>
+          <p class="site-sub">Diga quantos professores a sua instituição tem e a gente faz a conta.</p>
         </header>
 
         <div class="site-conta">
@@ -323,22 +320,12 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </div>
             <p class="site-premissas">
               Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
-              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · 1
-              recarga rende ~{PREMISSAS.kmPorRecarga} km de escrita · pincel descartável rende
-              ~{PREMISSAS.metrosPorDescartavel} m e custa {reais(PREMISSAS.precoDescartavelReais)} ·
-              ~{PREMISSAS.kgPlasticoPorDescartavel * 1000} g de plástico por descartável.
+              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · cada
+              recarga economiza aproximadamente {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
             </p>
           </div>
 
           <div class="site-conta-quadro">
-            <p class="site-conta-linha">
-              <span class="site-conta-rotulo">No modelo descartável</span>
-              <strong id="sim-descartaveis">{sim0.descartaveis.toLocaleString('pt-BR')}</strong>{' '}pincéis
-              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
-              {reais(PREMISSAS.precoDescartavelReais)}
-              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong id="sim-custo-descartaveis" class="site-custo-ruim">{reais(sim0.custoDescartaveis)}</strong>
-            </p>
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Com o ecossistema FILL</span>
               <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
@@ -347,25 +334,15 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
               <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
             </p>
-            <p class="site-conta-linha site-conta-economia">
-              <span class="site-conta-rotulo">Economia estimada por ano</span>
-              <span class="site-sublinhado">
-                <strong id="sim-economia">{reais(sim0.economia)}</strong>
-                <svg class="traco" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M6 8 C 80 2, 200 12, 294 6" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
-                  <path d="M20 20 C 110 14, 210 24, 284 18" fill="none" stroke="var(--verde)" stroke-width="6" stroke-linecap="round" />
-                </svg>
-              </span>
-            </p>
-            <p class="site-conta-linha site-conta-bonus">
-              <svg class="site-folha" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 19 C 5 10, 10 5, 19 5 C 19 14, 14 19, 5 19 Z" stroke="var(--verde)" stroke-width="2.2" stroke-linejoin="round" />
-                <path d="M5 19 C 8 13.5, 11.5 9.8, 15 8" stroke="var(--verde)" stroke-width="2.2" stroke-linecap="round" />
-              </svg>
-              <span>
-                E de lição de casa: <strong id="sim-plastico">{sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg</strong>{' '}de
-                plástico que não viram lixo.
-              </span>
+            <p class="site-conta-linha">
+              <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <strong id="sim-recargas-plastico">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
+              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
+              {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g
+              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
+              <strong class="site-plastico-economizado" id="sim-plastico">
+                {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
+              </strong>
             </p>
             <p
               id="sim-resultado-status"

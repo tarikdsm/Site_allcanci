@@ -1,5 +1,4 @@
 import { bindSimulador } from './simulador-bind.js';
-import { reais } from './simulador-core.js';
 
 const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -53,9 +52,4 @@ if (!reduz) {
   });
 }
 
-// Linha extra da conta do simulador, seguindo o mesmo contrato de markup #sim-*:
-// O custo anual dos descartáveis é calculado com as premissas exibidas no simulador.
-bindSimulador((r) => {
-  const alvo = document.querySelector('#sim-custo-descartaveis');
-  if (alvo) alvo.textContent = reais(r.custoDescartaveis);
-});
+bindSimulador();

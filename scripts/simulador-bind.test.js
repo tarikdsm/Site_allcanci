@@ -37,9 +37,8 @@ const seletoresSimulador = [
   '#sim-professores',
   '#sim-professores-num',
   '#sim-recargas',
+  '#sim-recargas-plastico',
   '#sim-custo-fill',
-  '#sim-descartaveis',
-  '#sim-economia',
   '#sim-plastico',
   '#sim-resultado-status',
 ];
@@ -81,7 +80,7 @@ test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', 
     assert.equal(status.escritas, 1);
     assert.equal(
       status.textContent,
-      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, custo FILL de ${reais(resultado.custoFill)}, ${resultado.descartaveis.toLocaleString('pt-BR')} pincéis descartáveis, economia anual de ${reais(resultado.economia)} e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico evitado.`,
+      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(resultado.custoFill)} e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico economizado.`,
     );
   } finally {
     delete globalThis.document;
@@ -112,6 +111,8 @@ test('valor numerico valido sincroniza imediatamente os dois controles', () => {
     assert.equal(elementos.get('#sim-professores').value, '30');
     assert.equal(numero.value, '30');
     assert.equal(elementos.get('#sim-recargas').textContent, '780');
+    assert.equal(elementos.get('#sim-recargas-plastico').textContent, '780');
+    assert.equal(elementos.get('#sim-plastico').textContent, '39 kg');
   } finally {
     delete globalThis.document;
   }
