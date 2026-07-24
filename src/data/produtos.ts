@@ -30,7 +30,7 @@ export const produtos: Produto[] = [
     nome: 'FILL Master Color',
     subtitulo: 'Tinta 500 ml',
     descricao:
-      'Tinta de alta performance desenvolvida com parceiro exclusivo, em frascos de 500 ml, para uso exclusivo na Ink Injector.',
+      'Tinta exclusiva de alta performance, com escrita nítida e fácil remoção, fornecida em frascos desenvolvidos especialmente para o abastecimento da Fill Ink Injector.',
     destaques: ['Azul, preto e vermelho', 'Padrões rigorosos de qualidade', 'Uso exclusivo na FILL Ink Injector'],
   },
   {
