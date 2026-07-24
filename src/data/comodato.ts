@@ -1,7 +1,7 @@
 import { CONSTANTES_NEGOCIO } from './constantes-negocio.js';
 
 export const etapasComodato = [
-  { titulo: 'Diagnóstico', texto: 'Levantamos o número de professores, salas e o consumo atual de pincéis descartáveis da instituição.' },
+  { titulo: 'Diagnóstico', texto: 'Realizamos o levantamento do número de professores, salas e unidades escolares, além da estimativa anual de consumo de recargas.' },
   { titulo: 'Proposta sob medida', texto: 'Você recebe uma proposta de comodato com máquina, pincéis e créditos de recarga dimensionados para a sua realidade.' },
   { titulo: 'Instalação e treinamento', texto: `Entregamos em até ${CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis, instalamos a Ink Injector e treinamos a equipe.` },
   { titulo: 'Uso diário', texto: 'Professores usam os Eco Markers normalmente — sem pincel seco no meio da aula.' },
