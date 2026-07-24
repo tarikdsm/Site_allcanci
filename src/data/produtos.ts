@@ -10,20 +10,20 @@ export type Produto = {
 
 export const produtos: Produto[] = [
   {
-    id: 'ink-injector',
-    nome: 'FILL Ink Injector',
-    subtitulo: 'Máquina de recarga automática',
-    descricao:
-      `A máquina que recarrega pincéis de quadro branco de forma automática, precisa e sem sujeira — em cerca de ${CONSTANTES_NEGOCIO.recargaSegundos} segundos.`,
-    destaques: [`Recarga automática em ~${CONSTANTES_NEGOCIO.recargaSegundos}s`, 'Sem contato com a tinta, sem sujeira', 'Carrega azul, preto e vermelho'],
-  },
-  {
     id: 'eco-marker',
     nome: 'FILL Eco Marker',
     subtitulo: 'Pincel reutilizável',
     descricao:
       `O pincel que não precisa ser aberto para recarregar. Cada recarga rende cerca de ${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita, com traço sempre uniforme.`,
     destaques: ['Recarga sem abrir o pincel', `~${CONSTANTES_NEGOCIO.kmPorRecarga} km de escrita por recarga`, 'Fácil de apagar'],
+  },
+  {
+    id: 'ink-injector',
+    nome: 'FILL Ink Injector',
+    subtitulo: 'Máquina de recarga automática',
+    descricao:
+      `A máquina que recarrega pincéis de quadro branco de forma automática, precisa e sem sujeira — em cerca de ${CONSTANTES_NEGOCIO.recargaSegundos} segundos.`,
+    destaques: [`Recarga automática em ~${CONSTANTES_NEGOCIO.recargaSegundos}s`, 'Sem contato com a tinta, sem sujeira', 'Carrega azul, preto e vermelho'],
   },
   {
     id: 'master-color',
