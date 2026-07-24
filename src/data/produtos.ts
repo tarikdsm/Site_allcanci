@@ -43,10 +43,10 @@ export const produtos: Produto[] = [
   },
   {
     id: 'refil',
-    nome: 'Ponteira Removível FILL',
-    subtitulo: 'Ponteiras substituíveis',
+    nome: 'Ponta Removível FILL',
+    subtitulo: 'Pontas substituíveis',
     descricao:
-      'A ponteira do Eco Marker é substituível: quando a ponta desgasta, troca-se só o refil — o pincel continua.',
+      'A ponta do Eco Marker é substituível: quando a ponta desgasta, troca-se só o refil — o pincel continua.',
     destaques: ['Troca em segundos', 'Prolonga a vida útil do pincel', 'Menos plástico descartado'],
   },
   {
