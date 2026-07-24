@@ -771,11 +771,7 @@ body.site::before {
   font-weight: 900;
 }
 
-.site-custo-bom {
-  color: var(--azul);
-}
-
-.site-plastico-economizado {
+.site-plastico-reduzido {
   color: var(--verde);
 }
 

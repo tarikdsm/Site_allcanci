@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { bindSimulador } from '../src/scripts/simulador-bind.js';
-import { LIMITES_PROFESSORES, reais, simular } from '../src/scripts/simulador-core.js';
+import { LIMITES_PROFESSORES, simular } from '../src/scripts/simulador-core.js';
 
 const read = (path) => readFileSync(path, 'utf8');
 
@@ -38,7 +38,6 @@ const seletoresSimulador = [
   '#sim-professores-num',
   '#sim-recargas',
   '#sim-recargas-plastico',
-  '#sim-custo-fill',
   '#sim-plastico',
   '#sim-resultado-status',
 ];
@@ -64,6 +63,16 @@ test('o simulador oferece uma unica regiao de status atomica e educada', () => {
   assert.match(regioes[0], /aria-atomic="true"/);
 });
 
+test('o simulador mostra recargas e plástico reduzido sem exibir preços', () => {
+  const page = read('src/pages/index.astro');
+  const section = page.match(/<section id="simulador"[\s\S]*?<\/section>/)?.[0] ?? '';
+  const core = read('src/scripts/simulador-core.js');
+
+  assert.doesNotMatch(section, /R\$|precoCreditoReais|sim-custo-fill|economizad[oa]/i);
+  assert.doesNotMatch(core, /custoFill|precoCreditoReais|export const reais/);
+  assert.match(section, /Plástico reduzido por ano/);
+});
+
 test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', () => {
   const elementos = montarSimulador();
 
@@ -80,7 +89,7 @@ test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', 
     assert.equal(status.escritas, 1);
     assert.equal(
       status.textContent,
-      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(resultado.custoFill)} e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico economizado.`,
+      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico reduzido.`,
     );
   } finally {
     delete globalThis.document;

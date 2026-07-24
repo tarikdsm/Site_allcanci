@@ -11,7 +11,7 @@ import { provaSocial } from '../data/provaSocial';
 import { sustentabilidade } from '../data/sustentabilidade';
 import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 import * as img from '../data/imagens';
-import { LIMITES_PROFESSORES, simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+import { LIMITES_PROFESSORES, simular, PREMISSAS } from '../scripts/simulador-core.js';
 import IconWhatsapp from '../components/IconWhatsapp.astro';
 import IconInstagram from '../components/IconInstagram.astro';
 import IconLinkedin from '../components/IconLinkedin.astro';
@@ -323,27 +323,24 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </div>
             <p class="site-premissas">
               Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
-              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · cada
-              recarga economiza aproximadamente {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
+              professor/ano · cada recarga reduz aproximadamente
+              {' '}{PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
             </p>
           </div>
 
           <div class="site-conta-quadro">
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Com o ecossistema FILL</span>
-              <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
-              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
-              {reais(PREMISSAS.precoCreditoReais)}
-              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
+              <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}
+              recargas por ano
             </p>
             <p class="site-conta-linha">
-              <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <span class="site-conta-rotulo">Plástico reduzido por ano</span>
               <strong id="sim-recargas-plastico">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
               <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
               {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong class="site-plastico-economizado" id="sim-plastico">
+              <strong class="site-plastico-reduzido" id="sim-plastico">
                 {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
               </strong>
             </p>
