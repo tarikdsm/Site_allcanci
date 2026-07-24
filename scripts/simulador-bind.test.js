@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { bindSimulador } from '../src/scripts/simulador-bind.js';
-import { LIMITES_PROFESSORES, reais, simular } from '../src/scripts/simulador-core.js';
+import { LIMITES_PROFESSORES, simular } from '../src/scripts/simulador-core.js';
 
 const read = (path) => readFileSync(path, 'utf8');
 
@@ -38,7 +38,6 @@ const seletoresSimulador = [
   '#sim-professores-num',
   '#sim-recargas',
   '#sim-recargas-plastico',
-  '#sim-custo-fill',
   '#sim-plastico',
   '#sim-resultado-status',
 ];
@@ -64,6 +63,16 @@ test('o simulador oferece uma unica regiao de status atomica e educada', () => {
   assert.match(regioes[0], /aria-atomic="true"/);
 });
 
+test('o simulador mostra recargas e plástico reduzido sem exibir preços', () => {
+  const page = read('src/pages/index.astro');
+  const section = page.match(/<section id="simulador"[\s\S]*?<\/section>/)?.[0] ?? '';
+  const core = read('src/scripts/simulador-core.js');
+
+  assert.doesNotMatch(section, /R\$|precoCreditoReais|sim-custo-fill|economizad[oa]/i);
+  assert.doesNotMatch(core, /custoFill|precoCreditoReais|export const reais/);
+  assert.match(section, /Plástico reduzido por ano/);
+});
+
 test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', () => {
   const elementos = montarSimulador();
 
@@ -80,14 +89,14 @@ test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', 
     assert.equal(status.escritas, 1);
     assert.equal(
       status.textContent,
-      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(resultado.custoFill)} e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico economizado.`,
+      `Para 30 professores: ${resultado.recargasAno.toLocaleString('pt-BR')} recargas por ano e ${resultado.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico reduzido.`,
     );
   } finally {
     delete globalThis.document;
   }
 });
 
-test('range e number declaram o mesmo intervalo de 1 a 999', () => {
+test('range e number declaram o mesmo intervalo de 1 a 5000', () => {
   const page = read('src/pages/index.astro');
   const faixa = page.match(/<input\s+type="range"[\s\S]*?\/>/)?.[0] ?? '';
   const numero = page.match(/<input\s+type="number"[\s\S]*?\/>/)?.[0] ?? '';
@@ -134,13 +143,13 @@ test('underflow e overflow so sao clampados quando a digitacao e confirmada', ()
     assert.equal(numero.value, '1');
     assert.equal(faixa.value, '1');
 
-    numero.value = '1000';
+    numero.value = '5001';
     numero.disparar('input');
-    assert.equal(numero.value, '1000');
+    assert.equal(numero.value, '5001');
     assert.equal(faixa.value, '1');
     numero.disparar('change');
-    assert.equal(numero.value, '999');
-    assert.equal(faixa.value, '999');
+    assert.equal(numero.value, '5000');
+    assert.equal(faixa.value, '5000');
     assert.ok(
       [...elementos.values()]
         .filter((elemento) => elemento.textContent)

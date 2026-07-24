@@ -1,6 +1,6 @@
 import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 
-export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 999, inicial: 20 });
+export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 5000, inicial: 20 });
 
 /**
  * Núcleo puro do simulador FILL (sem DOM).
@@ -8,7 +8,6 @@ export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 999, inici
  */
 export const PREMISSAS = {
   recargasPorProfessorAno: CONSTANTES_NEGOCIO.recargasPorProfessorAno,
-  precoCreditoReais: CONSTANTES_NEGOCIO.precoCreditoReais,
   kgPlasticoEvitadoPorRecarga: 0.05,
 };
 
@@ -25,13 +24,8 @@ export function normalizarProfessores(valor, fallback = 0) {
 export function simular(professores, premissas = PREMISSAS) {
   const n = normalizarProfessores(professores);
   const recargasAno = n * premissas.recargasPorProfessorAno;
-  const custoFill = recargasAno * premissas.precoCreditoReais;
   return {
     recargasAno,
-    custoFill,
     plasticoEvitadoKg: recargasAno * premissas.kgPlasticoEvitadoPorRecarga,
   };
 }
-
-export const reais = (v) =>
-  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

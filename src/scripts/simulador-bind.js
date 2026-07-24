@@ -2,7 +2,6 @@ import {
   LIMITES_PROFESSORES,
   normalizarProfessores,
   simular,
-  reais,
 } from './simulador-core.js';
 
 /**
@@ -19,10 +18,9 @@ export function bindSimulador() {
     const r = simular(n);
     set('#sim-recargas', r.recargasAno.toLocaleString('pt-BR'));
     set('#sim-recargas-plastico', r.recargasAno.toLocaleString('pt-BR'));
-    set('#sim-custo-fill', reais(r.custoFill));
     set('#sim-plastico', `${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg`);
     if (anunciar && status) {
-      status.textContent = `Para ${n.toLocaleString('pt-BR')} professores: ${r.recargasAno.toLocaleString('pt-BR')} recargas por ano, com custo FILL de ${reais(r.custoFill)} e ${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico economizado.`;
+      status.textContent = `Para ${n.toLocaleString('pt-BR')} professores: ${r.recargasAno.toLocaleString('pt-BR')} recargas por ano e ${r.plasticoEvitadoKg.toLocaleString('pt-BR')} kg de plástico reduzido.`;
     }
   };
   let ultimoValido = LIMITES_PROFESSORES.inicial;

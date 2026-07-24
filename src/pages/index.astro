@@ -11,7 +11,7 @@ import { provaSocial } from '../data/provaSocial';
 import { sustentabilidade } from '../data/sustentabilidade';
 import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 import * as img from '../data/imagens';
-import { LIMITES_PROFESSORES, simular, reais, PREMISSAS } from '../scripts/simulador-core.js';
+import { LIMITES_PROFESSORES, simular, PREMISSAS } from '../scripts/simulador-core.js';
 import IconWhatsapp from '../components/IconWhatsapp.astro';
 import IconInstagram from '../components/IconInstagram.astro';
 import IconLinkedin from '../components/IconLinkedin.astro';
@@ -65,15 +65,15 @@ const fotosProdutos: Record<string, { src: ImageMetadata; alt: string }> = {
   },
   'master-clean': {
     src: img.masterClean,
-    alt: 'Estojo apagador FILL azul aberto, armazenando pincéis recarregáveis',
+    alt: 'Estojo apagador FILL azul aberto com pincéis, embalagem de refil e três feltros',
   },
   refil: {
-    src: img.ecoMarkerPreto,
-    alt: 'Pincel FILL Eco Marker preto com refil de feltro removível translúcido encaixado na base',
+    src: img.ponteiraRemovivelFill,
+    alt: 'Três pontas removíveis FILL brancas alinhadas sobre fundo branco',
   },
   app: {
     src: img.appAllcanci,
-    alt: 'Tela de acesso do aplicativo Allcanci exibida em um celular, com a máquina FILL Ink Printer e três marcadores',
+    alt: 'Tela de detalhes de equipamento do aplicativo Allcanci exibida em um celular, com dados de conexão, nível e recargas',
   },
 };
 
@@ -135,22 +135,41 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           <div>
             <p class="site-etiqueta">{empresa.nome} · {empresa.cidade}</p>
             <h1 id="titulo-hero">
-              Quem transforma vidas merece{' '}
-              <span class="site-circulado">
-                o melhor
-                <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
-                  <path
-                    d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
-                    fill="none"
-                    stroke="var(--vermelho)"
-                    stroke-width="7"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>{' '}
-              para ensinar.
+              <span class="site-hero-linha">Quem transforma vidas</span>
+              <span class="site-hero-linha">
+                merece{' '}
+                <span class="site-circulado">
+                  o melhor
+                  <svg class="traco" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+                    <path
+                      d="M158 8 C 236 6, 292 26, 292 55 C 292 86, 226 104, 152 103 C 74 102, 10 86, 9 54 C 8 24, 78 7, 190 12"
+                      fill="none"
+                      stroke="var(--vermelho)"
+                      stroke-width="7"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span class="site-hero-linha">para ensinar.</span>
             </h1>
             <p class="site-hero-sub">{empresa.descricao}</p>
+
+            <div class="site-hero-imagem">
+              <figure class="site-quadro-foto site-fita">
+                <Image
+                  class="site-quadro-foto-infografico"
+                  src={img.ecoMarkerHeroInfografico}
+                  alt={ecoMarkerInfograficoAlt}
+                  widths={[420, 640, 900, 1240]}
+                  sizes="(min-width: 960px) 42rem, 88vw"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+                <figcaption>Fill Eco Marker</figcaption>
+              </figure>
+            </div>
+
             <div class="site-hero-ctas">
               <a
                 class="site-botao site-botao--azul"
@@ -164,25 +183,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
               <a class="site-botao site-botao--contorno" href="#simulador">Fazer a conta no quadro</a>
             </div>
           </div>
-
-          <figure class="site-quadro-foto site-fita">
-            <Image
-              class="site-quadro-foto-infografico"
-              src={img.ecoMarkerHeroInfografico}
-              alt={ecoMarkerInfograficoAlt}
-              widths={[420, 640, 900, 1240]}
-              sizes="(min-width: 960px) 34rem, 88vw"
-              loading="eager"
-              fetchpriority="high"
-            />
-            <figcaption>FILL Eco Marker</figcaption>
-          </figure>
         </div>
-
-        <svg class="traco site-hero-doodle" viewBox="0 0 150 100" aria-hidden="true">
-          <path d="M10 14 C 56 6, 104 28, 128 70" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" />
-          <path d="M106 64 L130 72 L124 46" fill="none" stroke="var(--vermelho)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
 
         <ul class="site-postits" role="list">
           {postits.map((p) => (
@@ -246,7 +247,7 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
     <section id="como-funciona" class="site-secao" aria-labelledby="titulo-como">
       <div class="site-caixa">
         <header class="site-cabeca">
-          <p class="site-kicker">Comodato em 6 etapas</p>
+          <p class="site-kicker">Locação em 6 etapas</p>
           <h2 class="site-titulo" id="titulo-como">O passo a passo, desenhado no quadro</h2>
           <svg class="traco site-traco-titulo" viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true">
             <path d={tracoB} fill="none" stroke="var(--vermelho)" stroke-width="6" stroke-linecap="round" />
@@ -322,27 +323,24 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             </div>
             <p class="site-premissas">
               Premissas do cálculo: {PREMISSAS.recargasPorProfessorAno} recargas por
-              professor/ano · crédito de recarga a {reais(PREMISSAS.precoCreditoReais)} · cada
-              recarga economiza aproximadamente {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
+              professor/ano · cada recarga reduz aproximadamente
+              {' '}{PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g de plástico.
             </p>
           </div>
 
           <div class="site-conta-quadro">
             <p class="site-conta-linha">
               <span class="site-conta-rotulo">Com o ecossistema FILL</span>
-              <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
-              <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
-              {reais(PREMISSAS.precoCreditoReais)}
-              <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong class="site-custo-bom" id="sim-custo-fill">{reais(sim0.custoFill)}</strong>
+              <strong id="sim-recargas">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}
+              recargas por ano
             </p>
             <p class="site-conta-linha">
-              <span class="site-conta-rotulo">Plástico economizado por ano</span>
+              <span class="site-conta-rotulo">Plástico reduzido por ano</span>
               <strong id="sim-recargas-plastico">{sim0.recargasAno.toLocaleString('pt-BR')}</strong>{' '}recargas
               <span class="site-op" aria-hidden="true">×</span><span class="visually-hidden">vezes</span>
               {PREMISSAS.kgPlasticoEvitadoPorRecarga * 1000} g
               <span class="site-op" aria-hidden="true">=</span><span class="visually-hidden">igual a</span>
-              <strong class="site-plastico-economizado" id="sim-plastico">
+              <strong class="site-plastico-reduzido" id="sim-plastico">
                 {sim0.plasticoEvitadoKg.toLocaleString('pt-BR')} kg
               </strong>
             </p>
@@ -492,9 +490,9 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             />
           </svg>
 
-          <h2 id="titulo-contato">Vamos tirar o pincel seco da sua escola?</h2>
+          <h2 id="titulo-contato">Vamos tirar o pincel descartável da sua escola?</h2>
           <p>
-            Fale com a equipe da {empresa.nome} e receba uma proposta de comodato sob medida —
+            Fale com a equipe da {empresa.nome} e receba uma proposta de locação sob medida —
             entrega em até {CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis para todo o Brasil.
           </p>
 
