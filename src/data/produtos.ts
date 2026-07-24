@@ -38,7 +38,7 @@ export const produtos: Produto[] = [
     nome: 'FILL Master Clean 3P',
     subtitulo: 'Estojo apagador',
     descricao:
-      'Estojo com apagador que armazena e protege até 3 pincéis, mantendo tudo organizado na mesa do professor.',
+      'Estojo com apagador integrado, desenvolvido para armazenar e proteger até três pincéis, mantendo a mesa do professor organizada. Conta ainda com uma capa protetora que retém resíduos e ajuda a preservar os quadros.',
     destaques: ['Armazena 3 pincéis', 'Capa protetora', 'Refil com 3 feltros'],
   },
   {
