@@ -2,7 +2,7 @@ export const empresa = {
   nome: 'Allcanci Tecnologia',
   slogan: 'Recarga inteligente para quadro branco',
   descricao:
-    'Tecnologia 100% nacional e patenteada que substitui pincéis descartáveis por um ecossistema de recarga automática: menos desperdício, mais controle.',
+    'Tecnologia 100% nacional e patenteada que substitui pincéis tradicionais por um ecossistema de recarga automática: menos desperdício, mais controle.',
   cidade: 'Betim/MG',
 };
 
