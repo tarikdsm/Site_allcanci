@@ -5,7 +5,7 @@ export const provaSocial = {
   texto:
     'Mais de 500 escolas em todo o Brasil já trocaram o pincel descartável pelo ecossistema FILL — de redes municipais a grandes grupos educacionais.',
   selos: [
-    'Tecnologia exclusiva',
+    'Tecnologia única',
     'Exclusividade mundial em fabricação',
     'Documentação para inexigibilidade e licitação',
     'Garantia total de satisfação',
