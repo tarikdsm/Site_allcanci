@@ -96,7 +96,7 @@ test('anuncia cada interacao em uma unica frase sem anunciar o estado inicial', 
   }
 });
 
-test('range e number declaram o mesmo intervalo de 1 a 999', () => {
+test('range e number declaram o mesmo intervalo de 1 a 5000', () => {
   const page = read('src/pages/index.astro');
   const faixa = page.match(/<input\s+type="range"[\s\S]*?\/>/)?.[0] ?? '';
   const numero = page.match(/<input\s+type="number"[\s\S]*?\/>/)?.[0] ?? '';
@@ -143,13 +143,13 @@ test('underflow e overflow so sao clampados quando a digitacao e confirmada', ()
     assert.equal(numero.value, '1');
     assert.equal(faixa.value, '1');
 
-    numero.value = '1000';
+    numero.value = '5001';
     numero.disparar('input');
-    assert.equal(numero.value, '1000');
+    assert.equal(numero.value, '5001');
     assert.equal(faixa.value, '1');
     numero.disparar('change');
-    assert.equal(numero.value, '999');
-    assert.equal(faixa.value, '999');
+    assert.equal(numero.value, '5000');
+    assert.equal(faixa.value, '5000');
     assert.ok(
       [...elementos.values()]
         .filter((elemento) => elemento.textContent)

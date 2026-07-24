@@ -24,7 +24,7 @@ test('simular limita underflow e overflow ao intervalo de professores', () => {
   const minimo = simular(0);
   const maximo = simular(Number.MAX_VALUE);
 
-  assert.deepEqual(LIMITES_PROFESSORES, { minimo: 1, maximo: 999, inicial: 20 });
+  assert.deepEqual(LIMITES_PROFESSORES, { minimo: 1, maximo: 5000, inicial: 20 });
   assert.equal(minimo.recargasAno, PREMISSAS.recargasPorProfessorAno);
   assert.equal(
     maximo.recargasAno,

@@ -1,6 +1,6 @@
 import { CONSTANTES_NEGOCIO } from '../data/constantes-negocio.js';
 
-export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 999, inicial: 20 });
+export const LIMITES_PROFESSORES = Object.freeze({ minimo: 1, maximo: 5000, inicial: 20 });
 
 /**
  * Núcleo puro do simulador FILL (sem DOM).
