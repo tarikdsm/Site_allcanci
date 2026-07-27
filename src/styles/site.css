@@ -970,9 +970,9 @@ body.site::before {
 
 .site-depoimentos-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
-  gap: 1.5rem;
-  margin: 2.8rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 1rem;
+  margin: 2rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -985,11 +985,11 @@ body.site::before {
 .site-depoimentos-vazio {
   position: relative;
   margin: 0;
-  padding: 2rem 1.6rem 1.6rem;
+  padding: 1.55rem 1.25rem 1.25rem;
   background: var(--branco);
   border: var(--site-borda);
   border-radius: var(--raio-sm);
-  box-shadow: 0.55rem 0.55rem 0 var(--amarelo);
+  box-shadow: 0.4rem 0.4rem 0 var(--amarelo);
 }
 
 .site-depoimento-card {
@@ -999,28 +999,63 @@ body.site::before {
 .site-depoimento-card::before {
   content: '“';
   position: absolute;
-  top: -0.55rem;
-  left: 1rem;
+  top: -0.4rem;
+  left: 0.8rem;
   color: var(--vermelho);
   font-family: var(--font-titulo);
-  font-size: 4.4rem;
+  font-size: 3.5rem;
   font-weight: 900;
   line-height: 1;
 }
 
-.site-depoimento-card > p {
+.site-depoimento-detalhes summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.site-depoimento-detalhes summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-depoimento-resumo {
+  display: block;
   margin: 0;
-  font-size: var(--texto-lg);
+  font-size: var(--texto-base);
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.45;
+}
+
+.site-depoimento-acao {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--azul);
+  font-size: var(--texto-sm);
+  font-weight: 900;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.site-depoimento-acao::after {
+  content: ' +';
+}
+
+.site-depoimento-detalhes[open] .site-depoimento-acao::after {
+  content: ' −';
+}
+
+.site-depoimento-detalhes > p {
+  margin: 1rem 0 0;
+  font-size: var(--texto-base);
+  font-weight: 600;
+  line-height: 1.5;
   white-space: pre-line;
 }
 
 .site-depoimento-card footer {
   display: grid;
   gap: 0.15rem;
-  margin-top: 1.4rem;
-  padding-top: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
   border-top: 2px dashed rgba(8, 8, 8, 0.22);
 }
 

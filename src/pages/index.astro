@@ -456,7 +456,13 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             {provaSocial.depoimentos.map((dep) => (
               <li class="site-depoimento">
                 <blockquote class="site-depoimento-card">
-                  <p>{dep.citacao}</p>
+                  <details class="site-depoimento-detalhes">
+                    <summary>
+                      <span class="site-depoimento-resumo">{dep.citacao.split('\n\n')[0]}</span>
+                      <span class="site-depoimento-acao">Ler depoimento completo</span>
+                    </summary>
+                    <p>{dep.citacao.split('\n\n').slice(1).join('\n\n')}</p>
+                  </details>
                   <footer>
                     <strong>{dep.autor}</strong>
                     <span>{dep.instituicao}</span>
