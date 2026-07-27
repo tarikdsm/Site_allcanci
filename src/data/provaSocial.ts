@@ -31,5 +31,16 @@ Agradecemos pela parceria e pela qualidade da solução oferecida pela Allcanci 
       autor: 'Alex — Diretor',
       instituicao: 'Escola Estadual Doutor Juscelino Barbosa',
     },
+    {
+      citacao: `A aquisição da máquina FILL, equipamento moderno desenvolvido para recarregar pincéis de quadro branco com mais praticidade, rapidez e economia.
+
+A máquina permite o abastecimento dos pincéis sem desperdício de tinta e sem sujeira, proporcionando mais organização no ambiente escolar e facilitando o trabalho diário dos professores. Além disso, o equipamento contribui para maior durabilidade dos pincéis e melhor aproveitamento do material utilizado.
+
+Com um sistema simples e eficiente, a FILL garante mais agilidade no processo de recarga, evitando desperdícios, além de promover mais conforto e higiene durante o uso.
+
+A aquisição desse equipamento representa mais um investimento da escola em soluções práticas e inovadoras para melhorar as condições de trabalho e o atendimento às necessidades do ambiente escolar.`,
+      autor: 'Maria Marta Gomes — Diretora',
+      instituicao: 'Escola Estadual Rosarinha Pimentinha',
+    },
   ] as { citacao: string; autor: string; instituicao: string }[],
 };
