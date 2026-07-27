@@ -1013,6 +1013,7 @@ body.site::before {
   font-size: var(--texto-lg);
   font-weight: 700;
   line-height: 1.55;
+  white-space: pre-line;
 }
 
 .site-depoimento-card footer {
