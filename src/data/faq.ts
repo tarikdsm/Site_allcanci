@@ -2,7 +2,6 @@ import { CONSTANTES_NEGOCIO } from './constantes-negocio.js';
 
 export const faq = [
   { pergunta: 'O sistema Allcanci serve para qualquer quadro branco ou de vidro?', resposta: 'Sim! Todos os produtos FILL são compatíveis com quadros brancos e de vidro.' },
-  { pergunta: 'O serviço tem nota fiscal e documentação para licitação?', resposta: 'Sim. Todos os serviços da Allcanci são vendidos com nota fiscal eletrônica ou fatura de locação, com documentação completa para compras públicas.' },
   { pergunta: 'Qual é o prazo de entrega e quem faz a instalação?', resposta: `O prazo de entrega é de até ${CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis após a confirmação do pedido, para todo o Brasil, com instalação e treinamento incluídos.` },
   { pergunta: 'E se eu não ficar satisfeito com o produto?', resposta: 'A Allcanci oferece garantia total de satisfação, sem burocracia.' },
   { pergunta: 'Como funciona o suporte técnico?', resposta: 'O suporte técnico especializado acompanha o cliente durante toda a vida útil do produto.' },
