@@ -255,17 +255,29 @@ body.site::before {
 
 .site-menu {
   display: flex;
-  gap: clamp(0.9rem, 2vw, 1.6rem);
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: clamp(0.7rem, 1.4vw, 1.25rem);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.site-menu li {
+  display: flex;
+  align-items: center;
+}
+
 .site-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 2.6rem;
   font-weight: 800;
   font-size: var(--texto-sm);
+  line-height: 1;
   color: var(--preto);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .site-menu a:hover {
@@ -284,7 +296,7 @@ body.site::before {
   white-space: nowrap;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1100px) {
   .site-nav {
     display: none;
   }
