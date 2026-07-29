@@ -115,15 +115,26 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           ))}
         </ul>
       </nav>
-      <a
-        class="site-botao site-botao--verde site-botao--mini"
-        href={contatos.whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <IconWhatsapp size={16} />
-        WhatsApp
-      </a>
+      <div class="site-topo-acoes">
+        <a
+          class="site-botao site-botao--azul site-botao--mini site-botao--suporte"
+          href={contatos.whatsappSuporteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconWhatsapp size={16} />
+          Fale com o Suporte
+        </a>
+        <a
+          class="site-botao site-botao--verde site-botao--mini"
+          href={contatos.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconWhatsapp size={16} />
+          WhatsApp
+        </a>
+      </div>
     </div>
   </header>
 
@@ -168,15 +179,6 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
                 />
                 <figcaption>Fill Eco Marker</figcaption>
               </figure>
-              <a
-                class="site-botao site-botao--azul site-botao--mini site-botao--suporte"
-                href={contatos.whatsappSuporteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconWhatsapp size={18} />
-                Fale com o Suporte
-              </a>
             </div>
 
             <div class="site-hero-ctas">
