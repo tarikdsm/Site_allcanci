@@ -360,8 +360,28 @@ body.site::before {
 
 .site-hero-imagem {
   position: relative;
-  width: min(100%, 42rem);
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  gap: 1.3rem;
+  width: min(100%, 58rem);
   margin: 2.4rem auto 0;
+}
+
+.site-hero-imagem .site-quadro-foto {
+  width: min(100%, 42rem);
+}
+
+.site-botao--suporte {
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .site-hero-imagem {
+    grid-template-columns: minmax(0, 42rem) max-content;
+    justify-content: center;
+    gap: 2rem;
+  }
 }
 
 .site-hero-ctas {

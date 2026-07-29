@@ -4,12 +4,14 @@ import test from 'node:test';
 
 const read = (path) => readFileSync(path, 'utf8');
 
-test('todos os CTAs centralizam uma URL oficial transparente do WhatsApp derivada do telefone publicado', () => {
+test('os CTAs usam as URLs transparentes do WhatsApp comercial e do suporte', () => {
   const contatos = read('src/data/site.ts');
   const page = read('src/pages/index.astro');
 
   assert.match(contatos, /telefone: '\(31\) 98292-9147',/);
   assert.match(contatos, /whatsappUrl: 'https:\/\/wa\.me\/5531982929147',/);
+  assert.match(contatos, /whatsappSuporteUrl: 'https:\/\/wa\.me\/5531981094487',/);
   assert.doesNotMatch(contatos, /wa\.link/);
   assert.equal([...page.matchAll(/href=\{contatos\.whatsappUrl\}/g)].length, 3);
+  assert.equal([...page.matchAll(/href=\{contatos\.whatsappSuporteUrl\}/g)].length, 1);
 });
