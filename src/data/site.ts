@@ -14,6 +14,7 @@ export const contatos = {
   email: 'comercial@allcanci.com.br',
   telefone: '(31) 98292-9147',
   whatsappUrl: 'https://wa.me/5531982929147',
+  whatsappSuporteUrl: 'https://wa.me/5531981094487',
   endereco: {
     logradouro: 'Rua Dom Afonso Henrique, 713',
     cidade: 'Betim',

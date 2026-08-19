@@ -18,6 +18,9 @@ interface Props {
 }
 const { title, description, bodyClass = '', ogImage, ogImageAlt } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const contentSecurityPolicy = import.meta.env.DEV
+  ? "default-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; upgrade-insecure-requests"
+  : "default-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; upgrade-insecure-requests";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site) : undefined;
 const organization = {
@@ -45,7 +48,7 @@ const organizationJsonLd = JSON.stringify(organization).replace(/</g, '\\u003c')
     <meta charset="utf-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; img-src 'self' data:; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
+      content={contentSecurityPolicy}
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

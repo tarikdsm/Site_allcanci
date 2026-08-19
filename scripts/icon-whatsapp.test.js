@@ -13,7 +13,7 @@ test('os CTAs de WhatsApp reutilizam um ícone decorativo com os tamanhos origin
   assert.match(page, /import IconWhatsapp from '\.\.\/components\/IconWhatsapp\.astro';/);
   assert.deepEqual(
     [...page.matchAll(/<IconWhatsapp size=\{(\d+)\} \/>/g)].map((match) => Number(match[1])),
-    [16, 18, 20],
+    [16, 16, 18, 20],
   );
   assert.doesNotMatch(page, /M21 12a8\.5 8\.5 0 0 1-12\.4 7\.5L3 21l1\.6-5\.2A8\.5 8\.5 0 1 1 21 12Z/);
   assert.match(icon, /aria-hidden="true"/);

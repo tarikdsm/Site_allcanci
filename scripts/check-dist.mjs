@@ -120,11 +120,18 @@ if (!existsSync(htmlPath)) {
   }
 
   const whatsappUrl = 'https://wa.me/5531982929147';
+  const whatsappSuporteUrl = 'https://wa.me/5531981094487';
   const whatsappLinks = [...html.matchAll(/<a\b[^>]*>/gi)]
     .map((match) => getAttribute(match[0], 'href'))
     .filter((href) => href?.startsWith('https://wa.me/') || href?.includes('wa.link'));
-  if (whatsappLinks.length !== 3 || whatsappLinks.some((href) => href !== whatsappUrl)) {
-    problemas.push('CTAs do WhatsApp devem usar a URL oficial transparente esperada');
+  const whatsappComercialLinks = whatsappLinks.filter((href) => href === whatsappUrl);
+  const whatsappSuporteLinks = whatsappLinks.filter((href) => href === whatsappSuporteUrl);
+  if (
+    whatsappLinks.length !== 4 ||
+    whatsappComercialLinks.length !== 3 ||
+    whatsappSuporteLinks.length !== 1
+  ) {
+    problemas.push('CTAs do WhatsApp devem usar as URLs transparentes comercial e de suporte esperadas');
   }
 
   for (const match of html.matchAll(/<section\b[^>]*>/gi)) {

@@ -12,5 +12,35 @@ export const provaSocial = {
     'Suporte durante todo o contrato',
     `Entrega em até ${CONSTANTES_NEGOCIO.entregaDiasUteis} dias úteis`,
   ],
-  depoimentos: [] as { citacao: string; autor: string; instituicao: string }[],
+  depoimentos: [
+    {
+      citacao: `A experiência da escola com a máquina FILL tem sido muito positiva. Tivemos uma economia significativa nos gastos relacionados à compra de pincéis, tintas e pontas, com redução de aproximadamente 40% nos custos do uso diário.
+
+Além da economia, percebemos mais praticidade e organização para os professores, redução da sujeira e também dos problemas que tínhamos anteriormente com materiais de baixa qualidade/falsificados. Outro ponto importante foi o maior controle no uso dos pincéis, já que não utilizamos e nem recarregamos pincéis que não sejam da marca, o que trouxe mais padronização e durabilidade aos materiais.
+
+Agradecemos pela parceria e pelo suporte oferecido pela Allcanci Tecnologia.`,
+      autor: 'Kele — Diretora',
+      instituicao: 'Escola Estadual Helena Guerra',
+    },
+    {
+      citacao: `A Escola Estadual Doutor Juscelino Barbosa vem utilizando a máquina FILL com resultados muito positivos. Além da praticidade no dia a dia, percebemos uma grande economia no uso dos pincéis e das tintas, reduzindo significativamente o desperdício.
+
+Os professores aprovaram a organização e a facilidade de utilização, tornando o trabalho mais ágil e eficiente em sala de aula. A máquina trouxe mais comodidade para a equipe e contribuiu para um melhor aproveitamento dos materiais escolares.
+
+Agradecemos pela parceria e pela qualidade da solução oferecida pela Allcanci Tecnologia.`,
+      autor: 'Alex — Diretor',
+      instituicao: 'Escola Estadual Doutor Juscelino Barbosa',
+    },
+    {
+      citacao: `A aquisição da máquina FILL, equipamento moderno desenvolvido para recarregar pincéis de quadro branco com mais praticidade, rapidez e economia.
+
+A máquina permite o abastecimento dos pincéis sem desperdício de tinta e sem sujeira, proporcionando mais organização no ambiente escolar e facilitando o trabalho diário dos professores. Além disso, o equipamento contribui para maior durabilidade dos pincéis e melhor aproveitamento do material utilizado.
+
+Com um sistema simples e eficiente, a FILL garante mais agilidade no processo de recarga, evitando desperdícios, além de promover mais conforto e higiene durante o uso.
+
+A aquisição desse equipamento representa mais um investimento da escola em soluções práticas e inovadoras para melhorar as condições de trabalho e o atendimento às necessidades do ambiente escolar.`,
+      autor: 'Maria Marta Gomes — Diretora',
+      instituicao: 'Escola Estadual Rosarinha Pimentinha',
+    },
+  ] as { citacao: string; autor: string; instituicao: string }[],
 };

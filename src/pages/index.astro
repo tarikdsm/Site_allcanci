@@ -115,15 +115,26 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
           ))}
         </ul>
       </nav>
-      <a
-        class="site-botao site-botao--verde site-botao--mini"
-        href={contatos.whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <IconWhatsapp size={16} />
-        WhatsApp
-      </a>
+      <div class="site-topo-acoes">
+        <a
+          class="site-botao site-botao--azul site-botao--mini site-botao--suporte"
+          href={contatos.whatsappSuporteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconWhatsapp size={16} />
+          Fale com o Suporte
+        </a>
+        <a
+          class="site-botao site-botao--verde site-botao--mini"
+          href={contatos.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconWhatsapp size={16} />
+          WhatsApp
+        </a>
+      </div>
     </div>
   </header>
 
@@ -456,7 +467,13 @@ const telefoneHref = `tel:+55${contatos.telefone.replace(/\D/g, '')}`;
             {provaSocial.depoimentos.map((dep) => (
               <li class="site-depoimento">
                 <blockquote class="site-depoimento-card">
-                  <p>{dep.citacao}</p>
+                  <details class="site-depoimento-detalhes">
+                    <summary>
+                      <span class="site-depoimento-resumo">{dep.citacao.split('\n\n')[0]}</span>
+                      <span class="site-depoimento-acao">Ler depoimento completo</span>
+                    </summary>
+                    <p>{dep.citacao.split('\n\n').slice(1).join('\n\n')}</p>
+                  </details>
                   <footer>
                     <strong>{dep.autor}</strong>
                     <span>{dep.instituicao}</span>
